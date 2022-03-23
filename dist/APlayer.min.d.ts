@@ -23,7 +23,7 @@ interface APlayerOptions {
   volume?: number;
   mutex?: boolean;
   listFolded?: boolean;
-  listMaxHeight?: number;
+  listMaxHeight?: String;
   lrcType?: number;
   audio?: any;
   storageName?: string;
