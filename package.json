@@ -1,6 +1,6 @@
 {
   "name": "aplayer-ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "TypeScript interface for aplayer",
   "main": "dist/APlayer.min.js",
   "types": "dist/APlayer.min.d.ts",
