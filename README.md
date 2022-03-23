@@ -7,7 +7,7 @@
 
 See [APlayer](https://github.com/MoePlayer/APlayer/)
 
-This is a TypeScript Version
+This is a TypeScript Version, [npm](https://www.npmjs.com/package/aplayer-ts)
 
 ```TypeScript
 import APlayer from 'aplayer'

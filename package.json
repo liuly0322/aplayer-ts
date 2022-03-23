@@ -15,18 +15,19 @@
     "dist"
   ],
   "repository": {
-    "url": "git+https://github.com/DIYgod/APlayer.git",
+    "url": "git+https://github.com/liuly0322/aplayer-ts",
     "type": "git"
   },
   "keywords": [
     "player",
     "music",
-    "html5"
+    "html5",
+    "typescript"
   ],
   "author": "DIYgod",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DIYgod/APlayer/issues"
+    "url": "https://github.com/liuly0322/aplayer-ts/issues"
   },
   "homepage": "https://github.com/DIYgod/APlayer#readme",
   "devDependencies": {
