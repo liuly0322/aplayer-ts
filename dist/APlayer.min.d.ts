@@ -1,6 +1,6 @@
 type FullScreenType = "web" | "browser";
 
-declare class Audio {
+export class Audio {
   name: string;
   url: string;
   artist?: string;
