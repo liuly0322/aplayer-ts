@@ -10,8 +10,8 @@ See [APlayer](https://github.com/MoePlayer/APlayer/)
 This is a TypeScript Version, [npm](https://www.npmjs.com/package/aplayer-ts)
 
 ```TypeScript
-import APlayer from 'aplayer'
-import 'aplayer/dist/APlayer.min.css'
+import APlayer from 'aplayer-ts'
+import 'aplayer-ts/dist/APlayer.min.css'
 ```
 
 and then you can
