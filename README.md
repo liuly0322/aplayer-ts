@@ -7,7 +7,7 @@
 
 See [APlayer](https://github.com/MoePlayer/APlayer/)
 
-This is a TypeScript Version, [npm](https://www.npmjs.com/package/aplayer-ts)
+This is a fork with typo annotation for TypeScript, [npm](https://www.npmjs.com/package/aplayer-ts)
 
 ```TypeScript
 import APlayer from 'aplayer-ts'
@@ -17,5 +17,5 @@ import 'aplayer-ts/dist/APlayer.min.css'
 and then you can
 
 ```TypeScript
-instance = new APlayer({ /* as the doc of aplayer */ })
+const instance = new APlayer({ /* as the doc of aplayer */ })
 ```
