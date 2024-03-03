@@ -1,14 +1,13 @@
 type FullScreenType = "web" | "browser";
 
 export class Audio {
-  name: string;
-  url: string;
+  name?: string;
+  url?: string;
   artist?: string;
   cover?: string;
   lrc?: string;
   theme?: string;
   type?: string;
-  customAudioType?: Record<string, void>;
 }
 
 interface APlayerOptions {
@@ -23,11 +22,11 @@ interface APlayerOptions {
   volume?: number;
   mutex?: boolean;
   listFolded?: boolean;
-  listMaxHeight?: String;
+  listMaxHeight?: string;
   lrcType?: number;
   audio?: any;
   storageName?: string;
-  customAudioType?: Record<string, void>;
+  customAudioType?: Record<string, () => void>;
   customInit?: (player: any, src: APlayerOptions) => Promise<any>;
 }
 
@@ -80,8 +79,9 @@ export default class APlayer {
     show(): void;
     hide(): void;
     toggle(): void;
-    add(audios: Array<Audio> | Audio): void;
+    add(audios: Audio[] | Audio): void;
     remove(index: number): void;
     switch(index: number): void;
+    clear(): void;
   };
 }
