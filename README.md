@@ -1,21 +1,21 @@
 <p align="center">
-<img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fhu01y9uy7j305k04s3yc.jpg" alt="ADPlayer" width="100">
+<img src="https://i.imgur.com/LnPvZvO.png" alt="ADPlayer" width="100">
 </p>
 <h1 align="center">APlayer</h1>
 
 > Wow, such a lovely HTML5 music player
 
-See [APlayer](https://github.com/MoePlayer/APlayer/)
+Type annotations for [APlayer](https://github.com/MoePlayer/APlayer/).
 
-This is a fork with type annotation for TypeScript, [npm](https://www.npmjs.com/package/aplayer-ts)
+## Usage
 
 ```TypeScript
 import APlayer from 'aplayer-ts'
 import 'aplayer-ts/dist/APlayer.min.css'
 ```
 
-and then you can
+Enjoy!
 
 ```TypeScript
-const instance = new APlayer({ /* as the doc of aplayer */ })
+const instance = new APlayer({ /* refer to the aplayer doc */ })
 ```
