@@ -73,6 +73,9 @@ export default class APlayer {
     show(): void;
     hide(): void;
     toggle(): void;
+
+    switch: (index: number) => void;
+    update: (currentTime: number) => void;
   };
 
   list: {
