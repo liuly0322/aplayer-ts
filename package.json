@@ -3,7 +3,7 @@
   "version": "1.10.1-2",
   "description": "TypeScript interface for aplayer",
   "main": "dist/APlayer.min.js",
-  "types": "dist/APlayer.min.d.ts",
+  "types": "APlayer.d.ts",
   "style": "dist/APlayer.min.css",
   "files": [
     "dist"
@@ -18,39 +18,10 @@
     "html5",
     "typescript"
   ],
-  "author": "DIYgod",
+  "author": "liuly",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/liuly0322/aplayer-ts/issues"
+    "url": "https://github.com/liuly0322/aplayer-ts"
   },
-  "homepage": "https://github.com/DIYgod/APlayer#readme",
-  "devDependencies": {
-    "art-template": "4.12.2",
-    "art-template-loader": "1.4.3",
-    "autoprefixer": "^8.1.0",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.6.1",
-    "cross-env": "^5.1.4",
-    "css-loader": "^0.28.10",
-    "eslint": "^4.18.2",
-    "eslint-loader": "^2.0.0",
-    "git-revision-webpack-plugin": "^2.5.1",
-    "mini-css-extract-plugin": "0.2.0",
-    "node-sass": "^4.7.2",
-    "postcss-loader": "^2.1.1",
-    "sass-loader": "^6.0.7",
-    "style-loader": "^0.20.3",
-    "svg-inline-loader": "0.8.0",
-    "template-string-optimize-loader": "^2.2.3",
-    "url-loader": "^1.0.1",
-    "webpack": "^4.1.1",
-    "webpack-cli": "2.0.12",
-    "webpack-dev-server": "^3.1.1"
-  },
-  "dependencies": {
-    "balloon-css": "^0.5.0",
-    "promise-polyfill": "7.1.0",
-    "smoothscroll": "0.4.0"
-  }
+  "homepage": "https://github.com/liuly0322/aplayer-ts#readme"
 }

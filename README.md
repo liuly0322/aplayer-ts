@@ -5,7 +5,7 @@
 
 > Wow, such a lovely HTML5 music player
 
-Type annotations for [APlayer](https://github.com/MoePlayer/APlayer/).
+TypeScript interface for [APlayer](https://github.com/MoePlayer/APlayer/).
 
 ## Usage
 
