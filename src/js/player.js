@@ -498,11 +498,6 @@ class APlayer {
     skipForward () {
         this.list.switch(this.nextIndex());
     }
-
-    static get version () {
-        /* global APLAYER_VERSION */
-        return APLAYER_VERSION;
-    }
 }
 
 export default APlayer;

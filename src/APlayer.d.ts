@@ -24,49 +24,27 @@ interface APlayerOptions {
   listFolded?: boolean;
   listMaxHeight?: string;
   lrcType?: number;
-  audio?: any;
+  audio?: Audio | Audio[];
   storageName?: string;
   customAudioType?: Record<string, () => void>;
-  customInit?: (player: any, src: APlayerOptions) => Promise<any>;
-}
-
-interface FullScreen {
-  request(type: FullScreenType): void;
-
-  cancel(type: FullScreenType): void;
 }
 
 export default class APlayer {
-  events: any;
   audio: HTMLAudioElement;
-  fullScreen: FullScreen;
+  mode: 'mini' | 'normal';
 
   constructor(options: APlayerOptions);
-
   play(): void;
-
   pause(): void;
-
   seek(time: number): void;
-
   toggle(): void;
-
   on(event: string, handler: () => void): void;
-
-  volume(percentage: number, nostorage: boolean, nonotice: boolean): void;
-
+  volume(percentage: number, nostorage: boolean): void;
   theme(color: string, index: number): void;
-
   setMode(mode: "normal" | "mini"): void;
-
-  mode(): string;
-
   notice(text: string, time?: number, opacity?: number): void;
-
   skipBack(): void;
-
   skipForward(): void;
-
   destroy(): void;
 
   lrc: {
