@@ -9,6 +9,11 @@
     "src",
     "dist"
   ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "url": "git+https://github.com/liuly0322/aplayer-ts",
     "type": "git"
@@ -29,5 +34,8 @@
     "art-template": "4.12.2",
     "promise-polyfill": "7.1.0",
     "smoothscroll": "0.4.0"
+  },
+  "devDependencies": {
+    "vite": "^5.1.5"
   }
 }

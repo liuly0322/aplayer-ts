@@ -1,6 +1,6 @@
 import Promise from 'promise-polyfill';
 
-import utils from './utils';
+import { secondToTime, isMobile, randomOrder } from './utils';
 import Icons from './icons';
 import handleOption from './options';
 import Template from './template';
@@ -22,14 +22,14 @@ class APlayer {
      * @param {Object} options - See README
      * @constructor
      */
-    constructor (options) {
+    constructor(options) {
         this.options = handleOption(options);
         this.container = this.options.container;
         this.paused = true;
         this.playedPromise = Promise.resolve();
         this.mode = 'normal';
 
-        this.randomOrder = utils.randomOrder(this.options.audio.length);
+        this.randomOrder = randomOrder(this.options.audio.length);
 
         this.container.classList.add('aplayer');
         if (this.options.lrcType && !this.options.fixed) {
@@ -38,7 +38,7 @@ class APlayer {
         if (this.options.audio.length > 1) {
             this.container.classList.add('aplayer-withlist');
         }
-        if (utils.isMobile) {
+        if (isMobile) {
             this.container.classList.add('aplayer-mobile');
         }
         this.arrow = this.container.offsetWidth <= 300;
@@ -106,7 +106,7 @@ class APlayer {
         instances.push(this);
     }
 
-    initAudio () {
+    initAudio() {
         this.audio = document.createElement('audio');
         this.audio.preload = this.options.preload;
 
@@ -119,7 +119,7 @@ class APlayer {
         this.volume(this.storage.get('volume'), true);
     }
 
-    bindEvents () {
+    bindEvents() {
         this.on('play', () => {
             if (this.paused) {
                 this.setUIPlaying();
@@ -136,7 +136,7 @@ class APlayer {
             if (!this.disableTimeupdate) {
                 this.bar.set('played', this.audio.currentTime / this.duration, 'width');
                 this.lrc && this.lrc.update();
-                const currentTime = utils.secondToTime(this.audio.currentTime);
+                const currentTime = secondToTime(this.audio.currentTime);
                 if (this.template.ptime.innerHTML !== currentTime) {
                     this.template.ptime.innerHTML = currentTime;
                 }
@@ -146,7 +146,7 @@ class APlayer {
         // show audio time: the metadata has loaded or changed
         this.on('durationchange', () => {
             if (this.duration !== 1) {           // compatibility: Android browsers will output 1 at first
-                this.template.dtime.innerHTML = utils.secondToTime(this.duration);
+                this.template.dtime.innerHTML = secondToTime(this.duration);
             }
         });
 
@@ -211,7 +211,7 @@ class APlayer {
         });
     }
 
-    setAudio (audio) {
+    setAudio(audio) {
         if (this.hls) {
             this.hls.destroy();
             this.hls = null;
@@ -258,7 +258,7 @@ class APlayer {
         }
     }
 
-    theme (color = this.list.audios[this.list.index].theme || this.options.theme, index = this.list.index, isReset = true) {
+    theme(color = this.list.audios[this.list.index].theme || this.options.theme, index = this.list.index, isReset = true) {
         if (isReset) {
             this.list.audios[index] && (this.list.audios[index].theme = color);
         }
@@ -271,19 +271,19 @@ class APlayer {
         }
     }
 
-    seek (time) {
+    seek(time) {
         time = Math.max(time, 0);
         time = Math.min(time, this.duration);
         this.audio.currentTime = time;
         this.bar.set('played', time / this.duration, 'width');
-        this.template.ptime.innerHTML = utils.secondToTime(time);
+        this.template.ptime.innerHTML = secondToTime(time);
     }
 
-    get duration () {
+    get duration() {
         return isNaN(this.audio.duration) ? 0 : this.audio.duration;
     }
 
-    setUIPlaying () {
+    setUIPlaying() {
         if (this.paused) {
             this.paused = false;
             this.template.button.classList.remove('aplayer-play');
@@ -306,7 +306,7 @@ class APlayer {
         }
     }
 
-    play () {
+    play() {
         this.setUIPlaying();
 
         const playPromise = this.audio.play();
@@ -320,7 +320,7 @@ class APlayer {
         }
     }
 
-    setUIPaused () {
+    setUIPaused() {
         if (!this.paused) {
             this.paused = true;
 
@@ -337,12 +337,12 @@ class APlayer {
         this.timer.disable('loading');
     }
 
-    pause () {
+    pause() {
         this.setUIPaused();
         this.audio.pause();
     }
 
-    switchVolumeIcon () {
+    switchVolumeIcon() {
         if (this.volume() >= 0.95) {
             this.template.volumeButton.innerHTML = Icons.volumeUp;
         }
@@ -357,7 +357,7 @@ class APlayer {
     /**
      * Set volume
      */
-    volume (percentage, nostorage) {
+    volume(percentage, nostorage) {
         percentage = parseFloat(percentage);
         if (!isNaN(percentage)) {
             percentage = Math.max(percentage, 0);
@@ -381,14 +381,14 @@ class APlayer {
     /**
      * bind events
      */
-    on (name, callback) {
+    on(name, callback) {
         this.events.on(name, callback);
     }
 
     /**
      * toggle between play and pause
      */
-    toggle () {
+    toggle() {
         if (this.template.button.classList.contains('aplayer-play')) {
             this.play();
         }
@@ -398,24 +398,24 @@ class APlayer {
     }
 
     // abandoned
-    switchAudio (index) {
+    switchAudio(index) {
         this.list.switch(index);
     }
 
     // abandoned
-    addAudio (audios) {
+    addAudio(audios) {
         this.list.add(audios);
     }
 
     // abandoned
-    removeAudio (index) {
+    removeAudio(index) {
         this.list.remove(index);
     }
 
     /**
      * destroy this player
      */
-    destroy () {
+    destroy() {
         instances.splice(instances.indexOf(this), 1);
         this.pause();
         this.container.innerHTML = '';
@@ -424,7 +424,7 @@ class APlayer {
         this.events.trigger('destroy');
     }
 
-    setMode (mode = 'normal') {
+    setMode(mode = 'normal') {
         this.mode = mode;
         if (mode === 'mini') {
             this.container.classList.add('aplayer-narrow');
@@ -434,7 +434,7 @@ class APlayer {
         }
     }
 
-    notice (text, time = 2000, opacity = 0.8) {
+    notice(text, time = 2000, opacity = 0.8) {
         this.template.notice.innerHTML = text;
         this.template.notice.style.opacity = opacity;
         if (this.noticeTime) {
@@ -451,7 +451,7 @@ class APlayer {
         }
     }
 
-    prevIndex () {
+    prevIndex() {
         if (this.list.audios.length > 1) {
             if (this.options.order === 'list') {
                 return this.list.index - 1 < 0 ? this.list.audios.length - 1 : this.list.index - 1;
@@ -471,7 +471,7 @@ class APlayer {
         }
     }
 
-    nextIndex () {
+    nextIndex() {
         if (this.list.audios.length > 1) {
             if (this.options.order === 'list') {
                 return (this.list.index + 1) % this.list.audios.length;
@@ -491,11 +491,11 @@ class APlayer {
         }
     }
 
-    skipBack () {
+    skipBack() {
         this.list.switch(this.prevIndex());
     }
 
-    skipForward () {
+    skipForward() {
         this.list.switch(this.nextIndex());
     }
 }

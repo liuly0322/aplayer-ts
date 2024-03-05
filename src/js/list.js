@@ -1,5 +1,5 @@
 import tplListItem from '../template/list-item.js';
-import utils from './utils';
+import { secondToTime, randomOrder } from './utils';
 import smoothScroll from 'smoothscroll';
 
 class List {
@@ -82,7 +82,7 @@ class List {
             this.player.container.classList.add('aplayer-withlist');
         }
 
-        this.player.randomOrder = utils.randomOrder(this.audios.length);
+        this.player.randomOrder = randomOrder(this.audios.length);
         this.player.template.listCurs = this.player.container.querySelectorAll('.aplayer-list-cur');
 
         this.player.template.listCurs[this.audios.length - 1].style.backgroundColor = audios.theme || this.player.options.theme;
@@ -167,7 +167,7 @@ class List {
 
             // set duration time
             if (this.player.duration !== 1) {           // compatibility: Android browsers will output 1 at first
-                this.player.template.dtime.innerHTML = utils.secondToTime(this.player.duration);
+                this.player.template.dtime.innerHTML = secondToTime(this.player.duration);
             }
         }
     }
@@ -186,7 +186,7 @@ class List {
         this.player.template.title.innerHTML = 'No audio';
         this.player.template.author.innerHTML = '';
         this.player.bar.set('loaded', 0, 'width');
-        this.player.template.dtime.innerHTML = utils.secondToTime(0);
+        this.player.template.dtime.innerHTML = secondToTime(0);
     }
 }
 

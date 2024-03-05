@@ -1,4 +1,4 @@
-import APlayer from "./js";
+import APlayer from "../src/js";
 
 const ap1 = new APlayer({
     element: document.getElementById('player1'),
@@ -20,5 +20,6 @@ const url = `https://api.liuly.moe/meting-api/?server=netease&type=playlist&id=3
 (async () => {
     const data = await fetch(url).then(res => res.json())
     const audioList = data.map(value => ({ ...value, cover: value.pic })) ?? []
+    ap1.list.clear()
     ap1.list.add(audioList)
 })()

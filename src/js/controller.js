@@ -1,8 +1,8 @@
-import utils from './utils';
+import { isMobile, nameMap, getElementViewLeft, getElementViewTop, secondToTime } from './utils';
 import Icons from './icons';
 
 class Controller {
-    constructor (player) {
+    constructor(player) {
         this.player = player;
 
         this.initPlayButton();
@@ -10,7 +10,7 @@ class Controller {
         this.initOrderButton();
         this.initLoopButton();
         this.initMenuButton();
-        if (!utils.isMobile) {
+        if (!isMobile) {
             this.initVolumeButton();
         }
         this.initMiniSwitcher();
@@ -18,26 +18,26 @@ class Controller {
         this.initLrcButton();
     }
 
-    initPlayButton () {
+    initPlayButton() {
         this.player.template.pic.addEventListener('click', () => {
             this.player.toggle();
         });
     }
 
-    initPlayBar () {
+    initPlayBar() {
         const thumbMove = (e) => {
-            let percentage = ((e.clientX || e.changedTouches[0].clientX) - utils.getElementViewLeft(this.player.template.barWrap)) / this.player.template.barWrap.clientWidth;
+            let percentage = ((e.clientX || e.changedTouches[0].clientX) - getElementViewLeft(this.player.template.barWrap)) / this.player.template.barWrap.clientWidth;
             percentage = Math.max(percentage, 0);
             percentage = Math.min(percentage, 1);
             this.player.bar.set('played', percentage, 'width');
             this.player.lrc && this.player.lrc.update(percentage * this.player.duration);
-            this.player.template.ptime.innerHTML = utils.secondToTime(percentage * this.player.duration);
+            this.player.template.ptime.innerHTML = secondToTime(percentage * this.player.duration);
         };
 
         const thumbUp = (e) => {
-            document.removeEventListener(utils.nameMap.dragEnd, thumbUp);
-            document.removeEventListener(utils.nameMap.dragMove, thumbMove);
-            let percentage = ((e.clientX || e.changedTouches[0].clientX) - utils.getElementViewLeft(this.player.template.barWrap)) / this.player.template.barWrap.clientWidth;
+            document.removeEventListener(nameMap.dragEnd, thumbUp);
+            document.removeEventListener(nameMap.dragMove, thumbMove);
+            let percentage = ((e.clientX || e.changedTouches[0].clientX) - getElementViewLeft(this.player.template.barWrap)) / this.player.template.barWrap.clientWidth;
             percentage = Math.max(percentage, 0);
             percentage = Math.min(percentage, 1);
             this.player.bar.set('played', percentage, 'width');
@@ -45,14 +45,14 @@ class Controller {
             this.player.disableTimeupdate = false;
         };
 
-        this.player.template.barWrap.addEventListener(utils.nameMap.dragStart, () => {
+        this.player.template.barWrap.addEventListener(nameMap.dragStart, () => {
             this.player.disableTimeupdate = true;
-            document.addEventListener(utils.nameMap.dragMove, thumbMove);
-            document.addEventListener(utils.nameMap.dragEnd, thumbUp);
+            document.addEventListener(nameMap.dragMove, thumbMove);
+            document.addEventListener(nameMap.dragEnd, thumbUp);
         });
     }
 
-    initVolumeButton () {
+    initVolumeButton() {
         this.player.template.volumeButton.addEventListener('click', () => {
             if (this.player.audio.muted) {
                 this.player.audio.muted = false;
@@ -67,7 +67,7 @@ class Controller {
         });
 
         const thumbMove = (e) => {
-            let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - utils.getElementViewTop(this.player.template.volumeBar, this.player.options.fixed)) / this.player.template.volumeBar.clientHeight;
+            let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - getElementViewTop(this.player.template.volumeBar, this.player.options.fixed)) / this.player.template.volumeBar.clientHeight;
             percentage = Math.max(percentage, 0);
             percentage = Math.min(percentage, 1);
             this.player.volume(percentage);
@@ -75,22 +75,22 @@ class Controller {
 
         const thumbUp = (e) => {
             this.player.template.volumeBarWrap.classList.remove('aplayer-volume-bar-wrap-active');
-            document.removeEventListener(utils.nameMap.dragEnd, thumbUp);
-            document.removeEventListener(utils.nameMap.dragMove, thumbMove);
-            let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - utils.getElementViewTop(this.player.template.volumeBar, this.player.options.fixed)) / this.player.template.volumeBar.clientHeight;
+            document.removeEventListener(nameMap.dragEnd, thumbUp);
+            document.removeEventListener(nameMap.dragMove, thumbMove);
+            let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - getElementViewTop(this.player.template.volumeBar, this.player.options.fixed)) / this.player.template.volumeBar.clientHeight;
             percentage = Math.max(percentage, 0);
             percentage = Math.min(percentage, 1);
             this.player.volume(percentage);
         };
 
-        this.player.template.volumeBarWrap.addEventListener(utils.nameMap.dragStart, () => {
+        this.player.template.volumeBarWrap.addEventListener(nameMap.dragStart, () => {
             this.player.template.volumeBarWrap.classList.add('aplayer-volume-bar-wrap-active');
-            document.addEventListener(utils.nameMap.dragMove, thumbMove);
-            document.addEventListener(utils.nameMap.dragEnd, thumbUp);
+            document.addEventListener(nameMap.dragMove, thumbMove);
+            document.addEventListener(nameMap.dragEnd, thumbUp);
         });
     }
 
-    initOrderButton () {
+    initOrderButton() {
         this.player.template.order.addEventListener('click', () => {
             if (this.player.options.order === 'list') {
                 this.player.options.order = 'random';
@@ -103,7 +103,7 @@ class Controller {
         });
     }
 
-    initLoopButton () {
+    initLoopButton() {
         this.player.template.loop.addEventListener('click', () => {
             if (this.player.list.audios.length > 1) {
                 if (this.player.options.loop === 'one') {
@@ -132,19 +132,19 @@ class Controller {
         });
     }
 
-    initMenuButton () {
+    initMenuButton() {
         this.player.template.menu.addEventListener('click', () => {
             this.player.list.toggle();
         });
     }
 
-    initMiniSwitcher () {
+    initMiniSwitcher() {
         this.player.template.miniSwitcher.addEventListener('click', () => {
             this.player.setMode(this.player.mode === 'mini' ? 'normal' : 'mini');
         });
     }
 
-    initSkipButton () {
+    initSkipButton() {
         this.player.template.skipBackButton.addEventListener('click', () => {
             this.player.skipBack();
         });
@@ -156,7 +156,7 @@ class Controller {
         });
     }
 
-    initLrcButton () {
+    initLrcButton() {
         this.player.template.lrcButton.addEventListener('click', () => {
             if (this.player.template.lrcButton.classList.contains('aplayer-icon-lrc-inactivity')) {
                 this.player.template.lrcButton.classList.remove('aplayer-icon-lrc-inactivity');
