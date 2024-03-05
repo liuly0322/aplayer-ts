@@ -5,14 +5,14 @@
 
 > Wow, such a lovely HTML5 music player
 
-TypeScript interface and ESM export for [APlayer](https://github.com/MoePlayer/APlayer/). 30% smaller than `APlayer.min.js` with Rollup.
+Fully ESM version of [APlayer](https://github.com/MoePlayer/APlayer/) with TypeScript support. Generated bundle is 30% smaller than `APlayer.min.js` with Rollup.
 
 ## Why this
 
 See this [blog post](https://blog.liuly.moe/posts/tree-shaking).
 
 1. TypeScript
-2. ESM export (APlayer only exports its minified version built by Webpack, which is not friendly to custom code optimization)
+2. ESM (APlayer only exports `APlayer.min.js`, which is not friendly to code optimization)
 
 APlayer relies on Webpack to import svg and art-template files. This package has already transformed these files into JavaScript code (see [utils](./utils)), so you don't need to worry about the compatibility of your bundler.
 
