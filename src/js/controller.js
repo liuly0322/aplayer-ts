@@ -1,5 +1,5 @@
 import { isMobile, nameMap, getElementViewLeft, getElementViewTop, secondToTime } from './utils';
-import Icons from './icons';
+import { orderList, orderRandom, loopOne, loopNone, loopAll } from './icons';
 
 class Controller {
     constructor(player) {
@@ -94,11 +94,11 @@ class Controller {
         this.player.template.order.addEventListener('click', () => {
             if (this.player.options.order === 'list') {
                 this.player.options.order = 'random';
-                this.player.template.order.innerHTML = Icons.orderRandom;
+                this.player.template.order.innerHTML = orderRandom;
             }
             else if (this.player.options.order === 'random') {
                 this.player.options.order = 'list';
-                this.player.template.order.innerHTML = Icons.orderList;
+                this.player.template.order.innerHTML = orderList;
             }
         });
     }
@@ -108,25 +108,25 @@ class Controller {
             if (this.player.list.audios.length > 1) {
                 if (this.player.options.loop === 'one') {
                     this.player.options.loop = 'none';
-                    this.player.template.loop.innerHTML = Icons.loopNone;
+                    this.player.template.loop.innerHTML = loopNone;
                 }
                 else if (this.player.options.loop === 'none') {
                     this.player.options.loop = 'all';
-                    this.player.template.loop.innerHTML = Icons.loopAll;
+                    this.player.template.loop.innerHTML = loopAll;
                 }
                 else if (this.player.options.loop === 'all') {
                     this.player.options.loop = 'one';
-                    this.player.template.loop.innerHTML = Icons.loopOne;
+                    this.player.template.loop.innerHTML = loopOne;
                 }
             }
             else {
                 if (this.player.options.loop === 'one' || this.player.options.loop === 'all') {
                     this.player.options.loop = 'none';
-                    this.player.template.loop.innerHTML = Icons.loopNone;
+                    this.player.template.loop.innerHTML = loopNone;
                 }
                 else if (this.player.options.loop === 'none') {
                     this.player.options.loop = 'all';
-                    this.player.template.loop.innerHTML = Icons.loopAll;
+                    this.player.template.loop.innerHTML = loopAll;
                 }
             }
         });

@@ -23,3 +23,5 @@ const url = `https://api.liuly.moe/meting-api/?server=netease&type=playlist&id=3
     ap1.list.clear()
     ap1.list.add(audioList)
 })()
+
+window.ap1 = ap1

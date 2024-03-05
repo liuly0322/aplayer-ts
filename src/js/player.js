@@ -1,7 +1,7 @@
 import Promise from 'promise-polyfill';
 
 import { secondToTime, isMobile, randomOrder } from './utils';
-import Icons from './icons';
+import { pause, play, volumeDown, volumeOff, volumeUp } from './icons';
 import handleOption from './options';
 import Template from './template';
 import Bar from './bar';
@@ -290,9 +290,9 @@ class APlayer {
             this.template.button.classList.add('aplayer-pause');
             this.template.button.innerHTML = '';
             setTimeout(() => {
-                this.template.button.innerHTML = Icons.pause;
+                this.template.button.innerHTML = pause;
             }, 100);
-            this.template.skipPlayButton.innerHTML = Icons.pause;
+            this.template.skipPlayButton.innerHTML = pause;
         }
 
         this.timer.enable('loading');
@@ -328,9 +328,9 @@ class APlayer {
             this.template.button.classList.add('aplayer-play');
             this.template.button.innerHTML = '';
             setTimeout(() => {
-                this.template.button.innerHTML = Icons.play;
+                this.template.button.innerHTML = play;
             }, 100);
-            this.template.skipPlayButton.innerHTML = Icons.play;
+            this.template.skipPlayButton.innerHTML = play;
         }
 
         this.container.classList.remove('aplayer-loading');
@@ -344,13 +344,13 @@ class APlayer {
 
     switchVolumeIcon() {
         if (this.volume() >= 0.95) {
-            this.template.volumeButton.innerHTML = Icons.volumeUp;
+            this.template.volumeButton.innerHTML = volumeUp;
         }
         else if (this.volume() > 0) {
-            this.template.volumeButton.innerHTML = Icons.volumeDown;
+            this.template.volumeButton.innerHTML = volumeDown;
         }
         else {
-            this.template.volumeButton.innerHTML = Icons.volumeOff;
+            this.template.volumeButton.innerHTML = volumeOff;
         }
     }
 

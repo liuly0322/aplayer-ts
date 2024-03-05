@@ -1,4 +1,3 @@
-import Icons from './icons';
 import tplPlayer from '../template/player.js';
 
 class Template {
@@ -22,7 +21,6 @@ class Template {
 
         this.container.innerHTML = tplPlayer({
             options: this.options,
-            icons: Icons,
             cover: cover,
             getObject: (obj) => obj,
         });
