@@ -1,11 +1,11 @@
 <p align="center">
 <img src="https://i.imgur.com/LnPvZvO.png" alt="ADPlayer" width="100">
 </p>
-<h1 align="center">APlayer</h1>
+<h1 align="center">APlayer-ts</h1>
 
 > Wow, such a lovely HTML5 music player
 
-TypeScript interface and ESM export for [APlayer](https://github.com/MoePlayer/APlayer/).
+TypeScript interface and ESM export for [APlayer](https://github.com/MoePlayer/APlayer/). 30% smaller than `APlayer.min.js` with Rollup.
 
 ## Why this
 
