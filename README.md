@@ -10,9 +10,9 @@ TypeScript interface and ESM export for [APlayer](https://github.com/MoePlayer/A
 ## Why this
 
 1. TypeScript
-2. ESM export (APlayer only has minified export, which is not friendly to tree shaking and code optimization)
+2. ESM export (APlayer only exports its minified version built by Webpack, which is not friendly to custom code optimization)
 
-APlayer relies on webpack for svg and art-template import. This package has already transformed them into JavaScript code (see [utils](./utils)), so you only need a small runtime to use it.
+APlayer relies on Webpack to import svg and art-template files. This package has already transformed these files into JavaScript code (see [utils](./utils)), so you don't need to worry about the compatibility of your bundler.
 
 `APlayer.min.js` is still in `dist` folder, but by default this package exports `src/js/index.js`.
 
