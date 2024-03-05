@@ -3,7 +3,7 @@
   "version": "1.10.1-3",
   "description": "TypeScript interface for aplayer",
   "main": "dist/APlayer.min.js",
-  "types": "APlayer.d.ts",
+  "types": "dist/APlayer.d.ts",
   "style": "dist/APlayer.min.css",
   "files": [
     "dist"
