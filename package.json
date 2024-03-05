@@ -2,10 +2,11 @@
   "name": "aplayer-ts",
   "version": "1.10.1-4",
   "description": "TypeScript interface for aplayer",
-  "main": "dist/APlayer.min.js",
-  "types": "dist/APlayer.d.ts",
+  "main": "src/js/index.js",
+  "types": "src/APlayer.d.ts",
   "style": "dist/APlayer.min.css",
   "files": [
+    "src",
     "dist"
   ],
   "repository": {
@@ -23,5 +24,10 @@
   "bugs": {
     "url": "https://github.com/liuly0322/aplayer-ts"
   },
-  "homepage": "https://github.com/liuly0322/aplayer-ts#readme"
+  "homepage": "https://github.com/liuly0322/aplayer-ts#readme",
+  "dependencies": {
+    "art-template": "4.12.2",
+    "promise-polyfill": "7.1.0",
+    "smoothscroll": "0.4.0"
+  }
 }
