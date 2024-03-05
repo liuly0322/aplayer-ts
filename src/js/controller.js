@@ -3,171 +3,169 @@ import { orderList, orderRandom, loopOne, loopNone, loopAll } from './icons';
 
 class Controller {
     constructor(player) {
-        this.player = player;
-
-        this.initPlayButton();
-        this.initPlayBar();
-        this.initOrderButton();
-        this.initLoopButton();
-        this.initMenuButton();
+        initPlayButton(player);
+        initPlayBar(player);
+        initOrderButton(player);
+        initLoopButton(player);
+        initMenuButton(player);
         if (!isMobile) {
-            this.initVolumeButton();
+            initVolumeButton(player);
         }
-        this.initMiniSwitcher();
-        this.initSkipButton();
-        this.initLrcButton();
+        initMiniSwitcher(player);
+        initSkipButton(player);
+        initLrcButton(player);
     }
+}
 
-    initPlayButton() {
-        this.player.template.pic.addEventListener('click', () => {
-            this.player.toggle();
-        });
-    }
+function initPlayButton(player) {
+    player.template.pic.addEventListener('click', () => {
+        player.toggle();
+    });
+}
 
-    initPlayBar() {
-        const thumbMove = (e) => {
-            let percentage = ((e.clientX || e.changedTouches[0].clientX) - getElementViewLeft(this.player.template.barWrap)) / this.player.template.barWrap.clientWidth;
-            percentage = Math.max(percentage, 0);
-            percentage = Math.min(percentage, 1);
-            this.player.bar.set('played', percentage, 'width');
-            this.player.lrc && this.player.lrc.update(percentage * this.player.duration);
-            this.player.template.ptime.innerHTML = secondToTime(percentage * this.player.duration);
-        };
+function initPlayBar(player) {
+    const thumbMove = (e) => {
+        let percentage = ((e.clientX || e.changedTouches[0].clientX) - getElementViewLeft(player.template.barWrap)) / player.template.barWrap.clientWidth;
+        percentage = Math.max(percentage, 0);
+        percentage = Math.min(percentage, 1);
+        player.bar.set('played', percentage, 'width');
+        player.lrc && player.lrc.update(percentage * player.duration);
+        player.template.ptime.innerHTML = secondToTime(percentage * player.duration);
+    };
 
-        const thumbUp = (e) => {
-            document.removeEventListener(nameMap.dragEnd, thumbUp);
-            document.removeEventListener(nameMap.dragMove, thumbMove);
-            let percentage = ((e.clientX || e.changedTouches[0].clientX) - getElementViewLeft(this.player.template.barWrap)) / this.player.template.barWrap.clientWidth;
-            percentage = Math.max(percentage, 0);
-            percentage = Math.min(percentage, 1);
-            this.player.bar.set('played', percentage, 'width');
-            this.player.seek(this.player.bar.get('played', 'width') * this.player.duration);
-            this.player.disableTimeupdate = false;
-        };
+    const thumbUp = (e) => {
+        document.removeEventListener(nameMap.dragEnd, thumbUp);
+        document.removeEventListener(nameMap.dragMove, thumbMove);
+        let percentage = ((e.clientX || e.changedTouches[0].clientX) - getElementViewLeft(player.template.barWrap)) / player.template.barWrap.clientWidth;
+        percentage = Math.max(percentage, 0);
+        percentage = Math.min(percentage, 1);
+        player.bar.set('played', percentage, 'width');
+        player.seek(player.bar.get('played', 'width') * player.duration);
+        player.disableTimeupdate = false;
+    };
 
-        this.player.template.barWrap.addEventListener(nameMap.dragStart, () => {
-            this.player.disableTimeupdate = true;
-            document.addEventListener(nameMap.dragMove, thumbMove);
-            document.addEventListener(nameMap.dragEnd, thumbUp);
-        });
-    }
+    player.template.barWrap.addEventListener(nameMap.dragStart, () => {
+        player.disableTimeupdate = true;
+        document.addEventListener(nameMap.dragMove, thumbMove);
+        document.addEventListener(nameMap.dragEnd, thumbUp);
+    });
+}
 
-    initVolumeButton() {
-        this.player.template.volumeButton.addEventListener('click', () => {
-            if (this.player.audio.muted) {
-                this.player.audio.muted = false;
-                this.player.switchVolumeIcon();
-                this.player.bar.set('volume', this.player.volume(), 'height');
+function initVolumeButton(player) {
+    player.template.volumeButton.addEventListener('click', () => {
+        if (player.audio.muted) {
+            player.audio.muted = false;
+            player.switchVolumeIcon();
+            player.bar.set('volume', player.volume(), 'height');
+        }
+        else {
+            player.audio.muted = true;
+            player.switchVolumeIcon();
+            player.bar.set('volume', 0, 'height');
+        }
+    });
+
+    const thumbMove = (e) => {
+        let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - getElementViewTop(player.template.volumeBar, player.options.fixed)) / player.template.volumeBar.clientHeight;
+        percentage = Math.max(percentage, 0);
+        percentage = Math.min(percentage, 1);
+        player.volume(percentage);
+    };
+
+    const thumbUp = (e) => {
+        player.template.volumeBarWrap.classList.remove('aplayer-volume-bar-wrap-active');
+        document.removeEventListener(nameMap.dragEnd, thumbUp);
+        document.removeEventListener(nameMap.dragMove, thumbMove);
+        let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - getElementViewTop(player.template.volumeBar, player.options.fixed)) / player.template.volumeBar.clientHeight;
+        percentage = Math.max(percentage, 0);
+        percentage = Math.min(percentage, 1);
+        player.volume(percentage);
+    };
+
+    player.template.volumeBarWrap.addEventListener(nameMap.dragStart, () => {
+        player.template.volumeBarWrap.classList.add('aplayer-volume-bar-wrap-active');
+        document.addEventListener(nameMap.dragMove, thumbMove);
+        document.addEventListener(nameMap.dragEnd, thumbUp);
+    });
+}
+
+function initOrderButton(player) {
+    player.template.order.addEventListener('click', () => {
+        if (player.options.order === 'list') {
+            player.options.order = 'random';
+            player.template.order.innerHTML = orderRandom;
+        }
+        else if (player.options.order === 'random') {
+            player.options.order = 'list';
+            player.template.order.innerHTML = orderList;
+        }
+    });
+}
+
+function initLoopButton(player) {
+    player.template.loop.addEventListener('click', () => {
+        if (player.list.audios.length > 1) {
+            if (player.options.loop === 'one') {
+                player.options.loop = 'none';
+                player.template.loop.innerHTML = loopNone;
             }
-            else {
-                this.player.audio.muted = true;
-                this.player.switchVolumeIcon();
-                this.player.bar.set('volume', 0, 'height');
+            else if (player.options.loop === 'none') {
+                player.options.loop = 'all';
+                player.template.loop.innerHTML = loopAll;
             }
-        });
-
-        const thumbMove = (e) => {
-            let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - getElementViewTop(this.player.template.volumeBar, this.player.options.fixed)) / this.player.template.volumeBar.clientHeight;
-            percentage = Math.max(percentage, 0);
-            percentage = Math.min(percentage, 1);
-            this.player.volume(percentage);
-        };
-
-        const thumbUp = (e) => {
-            this.player.template.volumeBarWrap.classList.remove('aplayer-volume-bar-wrap-active');
-            document.removeEventListener(nameMap.dragEnd, thumbUp);
-            document.removeEventListener(nameMap.dragMove, thumbMove);
-            let percentage = 1 - ((e.clientY || e.changedTouches[0].clientY) - getElementViewTop(this.player.template.volumeBar, this.player.options.fixed)) / this.player.template.volumeBar.clientHeight;
-            percentage = Math.max(percentage, 0);
-            percentage = Math.min(percentage, 1);
-            this.player.volume(percentage);
-        };
-
-        this.player.template.volumeBarWrap.addEventListener(nameMap.dragStart, () => {
-            this.player.template.volumeBarWrap.classList.add('aplayer-volume-bar-wrap-active');
-            document.addEventListener(nameMap.dragMove, thumbMove);
-            document.addEventListener(nameMap.dragEnd, thumbUp);
-        });
-    }
-
-    initOrderButton() {
-        this.player.template.order.addEventListener('click', () => {
-            if (this.player.options.order === 'list') {
-                this.player.options.order = 'random';
-                this.player.template.order.innerHTML = orderRandom;
+            else if (player.options.loop === 'all') {
+                player.options.loop = 'one';
+                player.template.loop.innerHTML = loopOne;
             }
-            else if (this.player.options.order === 'random') {
-                this.player.options.order = 'list';
-                this.player.template.order.innerHTML = orderList;
+        }
+        else {
+            if (player.options.loop === 'one' || player.options.loop === 'all') {
+                player.options.loop = 'none';
+                player.template.loop.innerHTML = loopNone;
             }
-        });
-    }
-
-    initLoopButton() {
-        this.player.template.loop.addEventListener('click', () => {
-            if (this.player.list.audios.length > 1) {
-                if (this.player.options.loop === 'one') {
-                    this.player.options.loop = 'none';
-                    this.player.template.loop.innerHTML = loopNone;
-                }
-                else if (this.player.options.loop === 'none') {
-                    this.player.options.loop = 'all';
-                    this.player.template.loop.innerHTML = loopAll;
-                }
-                else if (this.player.options.loop === 'all') {
-                    this.player.options.loop = 'one';
-                    this.player.template.loop.innerHTML = loopOne;
-                }
+            else if (player.options.loop === 'none') {
+                player.options.loop = 'all';
+                player.template.loop.innerHTML = loopAll;
             }
-            else {
-                if (this.player.options.loop === 'one' || this.player.options.loop === 'all') {
-                    this.player.options.loop = 'none';
-                    this.player.template.loop.innerHTML = loopNone;
-                }
-                else if (this.player.options.loop === 'none') {
-                    this.player.options.loop = 'all';
-                    this.player.template.loop.innerHTML = loopAll;
-                }
-            }
-        });
-    }
+        }
+    });
+}
 
-    initMenuButton() {
-        this.player.template.menu.addEventListener('click', () => {
-            this.player.list.toggle();
-        });
-    }
+function initMenuButton(player) {
+    player.template.menu.addEventListener('click', () => {
+        player.list.toggle();
+    });
+}
 
-    initMiniSwitcher() {
-        this.player.template.miniSwitcher.addEventListener('click', () => {
-            this.player.setMode(this.player.mode === 'mini' ? 'normal' : 'mini');
-        });
-    }
+function initMiniSwitcher(player) {
+    player.template.miniSwitcher.addEventListener('click', () => {
+        player.setMode(player.mode === 'mini' ? 'normal' : 'mini');
+    });
+}
 
-    initSkipButton() {
-        this.player.template.skipBackButton.addEventListener('click', () => {
-            this.player.skipBack();
-        });
-        this.player.template.skipForwardButton.addEventListener('click', () => {
-            this.player.skipForward();
-        });
-        this.player.template.skipPlayButton.addEventListener('click', () => {
-            this.player.toggle();
-        });
-    }
+function initSkipButton(player) {
+    player.template.skipBackButton.addEventListener('click', () => {
+        player.skipBack();
+    });
+    player.template.skipForwardButton.addEventListener('click', () => {
+        player.skipForward();
+    });
+    player.template.skipPlayButton.addEventListener('click', () => {
+        player.toggle();
+    });
+}
 
-    initLrcButton() {
-        this.player.template.lrcButton.addEventListener('click', () => {
-            if (this.player.template.lrcButton.classList.contains('aplayer-icon-lrc-inactivity')) {
-                this.player.template.lrcButton.classList.remove('aplayer-icon-lrc-inactivity');
-                this.player.lrc && this.player.lrc.show();
-            }
-            else {
-                this.player.template.lrcButton.classList.add('aplayer-icon-lrc-inactivity');
-                this.player.lrc && this.player.lrc.hide();
-            }
-        });
-    }
+function initLrcButton(player) {
+    player.template.lrcButton.addEventListener('click', () => {
+        if (player.template.lrcButton.classList.contains('aplayer-icon-lrc-inactivity')) {
+            player.template.lrcButton.classList.remove('aplayer-icon-lrc-inactivity');
+            player.lrc && player.lrc.show();
+        }
+        else {
+            player.template.lrcButton.classList.add('aplayer-icon-lrc-inactivity');
+            player.lrc && player.lrc.hide();
+        }
+    });
 }
 
 export default Controller;
