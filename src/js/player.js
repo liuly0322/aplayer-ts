@@ -14,6 +14,151 @@ import List from './list';
 
 const instances = [];
 
+function initAudio(player) {
+    player.audio = document.createElement('audio');
+    player.audio.preload = player.options.preload;
+
+    for (let i = 0; i < player.events.audioEvents.length; i++) {
+        player.audio.addEventListener(player.events.audioEvents[i], (e) => {
+            player.events.trigger(player.events.audioEvents[i], e);
+        });
+    }
+
+    player.volume(player.storage.get('volume'), true);
+}
+
+function bindEvents(player) {
+    player.on('play', () => {
+        if (player.paused) {
+            setUIPlaying(player);
+        }
+    });
+
+    player.on('pause', () => {
+        if (!player.paused) {
+            setUIPaused(player);
+        }
+    });
+
+    player.on('timeupdate', () => {
+        if (!player.disableTimeupdate) {
+            player.bar.set('played', player.audio.currentTime / player.duration, 'width');
+            player.lrc && player.lrc.update();
+            const currentTime = secondToTime(player.audio.currentTime);
+            if (player.template.ptime.innerHTML !== currentTime) {
+                player.template.ptime.innerHTML = currentTime;
+            }
+        }
+    });
+
+    // show audio time: the metadata has loaded or changed
+    player.on('durationchange', () => {
+        if (player.duration !== 1) {           // compatibility: Android browsers will output 1 at first
+            player.template.dtime.innerHTML = secondToTime(player.duration);
+        }
+    });
+
+    // show audio loaded bar: to inform interested parties of progress downloading the media
+    player.on('progress', () => {
+        const percentage = player.audio.buffered.length ? player.audio.buffered.end(player.audio.buffered.length - 1) / player.duration : 0;
+        player.bar.set('loaded', percentage, 'width');
+    });
+
+    // audio download error: an error occurs
+    let skipTime;
+    player.on('error', () => {
+        if (player.list.audios.length > 1) {
+            player.notice('An audio error has occurred, player will skip forward in 2 seconds.');
+            skipTime = setTimeout(() => {
+                player.skipForward();
+                if (!player.paused) {
+                    player.play();
+                }
+            }, 2000);
+        }
+        else if (player.list.audios.length === 1) {
+            player.notice('An audio error has occurred.');
+        }
+    });
+    player.events.on('listswitch', () => {
+        skipTime && clearTimeout(skipTime);
+    });
+
+    // multiple audio play
+    player.on('ended', () => {
+        if (player.options.loop === 'none') {
+            if (player.options.order === 'list') {
+                if (player.list.index < player.list.audios.length - 1) {
+                    player.list.switch((player.list.index + 1) % player.list.audios.length);
+                    player.play();
+                }
+                else {
+                    player.list.switch((player.list.index + 1) % player.list.audios.length);
+                    player.pause();
+                }
+            }
+            else if (player.options.order === 'random') {
+                if (player.randomOrder.indexOf(player.list.index) < player.randomOrder.length - 1) {
+                    player.list.switch(player.nextIndex());
+                    player.play();
+                }
+                else {
+                    player.list.switch(player.nextIndex());
+                    player.pause();
+                }
+            }
+        }
+        else if (player.options.loop === 'one') {
+            player.list.switch(player.list.index);
+            player.play();
+        }
+        else if (player.options.loop === 'all') {
+            player.skipForward();
+            player.play();
+        }
+    });
+}
+
+function setUIPlaying(player) {
+    if (player.paused) {
+        player.paused = false;
+        player.template.button.classList.remove('aplayer-play');
+        player.template.button.classList.add('aplayer-pause');
+        player.template.button.innerHTML = '';
+        setTimeout(() => {
+            player.template.button.innerHTML = pause;
+        }, 100);
+        player.template.skipPlayButton.innerHTML = pause;
+    }
+
+    player.timer.enable('loading');
+
+    if (player.options.mutex) {
+        for (let i = 0; i < instances.length; i++) {
+            if (player !== instances[i]) {
+                instances[i].pause();
+            }
+        }
+    }
+}
+
+function setUIPaused(player) {
+    if (!player.paused) {
+        player.paused = true;
+
+        player.template.button.classList.remove('aplayer-pause');
+        player.template.button.classList.add('aplayer-play');
+        player.template.button.innerHTML = '';
+        setTimeout(() => {
+            player.template.button.innerHTML = play;
+        }, 100);
+        player.template.skipPlayButton.innerHTML = play;
+    }
+
+    player.container.classList.remove('aplayer-loading');
+    player.timer.disable('loading');
+}
+
 class APlayer {
 
     /**
@@ -89,8 +234,8 @@ class APlayer {
         this.timer = new Timer(this);
         this.list = new List(this);
 
-        this.initAudio();
-        this.bindEvents();
+        initAudio(this);
+        bindEvents(this);
         if (this.options.order === 'random') {
             this.list.switch(this.randomOrder[0]);
         }
@@ -104,111 +249,6 @@ class APlayer {
         }
 
         instances.push(this);
-    }
-
-    initAudio() {
-        this.audio = document.createElement('audio');
-        this.audio.preload = this.options.preload;
-
-        for (let i = 0; i < this.events.audioEvents.length; i++) {
-            this.audio.addEventListener(this.events.audioEvents[i], (e) => {
-                this.events.trigger(this.events.audioEvents[i], e);
-            });
-        }
-
-        this.volume(this.storage.get('volume'), true);
-    }
-
-    bindEvents() {
-        this.on('play', () => {
-            if (this.paused) {
-                this.setUIPlaying();
-            }
-        });
-
-        this.on('pause', () => {
-            if (!this.paused) {
-                this.setUIPaused();
-            }
-        });
-
-        this.on('timeupdate', () => {
-            if (!this.disableTimeupdate) {
-                this.bar.set('played', this.audio.currentTime / this.duration, 'width');
-                this.lrc && this.lrc.update();
-                const currentTime = secondToTime(this.audio.currentTime);
-                if (this.template.ptime.innerHTML !== currentTime) {
-                    this.template.ptime.innerHTML = currentTime;
-                }
-            }
-        });
-
-        // show audio time: the metadata has loaded or changed
-        this.on('durationchange', () => {
-            if (this.duration !== 1) {           // compatibility: Android browsers will output 1 at first
-                this.template.dtime.innerHTML = secondToTime(this.duration);
-            }
-        });
-
-        // show audio loaded bar: to inform interested parties of progress downloading the media
-        this.on('progress', () => {
-            const percentage = this.audio.buffered.length ? this.audio.buffered.end(this.audio.buffered.length - 1) / this.duration : 0;
-            this.bar.set('loaded', percentage, 'width');
-        });
-
-        // audio download error: an error occurs
-        let skipTime;
-        this.on('error', () => {
-            if (this.list.audios.length > 1) {
-                this.notice('An audio error has occurred, player will skip forward in 2 seconds.');
-                skipTime = setTimeout(() => {
-                    this.skipForward();
-                    if (!this.paused) {
-                        this.play();
-                    }
-                }, 2000);
-            }
-            else if (this.list.audios.length === 1) {
-                this.notice('An audio error has occurred.');
-            }
-        });
-        this.events.on('listswitch', () => {
-            skipTime && clearTimeout(skipTime);
-        });
-
-        // multiple audio play
-        this.on('ended', () => {
-            if (this.options.loop === 'none') {
-                if (this.options.order === 'list') {
-                    if (this.list.index < this.list.audios.length - 1) {
-                        this.list.switch((this.list.index + 1) % this.list.audios.length);
-                        this.play();
-                    }
-                    else {
-                        this.list.switch((this.list.index + 1) % this.list.audios.length);
-                        this.pause();
-                    }
-                }
-                else if (this.options.order === 'random') {
-                    if (this.randomOrder.indexOf(this.list.index) < this.randomOrder.length - 1) {
-                        this.list.switch(this.nextIndex());
-                        this.play();
-                    }
-                    else {
-                        this.list.switch(this.nextIndex());
-                        this.pause();
-                    }
-                }
-            }
-            else if (this.options.loop === 'one') {
-                this.list.switch(this.list.index);
-                this.play();
-            }
-            else if (this.options.loop === 'all') {
-                this.skipForward();
-                this.play();
-            }
-        });
     }
 
     setAudio(audio) {
@@ -283,62 +323,22 @@ class APlayer {
         return isNaN(this.audio.duration) ? 0 : this.audio.duration;
     }
 
-    setUIPlaying() {
-        if (this.paused) {
-            this.paused = false;
-            this.template.button.classList.remove('aplayer-play');
-            this.template.button.classList.add('aplayer-pause');
-            this.template.button.innerHTML = '';
-            setTimeout(() => {
-                this.template.button.innerHTML = pause;
-            }, 100);
-            this.template.skipPlayButton.innerHTML = pause;
-        }
-
-        this.timer.enable('loading');
-
-        if (this.options.mutex) {
-            for (let i = 0; i < instances.length; i++) {
-                if (this !== instances[i]) {
-                    instances[i].pause();
-                }
-            }
-        }
-    }
-
     play() {
-        this.setUIPlaying();
+        setUIPlaying(this);
 
         const playPromise = this.audio.play();
         if (playPromise) {
             playPromise.catch((e) => {
                 console.warn(e);
                 if (e.name === 'NotAllowedError') {
-                    this.setUIPaused();
+                    setUIPaused(this);
                 }
             });
         }
     }
 
-    setUIPaused() {
-        if (!this.paused) {
-            this.paused = true;
-
-            this.template.button.classList.remove('aplayer-pause');
-            this.template.button.classList.add('aplayer-play');
-            this.template.button.innerHTML = '';
-            setTimeout(() => {
-                this.template.button.innerHTML = play;
-            }, 100);
-            this.template.skipPlayButton.innerHTML = play;
-        }
-
-        this.container.classList.remove('aplayer-loading');
-        this.timer.disable('loading');
-    }
-
     pause() {
-        this.setUIPaused();
+        setUIPaused(this);
         this.audio.pause();
     }
 
