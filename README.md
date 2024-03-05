@@ -9,6 +9,8 @@ TypeScript interface and ESM export for [APlayer](https://github.com/MoePlayer/A
 
 ## Why this
 
+See this [blog post](https://blog.liuly.moe/posts/tree-shaking).
+
 1. TypeScript
 2. ESM export (APlayer only exports its minified version built by Webpack, which is not friendly to custom code optimization)
 
