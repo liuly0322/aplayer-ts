@@ -9,7 +9,7 @@ import Storage from './storage';
 import Lrc from './lrc';
 import Controller from './controller';
 import Timer from './timer';
-import Events from './events';
+import Events, { audioEvents } from './events';
 import List from './list';
 
 const instances = [];
@@ -18,9 +18,9 @@ function initAudio(player) {
     player.audio = document.createElement('audio');
     player.audio.preload = player.options.preload;
 
-    for (let i = 0; i < player.events.audioEvents.length; i++) {
-        player.audio.addEventListener(player.events.audioEvents[i], (e) => {
-            player.events.trigger(player.events.audioEvents[i], e);
+    for (let i = 0; i < audioEvents.length; i++) {
+        player.audio.addEventListener(audioEvents[i], (e) => {
+            player.events.trigger(audioEvents[i], e);
         });
     }
 
