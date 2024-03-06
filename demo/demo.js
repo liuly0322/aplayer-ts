@@ -1,6 +1,8 @@
 import APlayer from "../src/js";
+import '../src/css/base.css'
 
 // import { enableFixedModeOnce } from "../src/js"
+// import '../src/css/fixed.css'
 // enableFixedModeOnce()
 
 const ap1 = new APlayer({

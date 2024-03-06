@@ -16,9 +16,13 @@ See this [blog post](https://blog.liuly.moe/posts/tree-shaking).
 3. Tree-Shaking, currently support fixed mode:
    ```shell
    # not import enableFixedModeOnce
-   demo_build/assets/index-C-Rm7Iso.js   35.17 kB │ gzip: 10.23 kB
+   demo_build/index.html                  1.95 kB │ gzip:  0.79 kB
+   demo_build/assets/index-3p8iLQ3k.css  10.22 kB │ gzip:  2.19 kB
+   demo_build/assets/index-DxuZX4IU.js   35.14 kB │ gzip: 10.22 kB
    # import enableFixedModeOnce
-   demo_build/assets/index-BR1t-qnt.js   36.21 kB │ gzip: 10.30 kB
+   demo_build/index.html                  1.95 kB │ gzip:  0.79 kB
+   demo_build/assets/index-Bi0rxlmU.css  12.04 kB │ gzip:  2.47 kB
+   demo_build/assets/index-B-y6Npzk.js   36.18 kB │ gzip: 10.30 kB
    ```
 
 `APlayer.min.js` is still in `dist` folder, but by default this package exports `src/js/index.js`.
@@ -29,8 +33,11 @@ It also includes a patch which fixes [APlayer#283](https://github.com/DIYgod/APl
 
 ```TypeScript
 import APlayer from 'aplayer-ts'
+import 'aplayer-ts/src/css/base.css'
+
+// If you want fixed mode
 // import { enableFixedModeOnce } from 'aplayer-ts'
-import 'aplayer-ts/dist/APlayer.min.css'
+// import 'aplayer-ts/src/css/fixed.css'
 ```
 
 Enjoy!

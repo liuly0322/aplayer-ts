@@ -1,0 +1,109 @@
+.aplayer.aplayer-fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 99;
+    overflow: visible;
+    max-width: 400px;
+    box-shadow: none;
+}
+
+.aplayer.aplayer-fixed .aplayer-list {
+    margin-bottom: 65px;
+    border: 1px solid #eee;
+    border-bottom: none;
+}
+
+.aplayer.aplayer-fixed .aplayer-body {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 99;
+    background: #fff;
+    padding-right: 18px;
+    transition: all 0.3s ease;
+    max-width: 400px;
+}
+
+.aplayer.aplayer-fixed .aplayer-lrc {
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 98;
+    pointer-events: none;
+    text-shadow: -1px -1px 0 #fff;
+}
+
+.aplayer.aplayer-fixed .aplayer-lrc:before,
+.aplayer.aplayer-fixed .aplayer-lrc:after {
+    display: none;
+}
+
+.aplayer.aplayer-fixed .aplayer-info {
+    transform: scaleX(1);
+    transform-origin: 0 0;
+    transition: all 0.3s ease;
+    border-bottom: none;
+    border-top: 1px solid #e9e9e9;
+}
+
+.aplayer.aplayer-fixed .aplayer-info .aplayer-music {
+    width: calc(100% - 105px);
+}
+
+.aplayer.aplayer-fixed .aplayer-miniswitcher {
+    display: block;
+}
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-info {
+    display: block;
+    transform: scaleX(0);
+}
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+    width: 66px !important;
+}
+
+.aplayer.aplayer-fixed.aplayer-narrow .aplayer-miniswitcher .aplayer-icon {
+    transform: rotateY(0);
+}
+
+.aplayer.aplayer-fixed .aplayer-icon-back,
+.aplayer.aplayer-fixed .aplayer-icon-play,
+.aplayer.aplayer-fixed .aplayer-icon-forward,
+.aplayer.aplayer-fixed .aplayer-icon-lrc {
+    display: inline-block;
+}
+
+.aplayer.aplayer-fixed .aplayer-icon-back,
+.aplayer.aplayer-fixed .aplayer-icon-play,
+.aplayer.aplayer-fixed .aplayer-icon-forward,
+.aplayer.aplayer-fixed .aplayer-icon-menu {
+    position: absolute;
+    bottom: 27px;
+    width: 20px;
+    height: 20px;
+}
+
+.aplayer.aplayer-fixed .aplayer-icon-back {
+    right: 75px;
+}
+
+.aplayer.aplayer-fixed .aplayer-icon-play {
+    right: 50px;
+}
+
+.aplayer.aplayer-fixed .aplayer-icon-forward {
+    right: 25px;
+}
+
+.aplayer.aplayer-fixed .aplayer-icon-menu {
+    right: 0;
+}
