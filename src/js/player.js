@@ -202,11 +202,7 @@ class APlayer {
             }
         }
 
-        this.template = new Template({
-            container: this.container,
-            options: this.options,
-            randomOrder: this.randomOrder,
-        });
+        this.template = Template(this.container, this.options, this.randomOrder);
 
         if (this.options.fixed) {
             this.container.classList.add('aplayer-fixed');

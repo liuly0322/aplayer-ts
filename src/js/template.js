@@ -1,61 +1,56 @@
 import tplPlayer from '../template/player.js';
 
-class Template {
-    constructor(options) {
-        this.container = options.container;
-        this.options = options.options;
-        this.randomOrder = options.randomOrder;
-        this.init();
+function Template(container, options, randomOrder) {
+    let cover = '';
+    if (options.audio.length) {
+        if (options.order === 'random') {
+            cover = options.audio[randomOrder[0]].cover;
+        }
+        else {
+            cover = options.audio[0].cover;
+        }
     }
 
-    init() {
-        let cover = '';
-        if (this.options.audio.length) {
-            if (this.options.order === 'random') {
-                cover = this.options.audio[this.randomOrder[0]].cover;
-            }
-            else {
-                cover = this.options.audio[0].cover;
-            }
-        }
+    container.innerHTML = tplPlayer({
+        options: options,
+        cover: cover,
+        getObject: (obj) => obj,
+    });
 
-        this.container.innerHTML = tplPlayer({
-            options: this.options,
-            cover: cover,
-            getObject: (obj) => obj,
-        });
+    const selectElement = (selector) => container.querySelector(selector);
 
-        this.lrc = this.container.querySelector('.aplayer-lrc-contents');
-        this.lrcWrap = this.container.querySelector('.aplayer-lrc');
-        this.ptime = this.container.querySelector('.aplayer-ptime');
-        this.info = this.container.querySelector('.aplayer-info');
-        this.time = this.container.querySelector('.aplayer-time');
-        this.barWrap = this.container.querySelector('.aplayer-bar-wrap');
-        this.button = this.container.querySelector('.aplayer-button');
-        this.body = this.container.querySelector('.aplayer-body');
-        this.list = this.container.querySelector('.aplayer-list');
-        this.listOl = this.container.querySelector('.aplayer-list ol');
-        this.listCurs = this.container.querySelectorAll('.aplayer-list-cur');
-        this.played = this.container.querySelector('.aplayer-played');
-        this.loaded = this.container.querySelector('.aplayer-loaded');
-        this.thumb = this.container.querySelector('.aplayer-thumb');
-        this.volume = this.container.querySelector('.aplayer-volume');
-        this.volumeBar = this.container.querySelector('.aplayer-volume-bar');
-        this.volumeButton = this.container.querySelector('.aplayer-time button');
-        this.volumeBarWrap = this.container.querySelector('.aplayer-volume-bar-wrap');
-        this.loop = this.container.querySelector('.aplayer-icon-loop');
-        this.order = this.container.querySelector('.aplayer-icon-order');
-        this.menu = this.container.querySelector('.aplayer-icon-menu');
-        this.pic = this.container.querySelector('.aplayer-pic');
-        this.title = this.container.querySelector('.aplayer-title');
-        this.author = this.container.querySelector('.aplayer-author');
-        this.dtime = this.container.querySelector('.aplayer-dtime');
-        this.notice = this.container.querySelector('.aplayer-notice');
-        this.miniSwitcher = this.container.querySelector('.aplayer-miniswitcher');
-        this.skipBackButton = this.container.querySelector('.aplayer-icon-back');
-        this.skipForwardButton = this.container.querySelector('.aplayer-icon-forward');
-        this.skipPlayButton = this.container.querySelector('.aplayer-icon-play');
-        this.lrcButton = this.container.querySelector('.aplayer-icon-lrc');
+    return {
+        lrc: selectElement('.aplayer-lrc-contents'),
+        lrcWrap: selectElement('.aplayer-lrc'),
+        ptime: selectElement('.aplayer-ptime'),
+        info: selectElement('.aplayer-info'),
+        time: selectElement('.aplayer-time'),
+        barWrap: selectElement('.aplayer-bar-wrap'),
+        button: selectElement('.aplayer-button'),
+        body: selectElement('.aplayer-body'),
+        list: selectElement('.aplayer-list'),
+        listOl: selectElement('.aplayer-list ol'),
+        listCurs: container.querySelectorAll('.aplayer-list-cur'),
+        played: selectElement('.aplayer-played'),
+        loaded: selectElement('.aplayer-loaded'),
+        thumb: selectElement('.aplayer-thumb'),
+        volume: selectElement('.aplayer-volume'),
+        volumeBar: selectElement('.aplayer-volume-bar'),
+        volumeButton: selectElement('.aplayer-time button'),
+        volumeBarWrap: selectElement('.aplayer-volume-bar-wrap'),
+        loop: selectElement('.aplayer-icon-loop'),
+        order: selectElement('.aplayer-icon-order'),
+        menu: selectElement('.aplayer-icon-menu'),
+        pic: selectElement('.aplayer-pic'),
+        title: selectElement('.aplayer-title'),
+        author: selectElement('.aplayer-author'),
+        dtime: selectElement('.aplayer-dtime'),
+        notice: selectElement('.aplayer-notice'),
+        miniSwitcher: selectElement('.aplayer-miniswitcher'),
+        skipBackButton: selectElement('.aplayer-icon-back'),
+        skipForwardButton: selectElement('.aplayer-icon-forward'),
+        skipPlayButton: selectElement('.aplayer-icon-play'),
+        lrcButton: selectElement('.aplayer-icon-lrc'),
     }
 }
 
