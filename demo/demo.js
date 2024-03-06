@@ -1,5 +1,8 @@
 import APlayer from "../src/js";
 
+// import { enableFixedModeOnce } from "../src/js"
+// enableFixedModeOnce()
+
 const ap1 = new APlayer({
     element: document.getElementById('player1'),
     theme: 'rgba(255,255,255,0.2)',

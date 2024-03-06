@@ -2,6 +2,7 @@ import { secondToTime, isMobile, randomOrder } from './utils';
 import { pause, play, volumeDown, volumeOff, volumeUp } from './icons';
 import handleOption from './options';
 import Template from './template';
+import { notFixedModeTplRenderers } from '../template/player';
 import Bar from './bar';
 import Storage from './storage';
 import Lrc from './lrc';
@@ -11,6 +12,11 @@ import Events, { audioEvents } from './events';
 import List from './list';
 
 const instances = [];
+
+let getTplRenderers = notFixedModeTplRenderers
+export function setTplRenderers(renderers) {
+    getTplRenderers = renderers
+}
 
 function initAudio(player) {
     player.audio = document.createElement('audio');
@@ -166,6 +172,12 @@ class APlayer {
      * @constructor
      */
     constructor(options) {
+        options.fixed = false;
+        const tplRenderers = getTplRenderers()
+        if (getTplRenderers != notFixedModeTplRenderers) {
+            options.fixed = true;
+            getTplRenderers = notFixedModeTplRenderers
+        }
         this.options = handleOption(options);
         this.container = this.options.container;
         this.paused = true;
@@ -200,7 +212,7 @@ class APlayer {
             }
         }
 
-        this.template = Template(this.container, this.options, this.randomOrder);
+        this.template = Template(this.container, this.options, this.randomOrder, tplRenderers);
 
         if (this.options.fixed) {
             this.container.classList.add('aplayer-fixed');

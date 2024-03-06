@@ -1,356 +1,215 @@
-var tt = setTimeout;
-function et() {
+const y = /mobile/i.test(window.navigator.userAgent);
+function m(t) {
+  const e = (o) => o < 10 ? "0" + o : "" + o, i = Math.floor(t / 3600), s = Math.floor((t - i * 3600) / 60), a = Math.floor(t - i * 3600 - s * 60);
+  return (i > 0 ? [i, s, a] : [s, a]).map(e).join(":");
 }
-function it(e, t) {
-  return function() {
-    e.apply(t, arguments);
-  };
-}
-function c(e) {
-  if (!(this instanceof c))
-    throw new TypeError("Promises must be constructed via new");
-  if (typeof e != "function")
-    throw new TypeError("not a function");
-  this._state = 0, this._handled = !1, this._value = void 0, this._deferreds = [], X(e, this);
-}
-function D(e, t) {
-  for (; e._state === 3; )
-    e = e._value;
-  if (e._state === 0) {
-    e._deferreds.push(t);
-    return;
-  }
-  e._handled = !0, c._immediateFn(function() {
-    var i = e._state === 1 ? t.onFulfilled : t.onRejected;
-    if (i === null) {
-      (e._state === 1 ? B : b)(t.promise, e._value);
-      return;
-    }
-    var n;
-    try {
-      n = i(e._value);
-    } catch (s) {
-      b(t.promise, s);
-      return;
-    }
-    B(t.promise, n);
-  });
-}
-function B(e, t) {
-  try {
-    if (t === e)
-      throw new TypeError("A promise cannot be resolved with itself.");
-    if (t && (typeof t == "object" || typeof t == "function")) {
-      var i = t.then;
-      if (t instanceof c) {
-        e._state = 3, e._value = t, H(e);
-        return;
-      } else if (typeof i == "function") {
-        X(it(i, t), e);
-        return;
-      }
-    }
-    e._state = 1, e._value = t, H(e);
-  } catch (n) {
-    b(e, n);
-  }
-}
-function b(e, t) {
-  e._state = 2, e._value = t, H(e);
-}
-function H(e) {
-  e._state === 2 && e._deferreds.length === 0 && c._immediateFn(function() {
-    e._handled || c._unhandledRejectionFn(e._value);
-  });
-  for (var t = 0, i = e._deferreds.length; t < i; t++)
-    D(e, e._deferreds[t]);
-  e._deferreds = null;
-}
-function st(e, t, i) {
-  this.onFulfilled = typeof e == "function" ? e : null, this.onRejected = typeof t == "function" ? t : null, this.promise = i;
-}
-function X(e, t) {
-  var i = !1;
-  try {
-    e(
-      function(n) {
-        i || (i = !0, B(t, n));
-      },
-      function(n) {
-        i || (i = !0, b(t, n));
-      }
-    );
-  } catch (n) {
-    if (i)
-      return;
-    i = !0, b(t, n);
-  }
-}
-c.prototype.catch = function(e) {
-  return this.then(null, e);
-};
-c.prototype.then = function(e, t) {
-  var i = new this.constructor(et);
-  return D(this, new st(e, t, i)), i;
-};
-c.prototype.finally = function(e) {
-  var t = this.constructor;
-  return this.then(
-    function(i) {
-      return t.resolve(e()).then(function() {
-        return i;
-      });
-    },
-    function(i) {
-      return t.resolve(e()).then(function() {
-        return t.reject(i);
-      });
-    }
-  );
-};
-c.all = function(e) {
-  return new c(function(t, i) {
-    if (!e || typeof e.length > "u")
-      throw new TypeError("Promise.all accepts an array");
-    var n = Array.prototype.slice.call(e);
-    if (n.length === 0)
-      return t([]);
-    var s = n.length;
-    function a(o, l) {
-      try {
-        if (l && (typeof l == "object" || typeof l == "function")) {
-          var d = l.then;
-          if (typeof d == "function") {
-            d.call(
-              l,
-              function(h) {
-                a(o, h);
-              },
-              i
-            );
-            return;
-          }
-        }
-        n[o] = l, --s === 0 && t(n);
-      } catch (h) {
-        i(h);
-      }
-    }
-    for (var r = 0; r < n.length; r++)
-      a(r, n[r]);
-  });
-};
-c.resolve = function(e) {
-  return e && typeof e == "object" && e.constructor === c ? e : new c(function(t) {
-    t(e);
-  });
-};
-c.reject = function(e) {
-  return new c(function(t, i) {
-    i(e);
-  });
-};
-c.race = function(e) {
-  return new c(function(t, i) {
-    for (var n = 0, s = e.length; n < s; n++)
-      e[n].then(t, i);
-  });
-};
-c._immediateFn = typeof setImmediate == "function" && function(e) {
-  setImmediate(e);
-} || function(e) {
-  tt(e, 0);
-};
-c._unhandledRejectionFn = function(t) {
-  typeof console < "u" && console && console.warn("Possible Unhandled Promise Rejection:", t);
-};
-const w = /mobile/i.test(window.navigator.userAgent);
-function v(e) {
-  const t = (a) => a < 10 ? "0" + a : "" + a, i = Math.floor(e / 3600), n = Math.floor((e - i * 3600) / 60), s = Math.floor(e - i * 3600 - n * 60);
-  return (i > 0 ? [i, n, s] : [n, s]).map(t).join(":");
-}
-function P(e) {
-  let t = e.offsetLeft, i = e.offsetParent;
-  const n = document.body.scrollLeft + document.documentElement.scrollLeft;
+function C(t) {
+  let e = t.offsetLeft, i = t.offsetParent;
+  const s = document.body.scrollLeft + document.documentElement.scrollLeft;
   if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement)
     for (; i !== null; )
-      t += i.offsetLeft, i = i.offsetParent;
+      e += i.offsetLeft, i = i.offsetParent;
   else
-    for (; i !== null && i !== e; )
-      t += i.offsetLeft, i = i.offsetParent;
-  return t - n;
+    for (; i !== null && i !== t; )
+      e += i.offsetLeft, i = i.offsetParent;
+  return e - s;
 }
-function _(e, t) {
-  let i = e.offsetTop, n = e.offsetParent, s = 0;
-  for (; n !== null; )
-    i += n.offsetTop, n = n.offsetParent;
-  return s = document.body.scrollTop + document.documentElement.scrollTop, t ? i : i - s;
+function P(t, e) {
+  let i = t.offsetTop, s = t.offsetParent, a = 0;
+  for (; s !== null; )
+    i += s.offsetTop, s = s.offsetParent;
+  return a = document.body.scrollTop + document.documentElement.scrollTop, e ? i : i - a;
 }
-const N = {
-  set: (e, t) => {
-    localStorage.setItem(e, t);
+const S = {
+  set: (t, e) => {
+    localStorage.setItem(t, e);
   },
-  get: (e) => localStorage.getItem(e)
-}, u = {
-  dragStart: w ? "touchstart" : "mousedown",
-  dragMove: w ? "touchmove" : "mousemove",
-  dragEnd: w ? "touchend" : "mouseup"
+  get: (t) => localStorage.getItem(t)
+}, c = {
+  dragStart: y ? "touchstart" : "mousedown",
+  dragMove: y ? "touchmove" : "mousemove",
+  dragEnd: y ? "touchend" : "mouseup"
 };
-function J(e) {
-  function t(i) {
-    for (let n = i.length - 1; n >= 0; n--) {
-      const s = Math.floor(Math.random() * (n + 1)), a = i[s];
-      i[s] = i[n], i[n] = a;
+function j(t) {
+  function e(i) {
+    for (let s = i.length - 1; s >= 0; s--) {
+      const a = Math.floor(Math.random() * (s + 1)), o = i[a];
+      i[a] = i[s], i[s] = o;
     }
     return i;
   }
-  return t([...Array(e)].map(function(i, n) {
-    return n;
+  return e([...Array(t)].map(function(i, s) {
+    return s;
   }));
 }
-const O = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22.667 4l7 6-7 6 7 6-7 6v-4h-3.653l-3.76-3.76 2.827-2.827 2.587 2.587h2v-8h-2l-12 12h-6v-4h4.347l12-12h3.653v-4zM2.667 8h6l3.76 3.76-2.827 2.827-2.587-2.587h-4.347v-4z"></path></svg>', j = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 17 32"><path d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z"></path></svg>', nt = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056zM29.728 16q0 4.096-2.272 7.552t-6.048 5.056q-0.224 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.64 0.704-1.056 0.128-0.064 0.384-0.192t0.416-0.192q0.8-0.448 1.44-0.896 2.208-1.632 3.456-4.064t1.216-5.152-1.216-5.152-3.456-4.064q-0.64-0.448-1.44-0.896-0.128-0.096-0.416-0.192t-0.384-0.192q-0.704-0.416-0.704-1.056 0-0.448 0.32-0.8t0.832-0.352q0.224 0 0.448 0.096 3.776 1.632 6.048 5.056t2.272 7.552z"></path></svg>', A = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528z"></path></svg>', x = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z"></path></svg>', at = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>', S = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 33 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333zM17.333 20v-8h-1.333l-2.667 1.333v1.333h2v5.333h2z"></path></svg>', R = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 22 32"><path d="M20.8 14.4q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2zM1.6 11.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2zM20.8 20.8q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2z"></path></svg>', p = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 31"><path d="M15.552 15.168q0.448 0.32 0.448 0.832 0 0.448-0.448 0.768l-13.696 8.512q-0.768 0.512-1.312 0.192t-0.544-1.28v-16.448q0-0.96 0.544-1.28t1.312 0.192z"></path></svg>', W = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path></svg>', $ = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M4 16c0-6.6 5.4-12 12-12s12 5.4 12 12c0 1.2-0.8 2-2 2s-2-0.8-2-2c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.2 0 2 0.8 2 2s-0.8 2-2 2c-6.6 0-12-5.4-12-12z"></path></svg>', z = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M0.622 18.334h19.54v7.55l11.052-9.412-11.052-9.413v7.549h-19.54v3.725z"></path></svg>', T = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333z"></path></svg>', k = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M2.667 7.027l1.707-1.693 22.293 22.293-1.693 1.707-4-4h-11.64v4l-5.333-5.333 5.333-5.333v4h8.973l-8.973-8.973v0.973h-2.667v-3.64l-4-4zM22.667 17.333h2.667v5.573l-2.667-2.667v-2.907zM22.667 6.667v-4l5.333 5.333-5.333 5.333v-4h-10.907l-2.667-2.667h13.573z"></path></svg>', Y = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M26.667 5.333h-21.333c-0 0-0.001 0-0.001 0-1.472 0-2.666 1.194-2.666 2.666 0 0 0 0.001 0 0.001v-0 16c0 0 0 0.001 0 0.001 0 1.472 1.194 2.666 2.666 2.666 0 0 0.001 0 0.001 0h21.333c0 0 0.001 0 0.001 0 1.472 0 2.666-1.194 2.666-2.666 0-0 0-0.001 0-0.001v0-16c0-0 0-0.001 0-0.001 0-1.472-1.194-2.666-2.666-2.666-0 0-0.001 0-0.001 0h0zM5.333 16h5.333v2.667h-5.333v-2.667zM18.667 24h-13.333v-2.667h13.333v2.667zM26.667 24h-5.333v-2.667h5.333v2.667zM26.667 18.667h-13.333v-2.667h13.333v2.667z"></path></svg>', ot = (e) => {
-  const t = {
-    container: e.element || document.getElementsByClassName("aplayer")[0],
-    mini: e.narrow || e.fixed || !1,
+const $ = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22.667 4l7 6-7 6 7 6-7 6v-4h-3.653l-3.76-3.76 2.827-2.827 2.587 2.587h2v-8h-2l-12 12h-6v-4h4.347l12-12h3.653v-4zM2.667 8h6l3.76 3.76-2.827 2.827-2.587-2.587h-4.347v-4z"></path></svg>', z = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 17 32"><path d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z"></path></svg>', F = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056zM29.728 16q0 4.096-2.272 7.552t-6.048 5.056q-0.224 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.64 0.704-1.056 0.128-0.064 0.384-0.192t0.416-0.192q0.8-0.448 1.44-0.896 2.208-1.632 3.456-4.064t1.216-5.152-1.216-5.152-3.456-4.064q-0.64-0.448-1.44-0.896-0.128-0.096-0.416-0.192t-0.384-0.192q-0.704-0.416-0.704-1.056 0-0.448 0.32-0.8t0.832-0.352q0.224 0 0.448 0.096 3.776 1.632 6.048 5.056t2.272 7.552z"></path></svg>', R = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528z"></path></svg>', I = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z"></path></svg>', J = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>', W = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 33 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333zM17.333 20v-8h-1.333l-2.667 1.333v1.333h2v5.333h2z"></path></svg>', G = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 22 32"><path d="M20.8 14.4q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2zM1.6 11.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2zM20.8 20.8q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2z"></path></svg>', x = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 31"><path d="M15.552 15.168q0.448 0.32 0.448 0.832 0 0.448-0.448 0.768l-13.696 8.512q-0.768 0.512-1.312 0.192t-0.544-1.28v-16.448q0-0.96 0.544-1.28t1.312 0.192z"></path></svg>', K = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path></svg>', Q = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M4 16c0-6.6 5.4-12 12-12s12 5.4 12 12c0 1.2-0.8 2-2 2s-2-0.8-2-2c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.2 0 2 0.8 2 2s-0.8 2-2 2c-6.6 0-12-5.4-12-12z"></path></svg>', Y = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M0.622 18.334h19.54v7.55l11.052-9.412-11.052-9.413v7.549h-19.54v3.725z"></path></svg>', k = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333z"></path></svg>', q = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M2.667 7.027l1.707-1.693 22.293 22.293-1.693 1.707-4-4h-11.64v4l-5.333-5.333 5.333-5.333v4h8.973l-8.973-8.973v0.973h-2.667v-3.64l-4-4zM22.667 17.333h2.667v5.573l-2.667-2.667v-2.907zM22.667 6.667v-4l5.333 5.333-5.333 5.333v-4h-10.907l-2.667-2.667h13.573z"></path></svg>', Z = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M26.667 5.333h-21.333c-0 0-0.001 0-0.001 0-1.472 0-2.666 1.194-2.666 2.666 0 0 0 0.001 0 0.001v-0 16c0 0 0 0.001 0 0.001 0 1.472 1.194 2.666 2.666 2.666 0 0 0.001 0 0.001 0h21.333c0 0 0.001 0 0.001 0 1.472 0 2.666-1.194 2.666-2.666 0-0 0-0.001 0-0.001v0-16c0-0 0-0.001 0-0.001 0-1.472-1.194-2.666-2.666-2.666-0 0-0.001 0-0.001 0h0zM5.333 16h5.333v2.667h-5.333v-2.667zM18.667 24h-13.333v-2.667h13.333v2.667zM26.667 24h-5.333v-2.667h5.333v2.667zM26.667 18.667h-13.333v-2.667h13.333v2.667z"></path></svg>', _ = (t) => {
+  const e = {
+    container: t.element || document.getElementsByClassName("aplayer")[0],
+    mini: t.narrow || t.fixed || !1,
     fixed: !1,
     autoplay: !1,
     mutex: !0,
-    lrcType: e.showlrc || e.lrc || 0,
+    lrcType: t.showlrc || t.lrc || 0,
     preload: "auto",
     theme: "#b7daff",
     loop: "all",
     order: "list",
     volume: 0.7,
-    listFolded: e.fixed,
-    listMaxHeight: e.listmaxheight || "250px",
-    audio: e.music || [],
+    listFolded: t.fixed,
+    listMaxHeight: t.listmaxheight || "250px",
+    audio: t.music || [],
     storageName: "aplayer-setting"
   };
-  for (const i in t)
-    t.hasOwnProperty(i) && !e.hasOwnProperty(i) && (e[i] = t[i]);
-  return Object.prototype.toString.call(e.audio) !== "[object Array]" && (e.audio = [e.audio]), e.audio.map((i) => (i.name = i.name || i.title || "Audio name", i.artist = i.artist || i.author || "Audio artist", i.cover = i.cover || i.pic, i.type = i.type || "normal", i)), e.audio.length <= 1 && e.loop === "one" && (e.loop = "all"), e;
+  for (const i in e)
+    e.hasOwnProperty(i) && !t.hasOwnProperty(i) && (t[i] = e[i]);
+  return Object.prototype.toString.call(t.audio) !== "[object Array]" && (t.audio = [t.audio]), t.audio.map((i) => (i.name = i.name || i.title || "Audio name", i.artist = i.artist || i.author || "Audio artist", i.cover = i.cover || i.pic, i.type = i.type || "normal", i)), t.audio.length <= 1 && t.loop === "one" && (t.loop = "all"), t;
 };
-var rt = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function G(e) {
-  return e && e.__esModule && Object.prototype.hasOwnProperty.call(e, "default") ? e.default : e;
+var tt = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+function U(t) {
+  return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
 }
-var F = Object.create(window), lt = /["&'<>]/;
-F.$escape = function(e) {
-  return ct(K(e));
+var H = Object.create(window), et = /["&'<>]/;
+H.$escape = function(t) {
+  return it(D(t));
 };
-F.$each = function(e, t) {
-  if (Array.isArray(e))
-    for (var i = 0, n = e.length; i < n; i++)
-      t(e[i], i);
+H.$each = function(t, e) {
+  if (Array.isArray(t))
+    for (var i = 0, s = t.length; i < s; i++)
+      e(t[i], i);
   else
-    for (var s in e)
-      t(e[s], s);
+    for (var a in t)
+      e(t[a], a);
 };
-function K(e) {
-  return typeof e != "string" && (e == null ? e = "" : typeof e == "function" ? e = K(e.call(e)) : e = JSON.stringify(e)), e;
+function D(t) {
+  return typeof t != "string" && (t == null ? t = "" : typeof t == "function" ? t = D(t.call(t)) : t = JSON.stringify(t)), t;
 }
-function ct(e) {
-  var t = "" + e, i = lt.exec(t);
+function it(t) {
+  var e = "" + t, i = et.exec(e);
   if (!i)
-    return e;
-  var n = "", s = void 0, a = void 0, r = void 0;
-  for (s = i.index, a = 0; s < t.length; s++) {
-    switch (t.charCodeAt(s)) {
+    return t;
+  var s = "", a = void 0, o = void 0, l = void 0;
+  for (a = i.index, o = 0; a < e.length; a++) {
+    switch (e.charCodeAt(a)) {
       case 34:
-        r = "&#34;";
+        l = "&#34;";
         break;
       case 38:
-        r = "&#38;";
+        l = "&#38;";
         break;
       case 39:
-        r = "&#39;";
+        l = "&#39;";
         break;
       case 60:
-        r = "&#60;";
+        l = "&#60;";
         break;
       case 62:
-        r = "&#62;";
+        l = "&#62;";
         break;
       default:
         continue;
     }
-    a !== s && (n += t.substring(a, s)), a = s + 1, n += r;
+    o !== a && (s += e.substring(o, a)), o = a + 1, s += l;
   }
-  return a !== s ? n + t.substring(a, s) : n;
+  return o !== a ? s + e.substring(o, a) : s;
 }
-var ht = F, dt = ht;
-const L = /* @__PURE__ */ G(dt);
-function Q(e) {
-  e = e || {};
-  var t = "", i = L.$each, n = e.audio;
-  e.$value, e.$index;
-  var s = L.$escape, a = e.theme, r = e.index;
-  return i(n, function(o, l) {
-    t += ' <li><span class="aplayer-list-cur" style="background-color: ', t += s(o.theme || a), t += '"></span> <span class="aplayer-list-index">', t += s(l + r), t += '</span><span class="aplayer-list-title">', t += s(o.name), t += '</span><span class="aplayer-list-author">', t += s(o.artist), t += "</span></li> ";
-  }), t;
+var st = H, at = st;
+const w = /* @__PURE__ */ U(at);
+function A(t) {
+  t = t || {};
+  var e = "", i = w.$each, s = t.audio;
+  t.$value, t.$index;
+  var a = w.$escape, o = t.theme, l = t.index;
+  return i(s, function(n, r) {
+    e += ' <li><span class="aplayer-list-cur" style="background-color: ', e += a(n.theme || o), e += '"></span> <span class="aplayer-list-index">', e += a(r + l), e += '</span><span class="aplayer-list-title">', e += a(n.name), e += '</span><span class="aplayer-list-author">', e += a(n.artist), e += "</span></li> ";
+  }), e;
 }
-function ut(e) {
-  e = e || {};
-  var t = "", i = e.options, n = e.cover, s = L.$escape;
-  e.icons;
-  var a = function(o) {
-    return t += o, t;
-  }, r = e.getObject;
-  return e.theme, e.audio, e.index, i.fixed ? (t += ' <div class="aplayer-list', i.listFolded && (t += " aplayer-list-hide"), t += '" ', i.listMaxHeight && (t += ' style="max-height: ', t += s(i.listMaxHeight), t += '" '), t += "><ol ", i.listMaxHeight && (t += ' style="max-height: ', t += s(i.listMaxHeight), t += '" '), t += "> ", a(require("./list-item.art")(r({
-    theme: i.theme,
-    audio: i.audio,
-    index: 1
-  }))), t += ' </ol></div><div class="aplayer-body"><div class="aplayer-pic" style="', n && (t += "background-image:url(&quot;", t += s(n), t += "&quot;);"), t += "background-color: ", t += s(i.theme), t += '"><div class="aplayer-button aplayer-play">', t += p, t += '</div></div><div class="aplayer-info" style="display:none"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ', t += s(i.theme), t += '"><span class="aplayer-thumb" style="background: ', t += s(i.theme), t += '"><span class="aplayer-loading-icon">', t += $, t += '</span></span></div></div></div><div class="aplayer-time"><span class="aplayer-time-inner"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">00:00</span> </span><span class="aplayer-icon aplayer-icon-back"> ', t += x, t += ' </span><span class="aplayer-icon aplayer-icon-play"> ', t += p, t += ' </span><span class="aplayer-icon aplayer-icon-forward"> ', t += x, t += ' </span><div class="aplayer-volume-wrap"><button type="button" class="aplayer-icon aplayer-icon-volume-down"> ', t += A, t += ' </button><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height:80%;background: ', t += s(i.theme), t += '"></div></div></div></div><button type="button" class="aplayer-icon aplayer-icon-order"> ', i.order === "list" ? t += z : i.order === "random" && (t += O), t += ' </button> <button type="button" class="aplayer-icon aplayer-icon-loop"> ', i.loop === "one" ? t += S : i.loop === "all" ? t += T : i.loop === "none" && (t += k), t += ' </button> <button type="button" class="aplayer-icon aplayer-icon-menu"> ', t += R, t += ' </button> <button type="button" class="aplayer-icon aplayer-icon-lrc"> ', t += Y, t += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">', t += W, t += '</button></div></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div> ') : (t += ' <div class="aplayer-body"><div class="aplayer-pic" style="', n && (t += "background-image:url(&quot;", t += s(n), t += "&quot;);"), t += "background-color: ", t += s(i.theme), t += '"><div class="aplayer-button aplayer-play">', t += p, t += '</div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ', t += s(i.theme), t += '"><span class="aplayer-thumb" style="background: ', t += s(i.theme), t += '"><span class="aplayer-loading-icon">', t += $, t += '</span></span></div></div></div><div class="aplayer-time"><span class="aplayer-time-inner"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">00:00</span> </span><span class="aplayer-icon aplayer-icon-back"> ', t += x, t += ' </span><span class="aplayer-icon aplayer-icon-play"> ', t += p, t += ' </span><span class="aplayer-icon aplayer-icon-forward"> ', t += x, t += ' </span><div class="aplayer-volume-wrap"><button type="button" class="aplayer-icon aplayer-icon-volume-down"> ', t += A, t += ' </button><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height:80%;background: ', t += s(i.theme), t += '"></div></div></div></div><button type="button" class="aplayer-icon aplayer-icon-order"> ', i.order === "list" ? t += z : i.order === "random" && (t += O), t += ' </button> <button type="button" class="aplayer-icon aplayer-icon-loop"> ', i.loop === "one" ? t += S : i.loop === "all" ? t += T : i.loop === "none" && (t += k), t += ' </button> <button type="button" class="aplayer-icon aplayer-icon-menu"> ', t += R, t += ' </button> <button type="button" class="aplayer-icon aplayer-icon-lrc"> ', t += Y, t += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">', t += W, t += '</button></div></div><div class="aplayer-list', i.listFolded && (t += " aplayer-list-hide"), t += '" ', i.listMaxHeight && (t += ' style="max-height: ', t += s(i.listMaxHeight), t += '" '), t += "><ol ", i.listMaxHeight && (t += ' style="max-height: ', t += s(i.listMaxHeight), t += '" '), t += "> ", a(Q(r({
-    theme: i.theme,
-    audio: i.audio,
-    index: 1
-  }))), t += " </ol></div> "), t;
-}
-function pt(e, t, i) {
-  let n = "";
-  t.audio.length && (t.order === "random" ? n = t.audio[i[0]].cover : n = t.audio[0].cover), e.innerHTML = ut({
-    options: t,
-    cover: n,
-    getObject: (a) => a
-  });
-  const s = (a) => e.querySelector(a);
+const p = w.$escape;
+function B() {
   return {
-    lrc: s(".aplayer-lrc-contents"),
-    lrcWrap: s(".aplayer-lrc"),
-    ptime: s(".aplayer-ptime"),
-    info: s(".aplayer-info"),
-    time: s(".aplayer-time"),
-    barWrap: s(".aplayer-bar-wrap"),
-    button: s(".aplayer-button"),
-    body: s(".aplayer-body"),
-    list: s(".aplayer-list"),
-    listOl: s(".aplayer-list ol"),
-    listCurs: e.querySelectorAll(".aplayer-list-cur"),
-    played: s(".aplayer-played"),
-    loaded: s(".aplayer-loaded"),
-    thumb: s(".aplayer-thumb"),
-    volume: s(".aplayer-volume"),
-    volumeBar: s(".aplayer-volume-bar"),
-    volumeButton: s(".aplayer-time button"),
-    volumeBarWrap: s(".aplayer-volume-bar-wrap"),
-    loop: s(".aplayer-icon-loop"),
-    order: s(".aplayer-icon-order"),
-    menu: s(".aplayer-icon-menu"),
-    pic: s(".aplayer-pic"),
-    title: s(".aplayer-title"),
-    author: s(".aplayer-author"),
-    dtime: s(".aplayer-dtime"),
-    notice: s(".aplayer-notice"),
-    miniSwitcher: s(".aplayer-miniswitcher"),
-    skipBackButton: s(".aplayer-icon-back"),
-    skipForwardButton: s(".aplayer-icon-forward"),
-    skipPlayButton: s(".aplayer-icon-play"),
-    lrcButton: s(".aplayer-icon-lrc")
+    injectPointA: (t, e, i) => {
+      i('<div class="aplayer-body"><div class="aplayer-pic" style="');
+    },
+    injectPointB: (t, e, i) => {
+      i('</div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ');
+    },
+    injectPointC: (t, e, i) => {
+      i('</button></div></div><div class="aplayer-list'), t.listFolded && i(" aplayer-list-hide"), i('" '), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("><ol "), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("> "), i(A({
+        theme: t.theme,
+        audio: t.audio,
+        index: 1
+      })), i(" </ol></div> ");
+    }
   };
 }
-class mt {
-  constructor(t) {
-    this.elements = {}, this.elements.volume = t.volume, this.elements.played = t.played, this.elements.loaded = t.loaded;
+function ot() {
+  return {
+    injectPointA: (t, e, i) => {
+      i(' <div class="aplayer-list'), t.listFolded && i(" aplayer-list-hide"), i('" '), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("><ol "), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("> "), i(A({
+        theme: t.theme,
+        audio: t.audio,
+        index: 1
+      })), i(' </ol></div><div class="aplayer-body"><div class="aplayer-pic" style="');
+    },
+    injectPointB: (t, e, i) => {
+      i('</div></div><div class="aplayer-info" style="display:none"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ');
+    },
+    injectPointC: (t, e, i) => {
+      i('</button></div></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div> ');
+    }
+  };
+}
+function nt(t) {
+  t = t || {};
+  var e = "", i = t.options, s = t.cover, a = function(o) {
+    return e += o, e;
+  };
+  return t.injectPointA(i, s, a), s && (e += "background-image:url(&quot;", e += p(s), e += "&quot;);"), e += "background-color: ", e += p(i.theme), e += '"><div class="aplayer-button aplayer-play">', e += x, t.injectPointB(i, s, a), e += p(i.theme), e += '"><span class="aplayer-thumb" style="background: ', e += p(i.theme), e += '"><span class="aplayer-loading-icon">', e += Q, e += '</span></span></div></div></div><div class="aplayer-time"><span class="aplayer-time-inner"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">00:00</span> </span><span class="aplayer-icon aplayer-icon-back"> ', e += I, e += ' </span><span class="aplayer-icon aplayer-icon-play"> ', e += x, e += ' </span><span class="aplayer-icon aplayer-icon-forward"> ', e += I, e += ' </span><div class="aplayer-volume-wrap"><button type="button" class="aplayer-icon aplayer-icon-volume-down"> ', e += R, e += ' </button><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height:80%;background: ', e += p(i.theme), e += '"></div></div></div></div><button type="button" class="aplayer-icon aplayer-icon-order"> ', i.order === "list" ? e += Y : i.order === "random" && (e += $), e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-loop"> ', i.loop === "one" ? e += W : i.loop === "all" ? e += k : i.loop === "none" && (e += q), e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-menu"> ', e += G, e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-lrc"> ', e += Z, e += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">', e += K, t.injectPointC(i, s, a), e;
+}
+function lt(t, e, i, s) {
+  let a = "";
+  e.audio.length && (e.order === "random" ? a = e.audio[i[0]].cover : a = e.audio[0].cover), t.innerHTML = nt({
+    options: e,
+    cover: a,
+    ...s
+  });
+  const o = (l) => t.querySelector(l);
+  return {
+    lrc: o(".aplayer-lrc-contents"),
+    lrcWrap: o(".aplayer-lrc"),
+    ptime: o(".aplayer-ptime"),
+    info: o(".aplayer-info"),
+    time: o(".aplayer-time"),
+    barWrap: o(".aplayer-bar-wrap"),
+    button: o(".aplayer-button"),
+    body: o(".aplayer-body"),
+    list: o(".aplayer-list"),
+    listOl: o(".aplayer-list ol"),
+    listCurs: t.querySelectorAll(".aplayer-list-cur"),
+    played: o(".aplayer-played"),
+    loaded: o(".aplayer-loaded"),
+    thumb: o(".aplayer-thumb"),
+    volume: o(".aplayer-volume"),
+    volumeBar: o(".aplayer-volume-bar"),
+    volumeButton: o(".aplayer-time button"),
+    volumeBarWrap: o(".aplayer-volume-bar-wrap"),
+    loop: o(".aplayer-icon-loop"),
+    order: o(".aplayer-icon-order"),
+    menu: o(".aplayer-icon-menu"),
+    pic: o(".aplayer-pic"),
+    title: o(".aplayer-title"),
+    author: o(".aplayer-author"),
+    dtime: o(".aplayer-dtime"),
+    notice: o(".aplayer-notice"),
+    miniSwitcher: o(".aplayer-miniswitcher"),
+    skipBackButton: o(".aplayer-icon-back"),
+    skipForwardButton: o(".aplayer-icon-forward"),
+    skipPlayButton: o(".aplayer-icon-play"),
+    lrcButton: o(".aplayer-icon-lrc")
+  };
+}
+class rt {
+  constructor(e) {
+    this.elements = {}, this.elements.volume = e.volume, this.elements.played = e.played, this.elements.loaded = e.loaded;
   }
   /**
    * Update progress
@@ -359,36 +218,36 @@ class mt {
    * @param {Number} percentage
    * @param {String} direction - Point out the direction of this bar, Should be height or width
    */
-  set(t, i, n) {
-    i = Math.max(i, 0), i = Math.min(i, 1), this.elements[t].style[n] = i * 100 + "%";
+  set(e, i, s) {
+    i = Math.max(i, 0), i = Math.min(i, 1), this.elements[e].style[s] = i * 100 + "%";
   }
-  get(t, i) {
-    return parseFloat(this.elements[t].style[i]) / 100;
-  }
-}
-class vt {
-  constructor(t) {
-    this.storageName = t.options.storageName, this.data = JSON.parse(N.get(this.storageName)), this.data || (this.data = {}), this.data.volume = this.data.volume || t.options.volume;
-  }
-  get(t) {
-    return this.data[t];
-  }
-  set(t, i) {
-    this.data[t] = i, N.set(this.storageName, JSON.stringify(this.data));
+  get(e, i) {
+    return parseFloat(this.elements[e].style[i]) / 100;
   }
 }
-function U(e) {
-  e = e || {};
-  var t = "", i = L.$each, n = e.lyrics;
-  e.$value, e.$index;
-  var s = L.$escape;
-  return i(n, function(a, r) {
-    t += " <p ", r === 0 && (t += ' class="aplayer-lrc-current" '), t += ">", t += s(a[1]), t += "</p> ";
-  }), t;
+class ht {
+  constructor(e) {
+    this.storageName = e.options.storageName, this.data = JSON.parse(S.get(this.storageName)), this.data || (this.data = {}), this.data.volume = this.data.volume || e.options.volume;
+  }
+  get(e) {
+    return this.data[e];
+  }
+  set(e, i) {
+    this.data[e] = i, S.set(this.storageName, JSON.stringify(this.data));
+  }
 }
-class ft {
-  constructor(t) {
-    this.container = t.container, this.async = t.async, this.player = t.player, this.parsed = [], this.index = 0, this.current = [];
+function N(t) {
+  t = t || {};
+  var e = "", i = w.$each, s = t.lyrics;
+  t.$value, t.$index;
+  var a = w.$escape;
+  return i(s, function(o, l) {
+    e += " <p ", l === 0 && (e += ' class="aplayer-lrc-current" '), e += ">", e += a(o[1]), e += "</p> ";
+  }), e;
+}
+class dt {
+  constructor(e) {
+    this.container = e.container, this.async = e.async, this.player = e.player, this.parsed = [], this.index = 0, this.current = [];
   }
   show() {
     this.player.events.trigger("lrcshow"), this.player.template.lrcWrap.classList.remove("aplayer-lrc-hide");
@@ -399,29 +258,29 @@ class ft {
   toggle() {
     this.player.template.lrcWrap.classList.contains("aplayer-lrc-hide") ? this.show() : this.hide();
   }
-  update(t = this.player.audio.currentTime) {
-    if (this.index > this.current.length - 1 || t < this.current[this.index][0] || !this.current[this.index + 1] || t >= this.current[this.index + 1][0])
+  update(e = this.player.audio.currentTime) {
+    if (this.index > this.current.length - 1 || e < this.current[this.index][0] || !this.current[this.index + 1] || e >= this.current[this.index + 1][0])
       for (let i = 0; i < this.current.length; i++)
-        t >= this.current[i][0] && (!this.current[i + 1] || t < this.current[i + 1][0]) && (this.index = i, this.container.style.transform = `translateY(${-this.index * 16}px)`, this.container.style.webkitTransform = `translateY(${-this.index * 16}px)`, this.container.getElementsByClassName("aplayer-lrc-current")[0].classList.remove("aplayer-lrc-current"), this.container.getElementsByTagName("p")[i].classList.add("aplayer-lrc-current"));
+        e >= this.current[i][0] && (!this.current[i + 1] || e < this.current[i + 1][0]) && (this.index = i, this.container.style.transform = `translateY(${-this.index * 16}px)`, this.container.style.webkitTransform = `translateY(${-this.index * 16}px)`, this.container.getElementsByClassName("aplayer-lrc-current")[0].classList.remove("aplayer-lrc-current"), this.container.getElementsByTagName("p")[i].classList.add("aplayer-lrc-current"));
   }
-  switch(t) {
-    if (!this.parsed[t])
+  switch(e) {
+    if (!this.parsed[e])
       if (!this.async)
-        this.player.list.audios[t].lrc ? this.parsed[t] = this.parse(this.player.list.audios[t].lrc) : this.parsed[t] = [["00:00", "Not available"]];
+        this.player.list.audios[e].lrc ? this.parsed[e] = this.parse(this.player.list.audios[e].lrc) : this.parsed[e] = [["00:00", "Not available"]];
       else {
-        this.parsed[t] = [["00:00", "Loading"]];
+        this.parsed[e] = [["00:00", "Loading"]];
         const i = new XMLHttpRequest();
         i.onreadystatechange = () => {
-          t === this.player.list.index && i.readyState === 4 && (i.status >= 200 && i.status < 300 || i.status === 304 ? this.parsed[t] = this.parse(i.responseText) : (this.player.notice(`LRC file request fails: status ${i.status}`), this.parsed[t] = [["00:00", "Not available"]]), this.container.innerHTML = U({
-            lyrics: this.parsed[t]
-          }), this.update(0), this.current = this.parsed[t]);
+          e === this.player.list.index && i.readyState === 4 && (i.status >= 200 && i.status < 300 || i.status === 304 ? this.parsed[e] = this.parse(i.responseText) : (this.player.notice(`LRC file request fails: status ${i.status}`), this.parsed[e] = [["00:00", "Not available"]]), this.container.innerHTML = N({
+            lyrics: this.parsed[e]
+          }), this.update(0), this.current = this.parsed[e]);
         };
-        const n = this.player.list.audios[t].lrc;
-        i.open("get", n, !0), i.send(null);
+        const s = this.player.list.audios[e].lrc;
+        i.open("get", s, !0), i.send(null);
       }
-    this.container.innerHTML = U({
-      lyrics: this.parsed[t]
-    }), this.current = this.parsed[t];
+    this.container.innerHTML = N({
+      lyrics: this.parsed[e]
+    }), this.current = this.parsed[e];
   }
   /**
    * Parse lrc, suppose multiple time tag
@@ -435,138 +294,138 @@ class ft {
    *
    * @return {String} [[time, text], [time, text], [time, text], ...]
    */
-  parse(t) {
-    if (t) {
-      t = t.replace(/([^\]^\n])\[/g, (a, r) => r + `
+  parse(e) {
+    if (e) {
+      e = e.replace(/([^\]^\n])\[/g, (o, l) => l + `
 [`);
-      const i = t.split(`
+      const i = e.split(`
 `);
-      let n = [];
-      const s = i.length;
-      for (let a = 0; a < s; a++) {
-        const r = i[a].match(/\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g), o = i[a].replace(/.*\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g, "").replace(/<(\d{2}):(\d{2})(\.(\d{2,3}))?>/g, "").replace(/^\s+|\s+$/g, "");
-        if (r) {
-          const l = r.length;
-          for (let d = 0; d < l; d++) {
-            const h = /\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/.exec(r[d]), f = h[1] * 60, y = parseInt(h[2]), q = h[4] ? parseInt(h[4]) / ((h[4] + "").length === 2 ? 100 : 1e3) : 0, E = f + y + q;
-            n.push([E, o]);
+      let s = [];
+      const a = i.length;
+      for (let o = 0; o < a; o++) {
+        const l = i[o].match(/\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g), n = i[o].replace(/.*\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g, "").replace(/<(\d{2}):(\d{2})(\.(\d{2,3}))?>/g, "").replace(/^\s+|\s+$/g, "");
+        if (l) {
+          const r = l.length;
+          for (let d = 0; d < r; d++) {
+            const h = /\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/.exec(l[d]), v = h[1] * 60, f = parseInt(h[2]), M = h[4] ? parseInt(h[4]) / ((h[4] + "").length === 2 ? 100 : 1e3) : 0, T = v + f + M;
+            s.push([T, n]);
           }
         }
       }
-      return n = n.filter((a) => a[1]), n.sort((a, r) => a[0] - r[0]), n;
+      return s = s.filter((o) => o[1]), s.sort((o, l) => o[0] - l[0]), s;
     } else
       return [];
   }
-  remove(t) {
-    this.parsed.splice(t, 1);
+  remove(e) {
+    this.parsed.splice(e, 1);
   }
   clear() {
     this.parsed = [], this.container.innerHTML = "";
   }
 }
-class yt {
-  constructor(t) {
-    gt(t), wt(t), Lt(t), xt(t), Mt(t), w || bt(t), Tt(t), kt(t), qt(t);
+class ct {
+  constructor(e) {
+    pt(e), ut(e), vt(e), ft(e), gt(e), y || mt(e), yt(e), wt(e), bt(e);
   }
 }
-function gt(e) {
-  e.template.pic.addEventListener("click", () => {
-    e.toggle();
+function pt(t) {
+  t.template.pic.addEventListener("click", () => {
+    t.toggle();
   });
 }
-function wt(e) {
-  const t = (n) => {
-    let s = ((n.clientX || n.changedTouches[0].clientX) - P(e.template.barWrap)) / e.template.barWrap.clientWidth;
-    s = Math.max(s, 0), s = Math.min(s, 1), e.bar.set("played", s, "width"), e.lrc && e.lrc.update(s * e.duration), e.template.ptime.innerHTML = v(s * e.duration);
-  }, i = (n) => {
-    document.removeEventListener(u.dragEnd, i), document.removeEventListener(u.dragMove, t);
-    let s = ((n.clientX || n.changedTouches[0].clientX) - P(e.template.barWrap)) / e.template.barWrap.clientWidth;
-    s = Math.max(s, 0), s = Math.min(s, 1), e.bar.set("played", s, "width"), e.seek(e.bar.get("played", "width") * e.duration), e.disableTimeupdate = !1;
+function ut(t) {
+  const e = (s) => {
+    let a = ((s.clientX || s.changedTouches[0].clientX) - C(t.template.barWrap)) / t.template.barWrap.clientWidth;
+    a = Math.max(a, 0), a = Math.min(a, 1), t.bar.set("played", a, "width"), t.lrc && t.lrc.update(a * t.duration), t.template.ptime.innerHTML = m(a * t.duration);
+  }, i = (s) => {
+    document.removeEventListener(c.dragEnd, i), document.removeEventListener(c.dragMove, e);
+    let a = ((s.clientX || s.changedTouches[0].clientX) - C(t.template.barWrap)) / t.template.barWrap.clientWidth;
+    a = Math.max(a, 0), a = Math.min(a, 1), t.bar.set("played", a, "width"), t.seek(t.bar.get("played", "width") * t.duration), t.disableTimeupdate = !1;
   };
-  e.template.barWrap.addEventListener(u.dragStart, () => {
-    e.disableTimeupdate = !0, document.addEventListener(u.dragMove, t), document.addEventListener(u.dragEnd, i);
+  t.template.barWrap.addEventListener(c.dragStart, () => {
+    t.disableTimeupdate = !0, document.addEventListener(c.dragMove, e), document.addEventListener(c.dragEnd, i);
   });
 }
-function bt(e) {
-  e.template.volumeButton.addEventListener("click", () => {
-    e.audio.muted ? (e.audio.muted = !1, e.switchVolumeIcon(), e.bar.set("volume", e.volume(), "height")) : (e.audio.muted = !0, e.switchVolumeIcon(), e.bar.set("volume", 0, "height"));
+function mt(t) {
+  t.template.volumeButton.addEventListener("click", () => {
+    t.audio.muted ? (t.audio.muted = !1, t.switchVolumeIcon(), t.bar.set("volume", t.volume(), "height")) : (t.audio.muted = !0, t.switchVolumeIcon(), t.bar.set("volume", 0, "height"));
   });
-  const t = (n) => {
-    let s = 1 - ((n.clientY || n.changedTouches[0].clientY) - _(e.template.volumeBar, e.options.fixed)) / e.template.volumeBar.clientHeight;
-    s = Math.max(s, 0), s = Math.min(s, 1), e.volume(s);
-  }, i = (n) => {
-    e.template.volumeBarWrap.classList.remove("aplayer-volume-bar-wrap-active"), document.removeEventListener(u.dragEnd, i), document.removeEventListener(u.dragMove, t);
-    let s = 1 - ((n.clientY || n.changedTouches[0].clientY) - _(e.template.volumeBar, e.options.fixed)) / e.template.volumeBar.clientHeight;
-    s = Math.max(s, 0), s = Math.min(s, 1), e.volume(s);
+  const e = (s) => {
+    let a = 1 - ((s.clientY || s.changedTouches[0].clientY) - P(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
+    a = Math.max(a, 0), a = Math.min(a, 1), t.volume(a);
+  }, i = (s) => {
+    t.template.volumeBarWrap.classList.remove("aplayer-volume-bar-wrap-active"), document.removeEventListener(c.dragEnd, i), document.removeEventListener(c.dragMove, e);
+    let a = 1 - ((s.clientY || s.changedTouches[0].clientY) - P(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
+    a = Math.max(a, 0), a = Math.min(a, 1), t.volume(a);
   };
-  e.template.volumeBarWrap.addEventListener(u.dragStart, () => {
-    e.template.volumeBarWrap.classList.add("aplayer-volume-bar-wrap-active"), document.addEventListener(u.dragMove, t), document.addEventListener(u.dragEnd, i);
+  t.template.volumeBarWrap.addEventListener(c.dragStart, () => {
+    t.template.volumeBarWrap.classList.add("aplayer-volume-bar-wrap-active"), document.addEventListener(c.dragMove, e), document.addEventListener(c.dragEnd, i);
   });
 }
-function Lt(e) {
-  e.template.order.addEventListener("click", () => {
-    e.options.order === "list" ? (e.options.order = "random", e.template.order.innerHTML = O) : e.options.order === "random" && (e.options.order = "list", e.template.order.innerHTML = z);
+function vt(t) {
+  t.template.order.addEventListener("click", () => {
+    t.options.order === "list" ? (t.options.order = "random", t.template.order.innerHTML = $) : t.options.order === "random" && (t.options.order = "list", t.template.order.innerHTML = Y);
   });
 }
-function xt(e) {
-  e.template.loop.addEventListener("click", () => {
-    e.list.audios.length > 1 ? e.options.loop === "one" ? (e.options.loop = "none", e.template.loop.innerHTML = k) : e.options.loop === "none" ? (e.options.loop = "all", e.template.loop.innerHTML = T) : e.options.loop === "all" && (e.options.loop = "one", e.template.loop.innerHTML = S) : e.options.loop === "one" || e.options.loop === "all" ? (e.options.loop = "none", e.template.loop.innerHTML = k) : e.options.loop === "none" && (e.options.loop = "all", e.template.loop.innerHTML = T);
+function ft(t) {
+  t.template.loop.addEventListener("click", () => {
+    t.list.audios.length > 1 ? t.options.loop === "one" ? (t.options.loop = "none", t.template.loop.innerHTML = q) : t.options.loop === "none" ? (t.options.loop = "all", t.template.loop.innerHTML = k) : t.options.loop === "all" && (t.options.loop = "one", t.template.loop.innerHTML = W) : t.options.loop === "one" || t.options.loop === "all" ? (t.options.loop = "none", t.template.loop.innerHTML = q) : t.options.loop === "none" && (t.options.loop = "all", t.template.loop.innerHTML = k);
   });
 }
-function Mt(e) {
-  e.template.menu.addEventListener("click", () => {
-    e.list.toggle();
+function gt(t) {
+  t.template.menu.addEventListener("click", () => {
+    t.list.toggle();
   });
 }
-function Tt(e) {
-  e.template.miniSwitcher.addEventListener("click", () => {
-    e.setMode(e.mode === "mini" ? "normal" : "mini");
+function yt(t) {
+  t.template.miniSwitcher.addEventListener("click", () => {
+    t.setMode(t.mode === "mini" ? "normal" : "mini");
   });
 }
-function kt(e) {
-  e.template.skipBackButton.addEventListener("click", () => {
-    e.skipBack();
-  }), e.template.skipForwardButton.addEventListener("click", () => {
-    e.skipForward();
-  }), e.template.skipPlayButton.addEventListener("click", () => {
-    e.toggle();
+function wt(t) {
+  t.template.skipBackButton.addEventListener("click", () => {
+    t.skipBack();
+  }), t.template.skipForwardButton.addEventListener("click", () => {
+    t.skipForward();
+  }), t.template.skipPlayButton.addEventListener("click", () => {
+    t.toggle();
   });
 }
-function qt(e) {
-  e.template.lrcButton.addEventListener("click", () => {
-    e.template.lrcButton.classList.contains("aplayer-icon-lrc-inactivity") ? (e.template.lrcButton.classList.remove("aplayer-icon-lrc-inactivity"), e.lrc && e.lrc.show()) : (e.template.lrcButton.classList.add("aplayer-icon-lrc-inactivity"), e.lrc && e.lrc.hide());
+function bt(t) {
+  t.template.lrcButton.addEventListener("click", () => {
+    t.template.lrcButton.classList.contains("aplayer-icon-lrc-inactivity") ? (t.template.lrcButton.classList.remove("aplayer-icon-lrc-inactivity"), t.lrc && t.lrc.show()) : (t.template.lrcButton.classList.add("aplayer-icon-lrc-inactivity"), t.lrc && t.lrc.hide());
   });
 }
-class Et {
-  constructor(t) {
-    this.player = t, window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(i) {
+class Lt {
+  constructor(e) {
+    this.player = e, window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(i) {
       window.setTimeout(i, 1e3 / 60);
     }, this.types = ["loading"], this.init();
   }
   init() {
-    this.types.forEach((t) => {
-      this[`init${t}Checker`]();
+    this.types.forEach((e) => {
+      this[`init${e}Checker`]();
     });
   }
   initloadingChecker() {
-    let t = 0, i = 0, n = !1;
+    let e = 0, i = 0, s = !1;
     this.loadingChecker = setInterval(() => {
-      this.enableloadingChecker && (i = this.player.audio.currentTime, !n && i === t && !this.player.audio.paused && (this.player.container.classList.add("aplayer-loading"), n = !0), n && i > t && !this.player.audio.paused && (this.player.container.classList.remove("aplayer-loading"), n = !1), t = i);
+      this.enableloadingChecker && (i = this.player.audio.currentTime, !s && i === e && !this.player.audio.paused && (this.player.container.classList.add("aplayer-loading"), s = !0), s && i > e && !this.player.audio.paused && (this.player.container.classList.remove("aplayer-loading"), s = !1), e = i);
     }, 100);
   }
-  enable(t) {
-    this[`enable${t}Checker`] = !0, t === "fps" && this.initfpsChecker();
+  enable(e) {
+    this[`enable${e}Checker`] = !0, e === "fps" && this.initfpsChecker();
   }
-  disable(t) {
-    this[`enable${t}Checker`] = !1;
+  disable(e) {
+    this[`enable${e}Checker`] = !1;
   }
   destroy() {
-    this.types.forEach((t) => {
-      this[`enable${t}Checker`] = !1, this[`${t}Checker`] && clearInterval(this[`${t}Checker`]);
+    this.types.forEach((e) => {
+      this[`enable${e}Checker`] = !1, this[`${e}Checker`] && clearInterval(this[`${e}Checker`]);
     });
   }
 }
-const Bt = [
+const xt = [
   "destroy",
   "listshow",
   "listhide",
@@ -578,7 +437,7 @@ const Bt = [
   "noticehide",
   "lrcshow",
   "lrchide"
-], M = [
+], b = [
   "abort",
   "canplay",
   "canplaythrough",
@@ -603,78 +462,78 @@ const Bt = [
   "volumechange",
   "waiting"
 ];
-class Ht {
+class Mt {
   constructor() {
     this.events = {};
   }
-  on(t, i) {
-    this.type(t) && typeof i == "function" && (this.events[t] || (this.events[t] = []), this.events[t].push(i));
+  on(e, i) {
+    this.type(e) && typeof i == "function" && (this.events[e] || (this.events[e] = []), this.events[e].push(i));
   }
-  trigger(t, i) {
-    if (this.events[t] && this.events[t].length)
-      for (let n = 0; n < this.events[t].length; n++)
-        this.events[t][n](i);
+  trigger(e, i) {
+    if (this.events[e] && this.events[e].length)
+      for (let s = 0; s < this.events[e].length; s++)
+        this.events[e][s](i);
   }
-  type(t) {
-    return Bt.indexOf(t) !== -1 ? "player" : M.indexOf(t) !== -1 ? "audio" : (console.error(`Unknown event name: ${t}`), null);
+  type(e) {
+    return xt.indexOf(e) !== -1 ? "player" : b.indexOf(e) !== -1 ? "audio" : (console.error(`Unknown event name: ${e}`), null);
   }
 }
-var Z = { exports: {} };
-(function(e, t) {
-  (function(i, n) {
-    e.exports = n();
-  })(rt, function() {
+var V = { exports: {} };
+(function(t, e) {
+  (function(i, s) {
+    t.exports = s();
+  })(tt, function() {
     if (typeof window == "object" && !(document.querySelectorAll === void 0 || window.pageYOffset === void 0 || history.pushState === void 0)) {
-      var i = function(o, l) {
-        return o.nodeName === "HTML" ? -l : o.getBoundingClientRect().top + l;
-      }, n = function(o) {
-        return o < 0.5 ? 4 * o * o * o : (o - 1) * (2 * o - 2) * (2 * o - 2) + 1;
-      }, s = function(o, l, d, h) {
-        return d > h ? l : o + (l - o) * n(d / h);
-      }, a = function(o, l, d, h) {
-        l = l || 500, h = h || window;
-        var f = h.scrollTop || window.pageYOffset;
-        if (typeof o == "number")
-          var y = parseInt(o);
+      var i = function(n, r) {
+        return n.nodeName === "HTML" ? -r : n.getBoundingClientRect().top + r;
+      }, s = function(n) {
+        return n < 0.5 ? 4 * n * n * n : (n - 1) * (2 * n - 2) * (2 * n - 2) + 1;
+      }, a = function(n, r, d, h) {
+        return d > h ? r : n + (r - n) * s(d / h);
+      }, o = function(n, r, d, h) {
+        r = r || 500, h = h || window;
+        var v = h.scrollTop || window.pageYOffset;
+        if (typeof n == "number")
+          var f = parseInt(n);
         else
-          var y = i(o, f);
-        var q = Date.now(), E = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function(g) {
+          var f = i(n, v);
+        var M = Date.now(), T = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function(g) {
           window.setTimeout(g, 15);
-        }, I = function() {
-          var g = Date.now() - q;
-          h !== window ? h.scrollTop = s(f, y, g, l) : window.scroll(0, s(f, y, g, l)), g > l ? typeof d == "function" && d(o) : E(I);
+        }, O = function() {
+          var g = Date.now() - M;
+          h !== window ? h.scrollTop = a(v, f, g, r) : window.scroll(0, a(v, f, g, r)), g > r ? typeof d == "function" && d(n) : T(O);
         };
-        I();
-      }, r = function(o) {
-        if (!o.defaultPrevented) {
-          o.preventDefault(), location.hash !== this.hash && window.history.pushState(null, null, this.hash);
-          var l = document.getElementById(this.hash.substring(1));
-          if (!l)
+        O();
+      }, l = function(n) {
+        if (!n.defaultPrevented) {
+          n.preventDefault(), location.hash !== this.hash && window.history.pushState(null, null, this.hash);
+          var r = document.getElementById(this.hash.substring(1));
+          if (!r)
             return;
-          a(l, 500, function(d) {
+          o(r, 500, function(d) {
             location.replace("#" + d.id);
           });
         }
       };
       return document.addEventListener("DOMContentLoaded", function() {
-        for (var o = document.querySelectorAll('a[href^="#"]:not([href="#"])'), l, d = o.length; l = o[--d]; )
-          l.addEventListener("click", r, !1);
-      }), a;
+        for (var n = document.querySelectorAll('a[href^="#"]:not([href="#"])'), r, d = n.length; r = n[--d]; )
+          r.addEventListener("click", l, !1);
+      }), o;
     }
   });
-})(Z);
-var Ot = Z.exports;
-const At = /* @__PURE__ */ G(Ot);
-class St {
-  constructor(t) {
-    this.player = t, this.index = 0, this.audios = this.player.options.audio, this.bindEvents();
+})(V);
+var Tt = V.exports;
+const kt = /* @__PURE__ */ U(Tt);
+class qt {
+  constructor(e) {
+    this.player = e, this.index = 0, this.audios = this.player.options.audio, this.bindEvents();
   }
   bindEvents() {
-    this.player.template.list.addEventListener("click", (t) => {
+    this.player.template.list.addEventListener("click", (e) => {
       let i;
-      t.target.tagName.toUpperCase() === "LI" ? i = t.target : i = t.target.parentElement;
-      const n = parseInt(i.getElementsByClassName("aplayer-list-index")[0].innerHTML) - 1;
-      n !== this.index ? (this.switch(n), this.player.play()) : this.player.toggle();
+      e.target.tagName.toUpperCase() === "LI" ? i = e.target : i = e.target.parentElement;
+      const s = parseInt(i.getElementsByClassName("aplayer-list-index")[0].innerHTML) - 1;
+      s !== this.index ? (this.switch(s), this.player.play()) : this.player.toggle();
     });
   }
   show() {
@@ -686,151 +545,157 @@ class St {
   toggle() {
     this.player.template.list.classList.contains("aplayer-list-hide") ? this.show() : this.hide();
   }
-  add(t) {
+  add(e) {
     this.player.events.trigger("listadd", {
-      audios: t
-    }), Object.prototype.toString.call(t) !== "[object Array]" && (t = [t]), t.map((s) => (s.name = s.name || s.title || "Audio name", s.artist = s.artist || s.author || "Audio artist", s.cover = s.cover || s.pic, s.type = s.type || "normal", s));
-    const i = !(this.audios.length > 1), n = this.audios.length === 0;
-    this.player.template.listOl.innerHTML += Q({
+      audios: e
+    }), Object.prototype.toString.call(e) !== "[object Array]" && (e = [e]), e.map((a) => (a.name = a.name || a.title || "Audio name", a.artist = a.artist || a.author || "Audio artist", a.cover = a.cover || a.pic, a.type = a.type || "normal", a));
+    const i = !(this.audios.length > 1), s = this.audios.length === 0;
+    this.player.template.listOl.innerHTML += A({
       theme: this.player.options.theme,
-      audio: t,
+      audio: e,
       index: this.audios.length + 1
-    }), this.audios = this.audios.concat(t), i && this.audios.length > 1 && this.player.container.classList.add("aplayer-withlist"), this.player.randomOrder = J(this.audios.length), this.player.template.listCurs = this.player.container.querySelectorAll(".aplayer-list-cur"), this.player.template.listCurs[this.audios.length - 1].style.backgroundColor = t.theme || this.player.options.theme, n && (this.player.options.order === "random" ? this.switch(this.player.randomOrder[0]) : this.switch(0));
+    }), this.audios = this.audios.concat(e), i && this.audios.length > 1 && this.player.container.classList.add("aplayer-withlist"), this.player.randomOrder = j(this.audios.length), this.player.template.listCurs = this.player.container.querySelectorAll(".aplayer-list-cur"), this.player.template.listCurs[this.audios.length - 1].style.backgroundColor = e.theme || this.player.options.theme, s && (this.player.options.order === "random" ? this.switch(this.player.randomOrder[0]) : this.switch(0));
   }
-  remove(t) {
+  remove(e) {
     if (this.player.events.trigger("listremove", {
-      index: t
-    }), this.audios[t])
+      index: e
+    }), this.audios[e])
       if (this.audios.length > 1) {
         const i = this.player.container.querySelectorAll(".aplayer-list li");
-        i[t].remove(), this.audios.splice(t, 1), this.player.lrc && this.player.lrc.remove(t), t === this.index && (this.audios[t] ? this.switch(t) : this.switch(t - 1)), this.index > t && this.index--;
-        for (let n = t; n < i.length; n++)
-          i[n].getElementsByClassName("aplayer-list-index")[0].textContent = n;
+        i[e].remove(), this.audios.splice(e, 1), this.player.lrc && this.player.lrc.remove(e), e === this.index && (this.audios[e] ? this.switch(e) : this.switch(e - 1)), this.index > e && this.index--;
+        for (let s = e; s < i.length; s++)
+          i[s].getElementsByClassName("aplayer-list-index")[0].textContent = s;
         this.audios.length === 1 && this.player.container.classList.remove("aplayer-withlist"), this.player.template.listCurs = this.player.container.querySelectorAll(".aplayer-list-cur");
       } else
         this.clear();
   }
-  switch(t) {
+  switch(e) {
     if (this.player.events.trigger("listswitch", {
-      index: t
-    }), typeof t < "u" && this.audios[t]) {
-      this.index = t;
+      index: e
+    }), typeof e < "u" && this.audios[e]) {
+      this.index = e;
       const i = this.audios[this.index];
       this.player.template.pic.style.backgroundImage = i.cover ? `url('${i.cover}')` : "", this.player.theme(this.audios[this.index].theme || this.player.options.theme, this.index, !1), this.player.template.title.innerHTML = i.name, this.player.template.author.innerHTML = i.artist ? " - " + i.artist : "";
-      const n = this.player.container.getElementsByClassName("aplayer-list-light")[0];
-      n && n.classList.remove("aplayer-list-light"), this.player.container.querySelectorAll(".aplayer-list li")[this.index].classList.add("aplayer-list-light"), At(this.index * 33, 500, null, this.player.template.listOl), this.player.setAudio(i), this.player.lrc && this.player.lrc.switch(this.index), this.player.lrc && this.player.lrc.update(0), this.player.duration !== 1 && (this.player.template.dtime.innerHTML = v(this.player.duration));
+      const s = this.player.container.getElementsByClassName("aplayer-list-light")[0];
+      s && s.classList.remove("aplayer-list-light"), this.player.container.querySelectorAll(".aplayer-list li")[this.index].classList.add("aplayer-list-light"), kt(this.index * 33, 500, null, this.player.template.listOl), this.player.setAudio(i), this.player.lrc && this.player.lrc.switch(this.index), this.player.lrc && this.player.lrc.update(0), this.player.duration !== 1 && (this.player.template.dtime.innerHTML = m(this.player.duration));
     }
   }
   clear() {
-    this.player.events.trigger("listclear"), this.index = 0, this.player.container.classList.remove("aplayer-withlist"), this.player.pause(), this.audios = [], this.player.lrc && this.player.lrc.clear(), this.player.audio.src = "", this.player.template.listOl.innerHTML = "", this.player.template.pic.style.backgroundImage = "", this.player.theme(this.player.options.theme, this.index, !1), this.player.template.title.innerHTML = "No audio", this.player.template.author.innerHTML = "", this.player.bar.set("loaded", 0, "width"), this.player.template.dtime.innerHTML = v(0);
+    this.player.events.trigger("listclear"), this.index = 0, this.player.container.classList.remove("aplayer-withlist"), this.player.pause(), this.audios = [], this.player.lrc && this.player.lrc.clear(), this.player.audio.src = "", this.player.template.listOl.innerHTML = "", this.player.template.pic.style.backgroundImage = "", this.player.theme(this.player.options.theme, this.index, !1), this.player.template.title.innerHTML = "No audio", this.player.template.author.innerHTML = "", this.player.bar.set("loaded", 0, "width"), this.player.template.dtime.innerHTML = m(0);
   }
 }
-const m = [];
-function zt(e) {
-  e.audio = document.createElement("audio"), e.audio.preload = e.options.preload;
-  for (let t = 0; t < M.length; t++)
-    e.audio.addEventListener(M[t], (i) => {
-      e.events.trigger(M[t], i);
+const u = [];
+let L = B;
+function Bt(t) {
+  L = t;
+}
+function Et(t) {
+  t.audio = document.createElement("audio"), t.audio.preload = t.options.preload;
+  for (let e = 0; e < b.length; e++)
+    t.audio.addEventListener(b[e], (i) => {
+      t.events.trigger(b[e], i);
     });
-  e.volume(e.storage.get("volume"), !0);
+  t.volume(t.storage.get("volume"), !0);
 }
-function Ct(e) {
-  e.on("play", () => {
-    e.paused && V(e);
-  }), e.on("pause", () => {
-    e.paused || C(e);
-  }), e.on("timeupdate", () => {
-    if (!e.disableTimeupdate) {
-      e.bar.set("played", e.audio.currentTime / e.duration, "width"), e.lrc && e.lrc.update();
-      const i = v(e.audio.currentTime);
-      e.template.ptime.innerHTML !== i && (e.template.ptime.innerHTML = i);
+function Ht(t) {
+  t.on("play", () => {
+    t.paused && X(t);
+  }), t.on("pause", () => {
+    t.paused || E(t);
+  }), t.on("timeupdate", () => {
+    if (!t.disableTimeupdate) {
+      t.bar.set("played", t.audio.currentTime / t.duration, "width"), t.lrc && t.lrc.update();
+      const i = m(t.audio.currentTime);
+      t.template.ptime.innerHTML !== i && (t.template.ptime.innerHTML = i);
     }
-  }), e.on("durationchange", () => {
-    e.duration !== 1 && (e.template.dtime.innerHTML = v(e.duration));
-  }), e.on("progress", () => {
-    const i = e.audio.buffered.length ? e.audio.buffered.end(e.audio.buffered.length - 1) / e.duration : 0;
-    e.bar.set("loaded", i, "width");
+  }), t.on("durationchange", () => {
+    t.duration !== 1 && (t.template.dtime.innerHTML = m(t.duration));
+  }), t.on("progress", () => {
+    const i = t.audio.buffered.length ? t.audio.buffered.end(t.audio.buffered.length - 1) / t.duration : 0;
+    t.bar.set("loaded", i, "width");
   });
-  let t;
-  e.on("error", () => {
-    e.list.audios.length > 1 ? (e.notice("An audio error has occurred, player will skip forward in 2 seconds."), t = setTimeout(() => {
-      e.skipForward(), e.paused || e.play();
-    }, 2e3)) : e.list.audios.length === 1 && e.notice("An audio error has occurred.");
-  }), e.events.on("listswitch", () => {
-    t && clearTimeout(t);
-  }), e.on("ended", () => {
-    e.options.loop === "none" ? e.options.order === "list" ? e.list.index < e.list.audios.length - 1 ? (e.list.switch((e.list.index + 1) % e.list.audios.length), e.play()) : (e.list.switch((e.list.index + 1) % e.list.audios.length), e.pause()) : e.options.order === "random" && (e.randomOrder.indexOf(e.list.index) < e.randomOrder.length - 1 ? (e.list.switch(e.nextIndex()), e.play()) : (e.list.switch(e.nextIndex()), e.pause())) : e.options.loop === "one" ? (e.list.switch(e.list.index), e.play()) : e.options.loop === "all" && (e.skipForward(), e.play());
+  let e;
+  t.on("error", () => {
+    t.list.audios.length > 1 ? (t.notice("An audio error has occurred, player will skip forward in 2 seconds."), e = setTimeout(() => {
+      t.skipForward(), t.paused || t.play();
+    }, 2e3)) : t.list.audios.length === 1 && t.notice("An audio error has occurred.");
+  }), t.events.on("listswitch", () => {
+    e && clearTimeout(e);
+  }), t.on("ended", () => {
+    t.options.loop === "none" ? t.options.order === "list" ? t.list.index < t.list.audios.length - 1 ? (t.list.switch((t.list.index + 1) % t.list.audios.length), t.play()) : (t.list.switch((t.list.index + 1) % t.list.audios.length), t.pause()) : t.options.order === "random" && (t.randomOrder.indexOf(t.list.index) < t.randomOrder.length - 1 ? (t.list.switch(t.nextIndex()), t.play()) : (t.list.switch(t.nextIndex()), t.pause())) : t.options.loop === "one" ? (t.list.switch(t.list.index), t.play()) : t.options.loop === "all" && (t.skipForward(), t.play());
   });
 }
-function V(e) {
-  if (e.paused && (e.paused = !1, e.template.button.classList.remove("aplayer-play"), e.template.button.classList.add("aplayer-pause"), e.template.button.innerHTML = "", setTimeout(() => {
-    e.template.button.innerHTML = j;
-  }, 100), e.template.skipPlayButton.innerHTML = j), e.timer.enable("loading"), e.options.mutex)
-    for (let t = 0; t < m.length; t++)
-      e !== m[t] && m[t].pause();
+function X(t) {
+  if (t.paused && (t.paused = !1, t.template.button.classList.remove("aplayer-play"), t.template.button.classList.add("aplayer-pause"), t.template.button.innerHTML = "", setTimeout(() => {
+    t.template.button.innerHTML = z;
+  }, 100), t.template.skipPlayButton.innerHTML = z), t.timer.enable("loading"), t.options.mutex)
+    for (let e = 0; e < u.length; e++)
+      t !== u[e] && u[e].pause();
 }
-function C(e) {
-  e.paused || (e.paused = !0, e.template.button.classList.remove("aplayer-pause"), e.template.button.classList.add("aplayer-play"), e.template.button.innerHTML = "", setTimeout(() => {
-    e.template.button.innerHTML = p;
-  }, 100), e.template.skipPlayButton.innerHTML = p), e.container.classList.remove("aplayer-loading"), e.timer.disable("loading");
+function E(t) {
+  t.paused || (t.paused = !0, t.template.button.classList.remove("aplayer-pause"), t.template.button.classList.add("aplayer-play"), t.template.button.innerHTML = "", setTimeout(() => {
+    t.template.button.innerHTML = x;
+  }, 100), t.template.skipPlayButton.innerHTML = x), t.container.classList.remove("aplayer-loading"), t.timer.disable("loading");
 }
-class Ft {
+class At {
   /**
    * APlayer constructor function
    *
    * @param {Object} options - See README
    * @constructor
    */
-  constructor(t) {
-    if (this.options = ot(t), this.container = this.options.container, this.paused = !0, this.playedPromise = c.resolve(), this.mode = "normal", this.randomOrder = J(this.options.audio.length), this.container.classList.add("aplayer"), this.options.lrcType && !this.options.fixed && this.container.classList.add("aplayer-withlrc"), this.options.audio.length > 1 && this.container.classList.add("aplayer-withlist"), w && this.container.classList.add("aplayer-mobile"), this.arrow = this.container.offsetWidth <= 300, this.arrow && this.container.classList.add("aplayer-arrow"), this.container = this.options.container, this.options.lrcType === 2 || this.options.lrcType === !0) {
-      const i = this.container.getElementsByClassName("aplayer-lrc-content");
-      for (let n = 0; n < i.length; n++)
-        this.options.audio[n] && (this.options.audio[n].lrc = i[n].innerHTML);
+  constructor(e) {
+    e.fixed = !1;
+    const i = L();
+    if (L != B && (e.fixed = !0, L = B), this.options = _(e), this.container = this.options.container, this.paused = !0, this.playedPromise = Promise.resolve(), this.mode = "normal", this.randomOrder = j(this.options.audio.length), this.container.classList.add("aplayer"), this.options.lrcType && !this.options.fixed && this.container.classList.add("aplayer-withlrc"), this.options.audio.length > 1 && this.container.classList.add("aplayer-withlist"), y && this.container.classList.add("aplayer-mobile"), this.arrow = this.container.offsetWidth <= 300, this.arrow && this.container.classList.add("aplayer-arrow"), this.container = this.options.container, this.options.lrcType === 2 || this.options.lrcType === !0) {
+      const s = this.container.getElementsByClassName("aplayer-lrc-content");
+      for (let a = 0; a < s.length; a++)
+        this.options.audio[a] && (this.options.audio[a].lrc = s[a].innerHTML);
     }
-    this.template = pt(this.container, this.options, this.randomOrder), this.options.fixed && (this.container.classList.add("aplayer-fixed"), this.template.body.style.width = this.template.body.offsetWidth - 18 + "px"), this.options.mini && (this.setMode("mini"), this.template.info.style.display = "block"), this.template.info.offsetWidth < 200 && this.template.time.classList.add("aplayer-time-narrow"), this.options.lrcType && (this.lrc = new ft({
+    this.template = lt(this.container, this.options, this.randomOrder, i), this.options.fixed && (this.container.classList.add("aplayer-fixed"), this.template.body.style.width = this.template.body.offsetWidth - 18 + "px"), this.options.mini && (this.setMode("mini"), this.template.info.style.display = "block"), this.template.info.offsetWidth < 200 && this.template.time.classList.add("aplayer-time-narrow"), this.options.lrcType && (this.lrc = new dt({
       container: this.template.lrc,
       async: this.options.lrcType === 3,
       player: this
-    })), this.events = new Ht(), this.storage = new vt(this), this.bar = new mt(this.template), this.controller = new yt(this), this.timer = new Et(this), this.list = new St(this), zt(this), Ct(this), this.options.order === "random" ? this.list.switch(this.randomOrder[0]) : this.list.switch(0), this.options.autoplay && this.play(), m.push(this);
+    })), this.events = new Mt(), this.storage = new ht(this), this.bar = new rt(this.template), this.controller = new ct(this), this.timer = new Lt(this), this.list = new qt(this), Et(this), Ht(this), this.options.order === "random" ? this.list.switch(this.randomOrder[0]) : this.list.switch(0), this.options.autoplay && this.play(), u.push(this);
   }
-  setAudio(t) {
+  setAudio(e) {
     this.hls && (this.hls.destroy(), this.hls = null);
-    let i = t.type;
-    this.options.customAudioType && this.options.customAudioType[i] ? Object.prototype.toString.call(this.options.customAudioType[i]) === "[object Function]" ? this.options.customAudioType[i](this.audio, t, this) : console.error(`Illegal customType: ${i}`) : ((!i || i === "auto") && (/m3u8(#|\?|$)/i.exec(t.url) ? i = "hls" : i = "normal"), i === "hls" ? Hls.isSupported() ? (this.hls = new Hls(), this.hls.loadSource(t.url), this.hls.attachMedia(this.audio)) : this.audio.canPlayType("application/x-mpegURL") || this.audio.canPlayType("application/vnd.apple.mpegURL") ? this.audio.src = t.url : this.notice("Error: HLS is not supported.") : i === "normal" && (this.audio.src = t.url)), this.seek(0), this.paused || this.audio.play();
+    let i = e.type;
+    this.options.customAudioType && this.options.customAudioType[i] ? Object.prototype.toString.call(this.options.customAudioType[i]) === "[object Function]" ? this.options.customAudioType[i](this.audio, e, this) : console.error(`Illegal customType: ${i}`) : ((!i || i === "auto") && (/m3u8(#|\?|$)/i.exec(e.url) ? i = "hls" : i = "normal"), i === "hls" ? Hls.isSupported() ? (this.hls = new Hls(), this.hls.loadSource(e.url), this.hls.attachMedia(this.audio)) : this.audio.canPlayType("application/x-mpegURL") || this.audio.canPlayType("application/vnd.apple.mpegURL") ? this.audio.src = e.url : this.notice("Error: HLS is not supported.") : i === "normal" && (this.audio.src = e.url)), this.seek(0), this.paused || this.audio.play();
   }
-  theme(t = this.list.audios[this.list.index].theme || this.options.theme, i = this.list.index, n = !0) {
-    n && this.list.audios[i] && (this.list.audios[i].theme = t), this.template.listCurs[i] && (this.template.listCurs[i].style.backgroundColor = t), i === this.list.index && (this.template.pic.style.backgroundColor = t, this.template.played.style.background = t, this.template.thumb.style.background = t, this.template.volume.style.background = t);
+  theme(e = this.list.audios[this.list.index].theme || this.options.theme, i = this.list.index, s = !0) {
+    s && this.list.audios[i] && (this.list.audios[i].theme = e), this.template.listCurs[i] && (this.template.listCurs[i].style.backgroundColor = e), i === this.list.index && (this.template.pic.style.backgroundColor = e, this.template.played.style.background = e, this.template.thumb.style.background = e, this.template.volume.style.background = e);
   }
-  seek(t) {
-    t = Math.max(t, 0), t = Math.min(t, this.duration), this.audio.currentTime = t, this.bar.set("played", t / this.duration, "width"), this.template.ptime.innerHTML = v(t);
+  seek(e) {
+    e = Math.max(e, 0), e = Math.min(e, this.duration), this.audio.currentTime = e, this.bar.set("played", e / this.duration, "width"), this.template.ptime.innerHTML = m(e);
   }
   get duration() {
     return isNaN(this.audio.duration) ? 0 : this.audio.duration;
   }
   play() {
-    V(this);
-    const t = this.audio.play();
-    t && t.catch((i) => {
-      console.warn(i), i.name === "NotAllowedError" && C(this);
+    X(this);
+    const e = this.audio.play();
+    e && e.catch((i) => {
+      console.warn(i), i.name === "NotAllowedError" && E(this);
     });
   }
   pause() {
-    C(this), this.audio.pause();
+    E(this), this.audio.pause();
   }
   switchVolumeIcon() {
-    this.volume() >= 0.95 ? this.template.volumeButton.innerHTML = nt : this.volume() > 0 ? this.template.volumeButton.innerHTML = A : this.template.volumeButton.innerHTML = at;
+    this.volume() >= 0.95 ? this.template.volumeButton.innerHTML = F : this.volume() > 0 ? this.template.volumeButton.innerHTML = R : this.template.volumeButton.innerHTML = J;
   }
   /**
    * Set volume
    */
-  volume(t, i) {
-    return t = parseFloat(t), isNaN(t) || (t = Math.max(t, 0), t = Math.min(t, 1), this.bar.set("volume", t, "height"), i || this.storage.set("volume", t), this.audio.volume = t, this.audio.muted && (this.audio.muted = !1), this.switchVolumeIcon()), this.audio.muted ? 0 : this.audio.volume;
+  volume(e, i) {
+    return e = parseFloat(e), isNaN(e) || (e = Math.max(e, 0), e = Math.min(e, 1), this.bar.set("volume", e, "height"), i || this.storage.set("volume", e), this.audio.volume = e, this.audio.muted && (this.audio.muted = !1), this.switchVolumeIcon()), this.audio.muted ? 0 : this.audio.volume;
   }
   /**
    * bind events
    */
-  on(t, i) {
-    this.events.on(t, i);
+  on(e, i) {
+    this.events.on(e, i);
   }
   /**
    * toggle between play and pause
@@ -839,29 +704,29 @@ class Ft {
     this.template.button.classList.contains("aplayer-play") ? this.play() : this.template.button.classList.contains("aplayer-pause") && this.pause();
   }
   // abandoned
-  switchAudio(t) {
-    this.list.switch(t);
+  switchAudio(e) {
+    this.list.switch(e);
   }
   // abandoned
-  addAudio(t) {
-    this.list.add(t);
+  addAudio(e) {
+    this.list.add(e);
   }
   // abandoned
-  removeAudio(t) {
-    this.list.remove(t);
+  removeAudio(e) {
+    this.list.remove(e);
   }
   /**
    * destroy this player
    */
   destroy() {
-    m.splice(m.indexOf(this), 1), this.pause(), this.container.innerHTML = "", this.audio.src = "", this.timer.destroy(), this.events.trigger("destroy");
+    u.splice(u.indexOf(this), 1), this.pause(), this.container.innerHTML = "", this.audio.src = "", this.timer.destroy(), this.events.trigger("destroy");
   }
-  setMode(t = "normal") {
-    this.mode = t, t === "mini" ? this.container.classList.add("aplayer-narrow") : t === "normal" && this.container.classList.remove("aplayer-narrow");
+  setMode(e = "normal") {
+    this.mode = e, e === "mini" ? this.container.classList.add("aplayer-narrow") : e === "normal" && this.container.classList.remove("aplayer-narrow");
   }
-  notice(t, i = 2e3, n = 0.8) {
-    this.template.notice.innerHTML = t, this.template.notice.style.opacity = n, this.noticeTime && clearTimeout(this.noticeTime), this.events.trigger("noticeshow", {
-      text: t
+  notice(e, i = 2e3, s = 0.8) {
+    this.template.notice.innerHTML = e, this.template.notice.style.opacity = s, this.noticeTime && clearTimeout(this.noticeTime), this.events.trigger("noticeshow", {
+      text: e
     }), i && (this.noticeTime = setTimeout(() => {
       this.template.notice.style.opacity = 0, this.events.trigger("noticehide");
     }, i));
@@ -871,8 +736,8 @@ class Ft {
       if (this.options.order === "list")
         return this.list.index - 1 < 0 ? this.list.audios.length - 1 : this.list.index - 1;
       if (this.options.order === "random") {
-        const t = this.randomOrder.indexOf(this.list.index);
-        return t === 0 ? this.randomOrder[this.randomOrder.length - 1] : this.randomOrder[t - 1];
+        const e = this.randomOrder.indexOf(this.list.index);
+        return e === 0 ? this.randomOrder[this.randomOrder.length - 1] : this.randomOrder[e - 1];
       }
     } else
       return 0;
@@ -882,8 +747,8 @@ class Ft {
       if (this.options.order === "list")
         return (this.list.index + 1) % this.list.audios.length;
       if (this.options.order === "random") {
-        const t = this.randomOrder.indexOf(this.list.index);
-        return t === this.randomOrder.length - 1 ? this.randomOrder[0] : this.randomOrder[t + 1];
+        const e = this.randomOrder.indexOf(this.list.index);
+        return e === this.randomOrder.length - 1 ? this.randomOrder[0] : this.randomOrder[e + 1];
       }
     } else
       return 0;
@@ -895,6 +760,10 @@ class Ft {
     this.list.switch(this.nextIndex());
   }
 }
+const Ot = () => {
+  Bt(ot);
+};
 export {
-  Ft as default
+  At as default,
+  Ot as enableFixedModeOnce
 };

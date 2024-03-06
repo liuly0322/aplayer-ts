@@ -12,7 +12,6 @@ export class Audio {
 
 interface APlayerOptions {
   container?: HTMLElement;
-  fixed?: boolean;
   mini?: boolean;
   autoplay?: boolean;
   theme?: string;
@@ -28,6 +27,8 @@ interface APlayerOptions {
   storageName?: string;
   customAudioType?: Record<string, () => void>;
 }
+
+export const enableFixedModeOnce: () => void;
 
 export default class APlayer {
   audio: HTMLAudioElement;

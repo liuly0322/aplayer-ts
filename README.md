@@ -5,7 +5,7 @@
 
 > Wow, such a lovely HTML5 music player
 
-Fully ESM version of [APlayer](https://github.com/MoePlayer/APlayer/) with TypeScript support. With Rollup and esbuild, [index.min.js](build/index.min.js) is 30%+ smaller than the original [APlayer.min.js](dist/APlayer.min.js), from 58KB to 38KB or less.
+Fully ESM version of [APlayer](https://github.com/MoePlayer/APlayer/) with TypeScript support. With Rollup and esbuild, [index.min.js](build/index.min.js) is 40% smaller than the original [APlayer.min.js](dist/APlayer.min.js), from 58KB to 35KB or less.
 
 ## Why this
 
@@ -13,8 +13,13 @@ See this [blog post](https://blog.liuly.moe/posts/tree-shaking).
 
 1. TypeScript
 2. ESM (APlayer only exports `APlayer.min.js`, which is not friendly to code optimization)
-
-APlayer relies on Webpack to import svg and art-template files. This package has already transformed these files into JavaScript code (see [utils](./utils)), so you don't need to worry about the compatibility of your bundler.
+3. Tree-Shaking, currently support fixed mode:
+   ```shell
+   # not import enableFixedModeOnce
+   demo_build/assets/index-C-Rm7Iso.js   35.17 kB │ gzip: 10.23 kB
+   # import enableFixedModeOnce
+   demo_build/assets/index-BR1t-qnt.js   36.21 kB │ gzip: 10.30 kB
+   ```
 
 `APlayer.min.js` is still in `dist` folder, but by default this package exports `src/js/index.js`.
 
@@ -24,12 +29,17 @@ It also includes a patch which fixes [APlayer#283](https://github.com/DIYgod/APl
 
 ```TypeScript
 import APlayer from 'aplayer-ts'
+// import { enableFixedModeOnce } from 'aplayer-ts'
 import 'aplayer-ts/dist/APlayer.min.css'
 ```
 
 Enjoy!
 
 ```TypeScript
+// if you want to enable fixed mode
+// instead of set options in APlayer constructor, use:
+// enableFixedModeOnce()
+// add this call before each APlayer instance you want to enable fixed mode
 const instance = new APlayer({ /* refer to the aplayer doc */ })
 ```
 
@@ -47,3 +57,5 @@ Package build:
 ```bash
 pnpm build       # ./build/index.{min}.js
 ```
+
+APlayer relies on Webpack to import svg and art-template files. This package has already transformed these files into JavaScript code (see [utils](./utils)), so you don't need to worry about the compatibility of your bundler.

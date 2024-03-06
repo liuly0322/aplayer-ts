@@ -1,6 +1,6 @@
 import tplPlayer from '../template/player.js';
 
-function Template(container, options, randomOrder) {
+function Template(container, options, randomOrder, tplRenderers) {
     let cover = '';
     if (options.audio.length) {
         if (options.order === 'random') {
@@ -13,7 +13,8 @@ function Template(container, options, randomOrder) {
 
     container.innerHTML = tplPlayer({
         options: options,
-        cover: cover
+        cover: cover,
+        ...tplRenderers
     });
 
     const selectElement = (selector) => container.querySelector(selector);
