@@ -1,6 +1,6 @@
 {
   "name": "aplayer-ts",
-  "version": "1.10.1-10",
+  "version": "2.0.0",
   "description": "TypeScript interface for aplayer",
   "main": "src/js/index.js",
   "type": "module",
