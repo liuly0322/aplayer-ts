@@ -1,5 +1,3 @@
-import Promise from 'promise-polyfill';
-
 import { secondToTime, isMobile, randomOrder } from './utils';
 import { pause, play, volumeDown, volumeOff, volumeUp } from './icons';
 import handleOption from './options';

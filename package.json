@@ -33,7 +33,6 @@
   "homepage": "https://github.com/liuly0322/aplayer-ts#readme",
   "dependencies": {
     "art-template": "4.12.2",
-    "promise-polyfill": "7.1.0",
     "smoothscroll": "0.4.0"
   },
   "devDependencies": {

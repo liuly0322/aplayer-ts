@@ -8,9 +8,6 @@ dependencies:
   art-template:
     specifier: 4.12.2
     version: 4.12.2
-  promise-polyfill:
-    specifier: 7.1.0
-    version: 7.1.0
   smoothscroll:
     specifier: 0.4.0
     version: 0.4.0
@@ -793,10 +790,6 @@ packages:
   /prelude-ls@1.1.2:
     resolution: {integrity: sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==}
     engines: {node: '>= 0.8.0'}
-    dev: false
-
-  /promise-polyfill@7.1.0:
-    resolution: {integrity: sha512-P6NJ2wU/8fac44ENORsuqT8TiolKGB2u0fEClPtXezn7w5cmLIjM/7mhPlTebke2EPr6tmqZbXvnX0TxwykGrg==}
     dev: false
 
   /relateurl@0.2.7:
