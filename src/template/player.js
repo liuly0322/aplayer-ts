@@ -4,10 +4,10 @@ import listItem from './list-item.js';
 export default function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', options = $data.options, cover = $data.cover, $escape = $imports.$escape, icons = $data.icons, $$blocks = arguments[1] || {}, include = function (content) {
+    var $$out = '', options = $data.options, cover = $data.cover, $escape = $imports.$escape, include = function (content) {
         $$out += content;
         return $$out;
-    }, getObject = $data.getObject, theme = $data.theme, audio = $data.audio, index = $data.index;
+    };
     if (!options.fixed) {
         $$out += ' <div class="aplayer-body"><div class="aplayer-pic" style="';
         if (cover) {
@@ -72,11 +72,11 @@ export default function ($data) {
             $$out += '" ';
         }
         $$out += '> ';
-        include(listItem(getObject({
+        include(listItem({
             theme: options.theme,
             audio: options.audio,
             index: 1
-        })));
+        }));
         $$out += ' </ol></div> ';
     } else {
         $$out += ' <div class="aplayer-list';
@@ -96,11 +96,11 @@ export default function ($data) {
             $$out += '" ';
         }
         $$out += '> ';
-        include(listItem(getObject({
+        include(listItem({
             theme: options.theme,
             audio: options.audio,
             index: 1
-        })));
+        }));
         $$out += ' </ol></div><div class="aplayer-body"><div class="aplayer-pic" style="';
         if (cover) {
             $$out += 'background-image:url(&quot;';

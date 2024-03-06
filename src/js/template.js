@@ -13,8 +13,7 @@ function Template(container, options, randomOrder) {
 
     container.innerHTML = tplPlayer({
         options: options,
-        cover: cover,
-        getObject: (obj) => obj,
+        cover: cover
     });
 
     const selectElement = (selector) => container.querySelector(selector);
