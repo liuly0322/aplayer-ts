@@ -32,3 +32,18 @@ Enjoy!
 ```TypeScript
 const instance = new APlayer({ /* refer to the aplayer doc */ })
 ```
+
+## Development
+
+Demo website:
+
+```bash
+pnpm dev         # start a dev server
+pnpm build:demo  # build the demo website (to see output size)
+```
+
+Package build:
+
+```bash
+pnpm build       # ./build/index.{min}.js
+```

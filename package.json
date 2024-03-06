@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "build": "vite build",
-    "dev": "vite",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:demo": "vite  build --config vite-dev.config.js",
+    "dev": "vite"
   },
   "repository": {
     "url": "git+https://github.com/liuly0322/aplayer-ts",
