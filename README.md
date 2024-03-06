@@ -5,7 +5,7 @@
 
 > Wow, such a lovely HTML5 music player
 
-Fully ESM version of [APlayer](https://github.com/MoePlayer/APlayer/) with TypeScript support. Generated bundle is 30% smaller than `APlayer.min.js` with Rollup.
+Fully ESM version of [APlayer](https://github.com/MoePlayer/APlayer/) with TypeScript support. With Rollup and esbuild, [index.min.js](build/index.min.js) is 30%+ smaller than the original [APlayer.min.js](dist/APlayer.min.js), from 58KB to 39KB or less.
 
 ## Why this
 
