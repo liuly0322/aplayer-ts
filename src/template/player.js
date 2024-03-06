@@ -96,7 +96,7 @@ export default function ($data) {
             $$out += '" ';
         }
         $$out += '> ';
-        include(require('./list-item.art')(getObject({
+        include(listItem(getObject({
             theme: options.theme,
             audio: options.audio,
             index: 1
