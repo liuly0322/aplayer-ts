@@ -1,3 +1,15 @@
+export function handleAudioOption(audio) {
+    if (Object.prototype.toString.call(audio) !== '[object Array]') {
+        audio = [audio];
+    }
+    return audio.map((item) => ({
+        name: item.name || item.title || 'Audio name',
+        artist: item.artist || item.author || 'Audio artist',
+        cover: item.cover || item.pic,
+        type: item.type || 'normal'
+    }));
+}
+
 export default (options) => {
 
     // default options
@@ -20,19 +32,7 @@ export default (options) => {
     };
 
     options = Object.assign(defaultOption, options);
-
-    if (Object.prototype.toString.call(options.audio) !== '[object Array]') {
-        options.audio = [options.audio];
-    }
-
-    options.audio.map((item) => {
-        item.name = item.name || item.title || 'Audio name';
-        item.artist = item.artist || item.author || 'Audio artist';
-        item.cover = item.cover || item.pic;
-        item.type = item.type || 'normal';
-        return item;
-    });
-
+    options.audio = handleAudioOption(options.audio);
     if (options.audio.length <= 1 && options.loop === 'one') {
         options.loop = 'all';
     }

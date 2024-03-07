@@ -1,5 +1,6 @@
 import tplListItem from '../template/list-item.js';
 import { secondToTime, randomOrder } from './utils';
+import { handleAudioOption } from './options';
 import smoothScroll from 'smoothscroll';
 
 class List {
@@ -55,17 +56,7 @@ class List {
         this.player.events.trigger('listadd', {
             audios: audios,
         });
-
-        if (Object.prototype.toString.call(audios) !== '[object Array]') {
-            audios = [audios];
-        }
-        audios.map((item) => {
-            item.name = item.name || item.title || 'Audio name';
-            item.artist = item.artist || item.author || 'Audio artist';
-            item.cover = item.cover || item.pic;
-            item.type = item.type || 'normal';
-            return item;
-        });
+        audios = handleAudioOption(audios);
 
         const wasSingle = !(this.audios.length > 1);
         const wasEmpty = this.audios.length === 0;
