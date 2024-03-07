@@ -237,8 +237,8 @@ class APlayer {
         this.storage = VolumnStorage(this);
         this.timer = Timer(this);
         this.events = Events();
+        this.bar = Bar(this.template);
 
-        this.bar = new Bar(this.template);
         this.controller = new Controller(this);
         this.list = new List(this);
 

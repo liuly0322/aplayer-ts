@@ -132,4 +132,4 @@ export default function ($data) {
     $$out += right;
     $data.injectPointC(options, cover, include);
     return $$out;
-};
+}

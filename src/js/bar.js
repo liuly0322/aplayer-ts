@@ -1,10 +1,6 @@
-class Bar {
-    constructor (template) {
-        this.elements = {};
-        this.elements.volume = template.volume;
-        this.elements.played = template.played;
-        this.elements.loaded = template.loaded;
-    }
+export default (template) => {
+    // type: volume, played, loaded
+    const elements = { ...template };
 
     /**
      * Update progress
@@ -13,15 +9,14 @@ class Bar {
      * @param {Number} percentage
      * @param {String} direction - Point out the direction of this bar, Should be height or width
      */
-    set (type, percentage, direction) {
+    function set(type, percentage, direction) {
         percentage = Math.max(percentage, 0);
         percentage = Math.min(percentage, 1);
-        this.elements[type].style[direction] = percentage * 100 + '%';
+        elements[type].style[direction] = percentage * 100 + '%';
     }
 
-    get (type, direction) {
-        return parseFloat(this.elements[type].style[direction]) / 100;
+    function get(type, direction) {
+        return parseFloat(elements[type].style[direction]) / 100;
     }
+    return { get, set }
 }
-
-export default Bar;
