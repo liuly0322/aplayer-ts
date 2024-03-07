@@ -12,29 +12,25 @@ export const audioEvents = [
     'timeupdate', 'volumechange', 'waiting'
 ];
 
-class Events {
-    constructor() {
-        this.events = {};
-    }
+export default () => {
+    const events = {};
 
-    on(name, callback) {
-        if (this.type(name) && typeof callback === 'function') {
-            if (!this.events[name]) {
-                this.events[name] = [];
+    function on(name, callback) {
+        if (type(name) && typeof callback === 'function') {
+            if (!events[name]) {
+                events[name] = [];
             }
-            this.events[name].push(callback);
+            events[name].push(callback);
         }
     }
-
-    trigger(name, data) {
-        if (this.events[name] && this.events[name].length) {
-            for (let i = 0; i < this.events[name].length; i++) {
-                this.events[name][i](data);
+    function trigger(name, data) {
+        if (events[name] && events[name].length) {
+            for (let i = 0; i < events[name].length; i++) {
+                events[name][i](data);
             }
         }
     }
-
-    type(name) {
+    function type(name) {
         if (playerEvents.indexOf(name) !== -1) {
             return 'player';
         }
@@ -45,6 +41,6 @@ class Events {
         console.error(`Unknown event name: ${name}`);
         return null;
     }
+    return { on, trigger, type }
 }
 
-export default Events;

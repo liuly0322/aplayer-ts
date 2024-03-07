@@ -12,7 +12,7 @@ export function secondToTime(second) {
     const min = Math.floor((second - hour * 3600) / 60);
     const sec = Math.floor(second - hour * 3600 - min * 60);
     return (hour > 0 ? [hour, min, sec] : [min, sec]).map(add0).join(':');
-};
+}
 
 /**
  * control play progress
@@ -35,7 +35,7 @@ export function getElementViewLeft(element) {
         }
     }
     return actualLeft - elementScrollLeft;
-};
+}
 
 export function getElementViewTop(element, noScrollTop) {
     let actualTop = element.offsetTop;
@@ -47,16 +47,7 @@ export function getElementViewTop(element, noScrollTop) {
     }
     elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop;
     return noScrollTop ? actualTop : actualTop - elementScrollTop;
-};
-
-
-export const storage = {
-    set: (key, value) => {
-        localStorage.setItem(key, value);
-    },
-
-    get: (key) => localStorage.getItem(key)
-};
+}
 
 export const nameMap = {
     dragStart: isMobile ? 'touchstart' : 'mousedown',

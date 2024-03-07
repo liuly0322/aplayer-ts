@@ -4,7 +4,7 @@ import handleOption from './options';
 import Template from './template';
 import { notFixedModeTplRenderers } from '../template/player';
 import Bar from './bar';
-import Storage from './storage';
+import VolumnStorage from './volumeStorage';
 import Lrc from './lrc';
 import Controller from './controller';
 import Timer from './timer';
@@ -28,7 +28,7 @@ function initAudio(player) {
         });
     }
 
-    player.volume(player.storage.get('volume'), true);
+    player.volume(player.storage.getVolume(), true);
 }
 
 function bindEvents(player) {
@@ -135,7 +135,7 @@ function setUIPlaying(player) {
         player.template.skipPlayButton.innerHTML = pause;
     }
 
-    player.timer.enable('loading');
+    player.timer.enable();
 
     if (player.options.mutex) {
         for (let i = 0; i < instances.length; i++) {
@@ -160,7 +160,7 @@ function setUIPaused(player) {
     }
 
     player.container.classList.remove('aplayer-loading');
-    player.timer.disable('loading');
+    player.timer.disable();
 }
 
 class APlayer {
@@ -233,11 +233,13 @@ class APlayer {
                 player: this,
             });
         }
-        this.events = new Events();
-        this.storage = new Storage(this);
+
+        this.storage = VolumnStorage(this);
+        this.timer = Timer(this);
+        this.events = Events();
+
         this.bar = new Bar(this.template);
         this.controller = new Controller(this);
-        this.timer = new Timer(this);
         this.list = new List(this);
 
         initAudio(this);
@@ -281,7 +283,9 @@ class APlayer {
                 }
             }
             if (type === 'hls') {
+                // eslint-disable-next-line no-undef
                 if (Hls.isSupported()) {
+                    // eslint-disable-next-line no-undef
                     this.hls = new Hls();
                     this.hls.loadSource(audio.url);
                     this.hls.attachMedia(this.audio);
@@ -370,7 +374,7 @@ class APlayer {
             percentage = Math.min(percentage, 1);
             this.bar.set('volume', percentage, 'height');
             if (!nostorage) {
-                this.storage.set('volume', percentage);
+                this.storage.setVolume(percentage);
             }
 
             this.audio.volume = percentage;

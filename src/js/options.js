@@ -18,11 +18,8 @@ export default (options) => {
         audio: options.music || [],
         storageName: 'aplayer-setting'
     };
-    for (const defaultKey in defaultOption) {
-        if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {
-            options[defaultKey] = defaultOption[defaultKey];
-        }
-    }
+
+    options = Object.assign(defaultOption, options);
 
     if (Object.prototype.toString.call(options.audio) !== '[object Array]') {
         options.audio = [options.audio];
