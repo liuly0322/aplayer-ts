@@ -181,7 +181,6 @@ class APlayer {
         this.options = handleOption(options);
         this.container = this.options.container;
         this.paused = true;
-        this.playedPromise = Promise.resolve();
         this.mode = 'normal';
 
         this.randomOrder = randomOrder(this.options.audio.length);
