@@ -196,8 +196,8 @@ class APlayer {
         if (isMobile) {
             this.container.classList.add('aplayer-mobile');
         }
-        this.arrow = this.container.offsetWidth <= 300;
-        if (this.arrow) {
+        const arrow = this.container.offsetWidth <= 300;
+        if (arrow) {
             this.container.classList.add('aplayer-arrow');
         }
 
