@@ -11,11 +11,7 @@ function Template(container, options, randomOrder, tplRenderers) {
         }
     }
 
-    container.innerHTML = tplPlayer({
-        options: options,
-        cover: cover,
-        ...tplRenderers
-    });
+    container.innerHTML = tplPlayer(options, cover, tplRenderers);
 
     const selectElement = (selector) => container.querySelector(selector);
 

@@ -5,14 +5,14 @@ import listItem from './list-item.js';
 const $escape = $imports.$escape;
 
 export function notFixedModeTplRenderers() {
-    return {
-        injectPointA: (options, cover, includeFunction) => {
+    return [
+        (options, includeFunction) => {
             includeFunction('<div class="aplayer-body"><div class="aplayer-pic" style="')
         },
-        injectPointB: (options, cover, includeFunction) => {
+        (options, includeFunction) => {
             includeFunction('</div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ')
         },
-        injectPointC: (options, cover, includeFunction) => {
+        (options, includeFunction) => {
             includeFunction('</button></div></div><div class="aplayer-list');
             if (options.listFolded) {
                 includeFunction(' aplayer-list-hide');
@@ -37,13 +37,12 @@ export function notFixedModeTplRenderers() {
             }));
             includeFunction(' </ol></div> ');
         }
-    }
+    ]
 }
 
 export function fixedModeTplRenderer() {
-    // if fixed mode, we need a different behavior for injectPoints
-    return {
-        injectPointA: (options, cover, includeFunction) => {
+    return [
+        (options, includeFunction) => {
             includeFunction(' <div class="aplayer-list');
             if (options.listFolded) {
                 includeFunction(' aplayer-list-hide');
@@ -68,23 +67,22 @@ export function fixedModeTplRenderer() {
             }));
             includeFunction(' </ol></div><div class="aplayer-body"><div class="aplayer-pic" style="');
         },
-        injectPointB: (options, cover, includeFunction) => {
+        (options, includeFunction) => {
             includeFunction('</div></div><div class="aplayer-info" style="display:none"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ');
         },
-        injectPointC: (options, cover, includeFunction) => {
+        (options, includeFunction) => {
             includeFunction('</button></div></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div> ');
         }
-    }
+    ]
 }
 
-export default function ($data) {
+export default function (options, cover, tplRenderers) {
     'use strict';
-    $data = $data || {};
-    let $$out = '', options = $data.options, cover = $data.cover, include = function (content) {
+    let $$out = '', include = function (content) {
         $$out += content;
         return $$out;
     };
-    $data.injectPointA(options, cover, include);
+    tplRenderers[0](options, include);
     if (cover) {
         $$out += 'background-image:url(&quot;';
         $$out += $escape(cover);
@@ -94,7 +92,7 @@ export default function ($data) {
     $$out += $escape(options.theme);
     $$out += '"><div class="aplayer-button aplayer-play">';
     $$out += play;
-    $data.injectPointB(options, cover, include);
+    tplRenderers[1](options, include);
     $$out += $escape(options.theme);
     $$out += '"><span class="aplayer-thumb" style="background: ';
     $$out += $escape(options.theme);
@@ -130,6 +128,6 @@ export default function ($data) {
     $$out += lrc;
     $$out += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">';
     $$out += right;
-    $data.injectPointC(options, cover, include);
+    tplRenderers[2](options, include);
     return $$out;
 }
