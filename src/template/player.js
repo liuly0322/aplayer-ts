@@ -80,7 +80,7 @@ export function fixedModeTplRenderer() {
 export default function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', options = $data.options, cover = $data.cover, include = function (content) {
+    let $$out = '', options = $data.options, cover = $data.cover, include = function (content) {
         $$out += content;
         return $$out;
     };

@@ -2,7 +2,7 @@ import $imports from 'art-template/lib/runtime.js';
 export default function ($data) {
     'use strict';
     $data = $data || {};
-    var $$out = '', $each = $imports.$each, lyrics = $data.lyrics, $escape = $imports.$escape;
+    let $$out = '', $each = $imports.$each, lyrics = $data.lyrics, $escape = $imports.$escape;
     $each(lyrics, function ($value, $index) {
         $$out += ' <p ';
         if ($index === 0) {
