@@ -3,6 +3,7 @@ export function handleAudioOption(audio) {
         audio = [audio];
     }
     return audio.map((item) => ({
+        ...item,
         name: item.name || item.title || 'Audio name',
         artist: item.artist || item.author || 'Audio artist',
         cover: item.cover || item.pic,
