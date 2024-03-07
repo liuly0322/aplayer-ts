@@ -227,7 +227,7 @@ class APlayer {
         }
 
         if (this.options.lrcType) {
-            this.lrc = new Lrc({
+            this.lrc = Lrc({
                 container: this.template.lrc,
                 async: this.options.lrcType === 3,
                 player: this,

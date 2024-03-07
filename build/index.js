@@ -1,9 +1,9 @@
-const y = /mobile/i.test(window.navigator.userAgent);
-function m(t) {
+const x = /mobile/i.test(window.navigator.userAgent);
+function b(t) {
   const e = (o) => o < 10 ? "0" + o : "" + o, i = Math.floor(t / 3600), a = Math.floor((t - i * 3600) / 60), s = Math.floor(t - i * 3600 - a * 60);
   return (i > 0 ? [i, a, s] : [a, s]).map(e).join(":");
 }
-function S(t) {
+function N(t) {
   let e = t.offsetLeft, i = t.offsetParent;
   const a = document.body.scrollLeft + document.documentElement.scrollLeft;
   if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement)
@@ -14,18 +14,18 @@ function S(t) {
       e += i.offsetLeft, i = i.offsetParent;
   return e - a;
 }
-function P(t, e) {
+function j(t, e) {
   let i = t.offsetTop, a = t.offsetParent, s = 0;
   for (; a !== null; )
     i += a.offsetTop, a = a.offsetParent;
   return s = document.body.scrollTop + document.documentElement.scrollTop, e ? i : i - s;
 }
-const d = {
-  dragStart: y ? "touchstart" : "mousedown",
-  dragMove: y ? "touchmove" : "mousemove",
-  dragEnd: y ? "touchend" : "mouseup"
+const u = {
+  dragStart: x ? "touchstart" : "mousedown",
+  dragMove: x ? "touchmove" : "mousemove",
+  dragEnd: x ? "touchend" : "mouseup"
 };
-function N(t) {
+function V(t) {
   function e(i) {
     for (let a = i.length - 1; a >= 0; a--) {
       const s = Math.floor(Math.random() * (a + 1)), o = i[s];
@@ -37,7 +37,17 @@ function N(t) {
     return a;
   }));
 }
-const j = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22.667 4l7 6-7 6 7 6-7 6v-4h-3.653l-3.76-3.76 2.827-2.827 2.587 2.587h2v-8h-2l-12 12h-6v-4h4.347l12-12h3.653v-4zM2.667 8h6l3.76 3.76-2.827 2.827-2.587-2.587h-4.347v-4z"></path></svg>', z = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 17 32"><path d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z"></path></svg>', X = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056zM29.728 16q0 4.096-2.272 7.552t-6.048 5.056q-0.224 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.64 0.704-1.056 0.128-0.064 0.384-0.192t0.416-0.192q0.8-0.448 1.44-0.896 2.208-1.632 3.456-4.064t1.216-5.152-1.216-5.152-3.456-4.064q-0.64-0.448-1.44-0.896-0.128-0.096-0.416-0.192t-0.384-0.192q-0.704-0.416-0.704-1.056 0-0.448 0.32-0.8t0.832-0.352q0.224 0 0.448 0.096 3.776 1.632 6.048 5.056t2.272 7.552z"></path></svg>', W = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528z"></path></svg>', I = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z"></path></svg>', J = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>', R = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 33 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333zM17.333 20v-8h-1.333l-2.667 1.333v1.333h2v5.333h2z"></path></svg>', G = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 22 32"><path d="M20.8 14.4q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2zM1.6 11.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2zM20.8 20.8q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2z"></path></svg>', x = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 31"><path d="M15.552 15.168q0.448 0.32 0.448 0.832 0 0.448-0.448 0.768l-13.696 8.512q-0.768 0.512-1.312 0.192t-0.544-1.28v-16.448q0-0.96 0.544-1.28t1.312 0.192z"></path></svg>', K = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path></svg>', Q = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M4 16c0-6.6 5.4-12 12-12s12 5.4 12 12c0 1.2-0.8 2-2 2s-2-0.8-2-2c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.2 0 2 0.8 2 2s-0.8 2-2 2c-6.6 0-12-5.4-12-12z"></path></svg>', $ = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M0.622 18.334h19.54v7.55l11.052-9.412-11.052-9.413v7.549h-19.54v3.725z"></path></svg>', k = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333z"></path></svg>', B = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M2.667 7.027l1.707-1.693 22.293 22.293-1.693 1.707-4-4h-11.64v4l-5.333-5.333 5.333-5.333v4h8.973l-8.973-8.973v0.973h-2.667v-3.64l-4-4zM22.667 17.333h2.667v5.573l-2.667-2.667v-2.907zM22.667 6.667v-4l5.333 5.333-5.333 5.333v-4h-10.907l-2.667-2.667h13.573z"></path></svg>', Z = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M26.667 5.333h-21.333c-0 0-0.001 0-0.001 0-1.472 0-2.666 1.194-2.666 2.666 0 0 0 0.001 0 0.001v-0 16c0 0 0 0.001 0 0.001 0 1.472 1.194 2.666 2.666 2.666 0 0 0.001 0 0.001 0h21.333c0 0 0.001 0 0.001 0 1.472 0 2.666-1.194 2.666-2.666 0-0 0-0.001 0-0.001v0-16c0-0 0-0.001 0-0.001 0-1.472-1.194-2.666-2.666-2.666-0 0-0.001 0-0.001 0h0zM5.333 16h5.333v2.667h-5.333v-2.667zM18.667 24h-13.333v-2.667h13.333v2.667zM26.667 24h-5.333v-2.667h5.333v2.667zM26.667 18.667h-13.333v-2.667h13.333v2.667z"></path></svg>', _ = (t) => {
+const Y = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22.667 4l7 6-7 6 7 6-7 6v-4h-3.653l-3.76-3.76 2.827-2.827 2.587 2.587h2v-8h-2l-12 12h-6v-4h4.347l12-12h3.653v-4zM2.667 8h6l3.76 3.76-2.827 2.827-2.587-2.587h-4.347v-4z"></path></svg>', W = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 17 32"><path d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z"></path></svg>', ot = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056zM29.728 16q0 4.096-2.272 7.552t-6.048 5.056q-0.224 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.64 0.704-1.056 0.128-0.064 0.384-0.192t0.416-0.192q0.8-0.448 1.44-0.896 2.208-1.632 3.456-4.064t1.216-5.152-1.216-5.152-3.456-4.064q-0.64-0.448-1.44-0.896-0.128-0.096-0.416-0.192t-0.384-0.192q-0.704-0.416-0.704-1.056 0-0.448 0.32-0.8t0.832-0.352q0.224 0 0.448 0.096 3.776 1.632 6.048 5.056t2.272 7.552z"></path></svg>', U = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528z"></path></svg>', R = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z"></path></svg>', nt = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>', D = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 33 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333zM17.333 20v-8h-1.333l-2.667 1.333v1.333h2v5.333h2z"></path></svg>', lt = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 22 32"><path d="M20.8 14.4q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2zM1.6 11.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2zM20.8 20.8q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2z"></path></svg>', q = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 31"><path d="M15.552 15.168q0.448 0.32 0.448 0.832 0 0.448-0.448 0.768l-13.696 8.512q-0.768 0.512-1.312 0.192t-0.544-1.28v-16.448q0-0.96 0.544-1.28t1.312 0.192z"></path></svg>', rt = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path></svg>', ct = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M4 16c0-6.6 5.4-12 12-12s12 5.4 12 12c0 1.2-0.8 2-2 2s-2-0.8-2-2c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.2 0 2 0.8 2 2s-0.8 2-2 2c-6.6 0-12-5.4-12-12z"></path></svg>', X = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M0.622 18.334h19.54v7.55l11.052-9.412-11.052-9.413v7.549h-19.54v3.725z"></path></svg>', A = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333z"></path></svg>', S = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M2.667 7.027l1.707-1.693 22.293 22.293-1.693 1.707-4-4h-11.64v4l-5.333-5.333 5.333-5.333v4h8.973l-8.973-8.973v0.973h-2.667v-3.64l-4-4zM22.667 17.333h2.667v5.573l-2.667-2.667v-2.907zM22.667 6.667v-4l5.333 5.333-5.333 5.333v-4h-10.907l-2.667-2.667h13.573z"></path></svg>', ht = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M26.667 5.333h-21.333c-0 0-0.001 0-0.001 0-1.472 0-2.666 1.194-2.666 2.666 0 0 0 0.001 0 0.001v-0 16c0 0 0 0.001 0 0.001 0 1.472 1.194 2.666 2.666 2.666 0 0 0.001 0 0.001 0h21.333c0 0 0.001 0 0.001 0 1.472 0 2.666-1.194 2.666-2.666 0-0 0-0.001 0-0.001v0-16c0-0 0-0.001 0-0.001 0-1.472-1.194-2.666-2.666-2.666-0 0-0.001 0-0.001 0h0zM5.333 16h5.333v2.667h-5.333v-2.667zM18.667 24h-13.333v-2.667h13.333v2.667zM26.667 24h-5.333v-2.667h5.333v2.667zM26.667 18.667h-13.333v-2.667h13.333v2.667z"></path></svg>';
+function _(t) {
+  return Object.prototype.toString.call(t) !== "[object Array]" && (t = [t]), t.map((e) => ({
+    ...e,
+    name: e.name || e.title || "Audio name",
+    artist: e.artist || e.author || "Audio artist",
+    cover: e.cover || e.pic,
+    type: e.type || "normal"
+  }));
+}
+const dt = (t) => {
   const e = {
     container: t.element || document.getElementsByClassName("aplayer")[0],
     mini: t.narrow || t.fixed || !1,
@@ -55,17 +65,17 @@ const j = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32
     audio: t.music || [],
     storageName: "aplayer-setting"
   };
-  return t = Object.assign(e, t), Object.prototype.toString.call(t.audio) !== "[object Array]" && (t.audio = [t.audio]), t.audio.map((i) => (i.name = i.name || i.title || "Audio name", i.artist = i.artist || i.author || "Audio artist", i.cover = i.cover || i.pic, i.type = i.type || "normal", i)), t.audio.length <= 1 && t.loop === "one" && (t.loop = "all"), t;
+  return t = Object.assign(e, t), t.audio = _(t.audio), t.audio.length <= 1 && t.loop === "one" && (t.loop = "all"), t;
 };
-var F = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function V(t) {
+var pt = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+function J(t) {
   return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
 }
-var H = Object.create(window), tt = /["&'<>]/;
-H.$escape = function(t) {
-  return et(Y(t));
+var I = Object.create(window), ut = /["&'<>]/;
+I.$escape = function(t) {
+  return mt(G(t));
 };
-H.$each = function(t, e) {
+I.$each = function(t, e) {
   if (Array.isArray(t))
     for (var i = 0, a = t.length; i < a; i++)
       e(t[i], i);
@@ -73,11 +83,11 @@ H.$each = function(t, e) {
     for (var s in t)
       e(t[s], s);
 };
-function Y(t) {
-  return typeof t != "string" && (t == null ? t = "" : typeof t == "function" ? t = Y(t.call(t)) : t = JSON.stringify(t)), t;
+function G(t) {
+  return typeof t != "string" && (t == null ? t = "" : typeof t == "function" ? t = G(t.call(t)) : t = JSON.stringify(t)), t;
 }
-function et(t) {
-  var e = "" + t, i = tt.exec(e);
+function mt(t) {
+  var e = "" + t, i = ut.exec(e);
   if (!i)
     return t;
   var a = "", s = void 0, o = void 0, n = void 0;
@@ -105,19 +115,17 @@ function et(t) {
   }
   return o !== s ? a + e.substring(o, s) : a;
 }
-var it = H, st = it;
-const w = /* @__PURE__ */ V(st);
-function O(t) {
+var vt = I, ft = vt;
+const T = /* @__PURE__ */ J(ft);
+function C(t) {
   t = t || {};
-  var e = "", i = w.$each, a = t.audio;
-  t.$value, t.$index;
-  var s = w.$escape, o = t.theme, n = t.index;
-  return i(a, function(l, r) {
-    e += ' <li><span class="aplayer-list-cur" style="background-color: ', e += s(l.theme || o), e += '"></span> <span class="aplayer-list-index">', e += s(r + n), e += '</span><span class="aplayer-list-title">', e += s(l.name), e += '</span><span class="aplayer-list-author">', e += s(l.artist), e += "</span></li> ";
+  var e = "", i = T.$each, a = t.audio, s = T.$escape, o = t.theme, n = t.index;
+  return i(a, function(l, h) {
+    e += ' <li><span class="aplayer-list-cur" style="background-color: ', e += s(l.theme || o), e += '"></span> <span class="aplayer-list-index">', e += s(h + n), e += '</span><span class="aplayer-list-title">', e += s(l.name), e += '</span><span class="aplayer-list-author">', e += s(l.artist), e += "</span></li> ";
   }), e;
 }
-const p = w.$escape;
-function q() {
+const v = T.$escape;
+function P() {
   return {
     injectPointA: (t, e, i) => {
       i('<div class="aplayer-body"><div class="aplayer-pic" style="');
@@ -126,7 +134,7 @@ function q() {
       i('</div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ');
     },
     injectPointC: (t, e, i) => {
-      i('</button></div></div><div class="aplayer-list'), t.listFolded && i(" aplayer-list-hide"), i('" '), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("><ol "), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("> "), i(O({
+      i('</button></div></div><div class="aplayer-list'), t.listFolded && i(" aplayer-list-hide"), i('" '), t.listMaxHeight && (i(' style="max-height: '), i(v(t.listMaxHeight)), i('" ')), i("><ol "), t.listMaxHeight && (i(' style="max-height: '), i(v(t.listMaxHeight)), i('" ')), i("> "), i(C({
         theme: t.theme,
         audio: t.audio,
         index: 1
@@ -134,10 +142,10 @@ function q() {
     }
   };
 }
-function at() {
+function gt() {
   return {
     injectPointA: (t, e, i) => {
-      i(' <div class="aplayer-list'), t.listFolded && i(" aplayer-list-hide"), i('" '), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("><ol "), t.listMaxHeight && (i(' style="max-height: '), i(p(t.listMaxHeight)), i('" ')), i("> "), i(O({
+      i(' <div class="aplayer-list'), t.listFolded && i(" aplayer-list-hide"), i('" '), t.listMaxHeight && (i(' style="max-height: '), i(v(t.listMaxHeight)), i('" ')), i("><ol "), t.listMaxHeight && (i(' style="max-height: '), i(v(t.listMaxHeight)), i('" ')), i("> "), i(C({
         theme: t.theme,
         audio: t.audio,
         index: 1
@@ -151,16 +159,16 @@ function at() {
     }
   };
 }
-function ot(t) {
+function wt(t) {
   t = t || {};
   var e = "", i = t.options, a = t.cover, s = function(o) {
     return e += o, e;
   };
-  return t.injectPointA(i, a, s), a && (e += "background-image:url(&quot;", e += p(a), e += "&quot;);"), e += "background-color: ", e += p(i.theme), e += '"><div class="aplayer-button aplayer-play">', e += x, t.injectPointB(i, a, s), e += p(i.theme), e += '"><span class="aplayer-thumb" style="background: ', e += p(i.theme), e += '"><span class="aplayer-loading-icon">', e += Q, e += '</span></span></div></div></div><div class="aplayer-time"><span class="aplayer-time-inner"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">00:00</span> </span><span class="aplayer-icon aplayer-icon-back"> ', e += I, e += ' </span><span class="aplayer-icon aplayer-icon-play"> ', e += x, e += ' </span><span class="aplayer-icon aplayer-icon-forward"> ', e += I, e += ' </span><div class="aplayer-volume-wrap"><button type="button" class="aplayer-icon aplayer-icon-volume-down"> ', e += W, e += ' </button><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height:80%;background: ', e += p(i.theme), e += '"></div></div></div></div><button type="button" class="aplayer-icon aplayer-icon-order"> ', i.order === "list" ? e += $ : i.order === "random" && (e += j), e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-loop"> ', i.loop === "one" ? e += R : i.loop === "all" ? e += k : i.loop === "none" && (e += B), e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-menu"> ', e += G, e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-lrc"> ', e += Z, e += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">', e += K, t.injectPointC(i, a, s), e;
+  return t.injectPointA(i, a, s), a && (e += "background-image:url(&quot;", e += v(a), e += "&quot;);"), e += "background-color: ", e += v(i.theme), e += '"><div class="aplayer-button aplayer-play">', e += q, t.injectPointB(i, a, s), e += v(i.theme), e += '"><span class="aplayer-thumb" style="background: ', e += v(i.theme), e += '"><span class="aplayer-loading-icon">', e += ct, e += '</span></span></div></div></div><div class="aplayer-time"><span class="aplayer-time-inner"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">00:00</span> </span><span class="aplayer-icon aplayer-icon-back"> ', e += R, e += ' </span><span class="aplayer-icon aplayer-icon-play"> ', e += q, e += ' </span><span class="aplayer-icon aplayer-icon-forward"> ', e += R, e += ' </span><div class="aplayer-volume-wrap"><button type="button" class="aplayer-icon aplayer-icon-volume-down"> ', e += U, e += ' </button><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height:80%;background: ', e += v(i.theme), e += '"></div></div></div></div><button type="button" class="aplayer-icon aplayer-icon-order"> ', i.order === "list" ? e += X : i.order === "random" && (e += Y), e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-loop"> ', i.loop === "one" ? e += D : i.loop === "all" ? e += A : i.loop === "none" && (e += S), e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-menu"> ', e += lt, e += ' </button> <button type="button" class="aplayer-icon aplayer-icon-lrc"> ', e += ht, e += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">', e += rt, t.injectPointC(i, a, s), e;
 }
-function lt(t, e, i, a) {
+function yt(t, e, i, a) {
   let s = "";
-  e.audio.length && (e.order === "random" ? s = e.audio[i[0]].cover : s = e.audio[0].cover), t.innerHTML = ot({
+  e.audio.length && (e.order === "random" ? s = e.audio[i[0]].cover : s = e.audio[0].cover), t.innerHTML = wt({
     options: e,
     cover: s,
     ...a
@@ -200,25 +208,16 @@ function lt(t, e, i, a) {
     lrcButton: o(".aplayer-icon-lrc")
   };
 }
-class nt {
-  constructor(e) {
-    this.elements = {}, this.elements.volume = e.volume, this.elements.played = e.played, this.elements.loaded = e.loaded;
+const bt = (t) => {
+  const e = { ...t };
+  function i(s, o, n) {
+    o = Math.max(o, 0), o = Math.min(o, 1), e[s].style[n] = o * 100 + "%";
   }
-  /**
-   * Update progress
-   *
-   * @param {String} type - Point out which bar it is
-   * @param {Number} percentage
-   * @param {String} direction - Point out the direction of this bar, Should be height or width
-   */
-  set(e, i, a) {
-    i = Math.max(i, 0), i = Math.min(i, 1), this.elements[e].style[a] = i * 100 + "%";
+  function a(s, o) {
+    return parseFloat(e[s].style[o]) / 100;
   }
-  get(e, i) {
-    return parseFloat(this.elements[e].style[i]) / 100;
-  }
-}
-const rt = (t) => {
+  return { get: a, set: i };
+}, Lt = (t) => {
   const e = t.options.storageName, i = JSON.parse(localStorage.getItem(e)) || {};
   return i.volume || (i.volume = t.options.volume), {
     getVolume() {
@@ -229,153 +228,148 @@ const rt = (t) => {
     }
   };
 };
-function C(t) {
+function $(t) {
   t = t || {};
-  var e = "", i = w.$each, a = t.lyrics;
-  t.$value, t.$index;
-  var s = w.$escape;
+  var e = "", i = T.$each, a = t.lyrics, s = T.$escape;
   return i(a, function(o, n) {
     e += " <p ", n === 0 && (e += ' class="aplayer-lrc-current" '), e += ">", e += s(o[1]), e += "</p> ";
   }), e;
 }
-class ht {
-  constructor(e) {
-    this.container = e.container, this.async = e.async, this.player = e.player, this.parsed = [], this.index = 0, this.current = [];
+const Mt = (t) => {
+  const e = t.container, i = t.player, a = t.async;
+  let s = [], o = 0, n = [];
+  function l() {
+    i.events.trigger("lrcshow"), i.template.lrcWrap.classList.remove("aplayer-lrc-hide");
   }
-  show() {
-    this.player.events.trigger("lrcshow"), this.player.template.lrcWrap.classList.remove("aplayer-lrc-hide");
+  function h() {
+    i.events.trigger("lrchide"), i.template.lrcWrap.classList.add("aplayer-lrc-hide");
   }
-  hide() {
-    this.player.events.trigger("lrchide"), this.player.template.lrcWrap.classList.add("aplayer-lrc-hide");
+  function d() {
+    i.template.lrcWrap.classList.contains("aplayer-lrc-hide") ? l() : h();
   }
-  toggle() {
-    this.player.template.lrcWrap.classList.contains("aplayer-lrc-hide") ? this.show() : this.hide();
+  function p(r = i.audio.currentTime) {
+    if (o > n.length - 1 || r < n[o][0] || !n[o + 1] || r >= n[o + 1][0])
+      for (let c = 0; c < n.length; c++)
+        r >= n[c][0] && (!n[c + 1] || r < n[c + 1][0]) && (o = c, e.style.transform = `translateY(${-o * 16}px)`, e.style.webkitTransform = `translateY(${-o * 16}px)`, e.getElementsByClassName("aplayer-lrc-current")[0].classList.remove("aplayer-lrc-current"), e.getElementsByTagName("p")[c].classList.add("aplayer-lrc-current"));
   }
-  update(e = this.player.audio.currentTime) {
-    if (this.index > this.current.length - 1 || e < this.current[this.index][0] || !this.current[this.index + 1] || e >= this.current[this.index + 1][0])
-      for (let i = 0; i < this.current.length; i++)
-        e >= this.current[i][0] && (!this.current[i + 1] || e < this.current[i + 1][0]) && (this.index = i, this.container.style.transform = `translateY(${-this.index * 16}px)`, this.container.style.webkitTransform = `translateY(${-this.index * 16}px)`, this.container.getElementsByClassName("aplayer-lrc-current")[0].classList.remove("aplayer-lrc-current"), this.container.getElementsByTagName("p")[i].classList.add("aplayer-lrc-current"));
-  }
-  switch(e) {
-    if (!this.parsed[e])
-      if (!this.async)
-        this.player.list.audios[e].lrc ? this.parsed[e] = this.parse(this.player.list.audios[e].lrc) : this.parsed[e] = [["00:00", "Not available"]];
+  function L(r) {
+    if (!s[r])
+      if (!a)
+        i.list.audios[r].lrc ? s[r] = f(i.list.audios[r].lrc) : s[r] = [["00:00", "Not available"]];
       else {
-        this.parsed[e] = [["00:00", "Loading"]];
-        const i = new XMLHttpRequest();
-        i.onreadystatechange = () => {
-          e === this.player.list.index && i.readyState === 4 && (i.status >= 200 && i.status < 300 || i.status === 304 ? this.parsed[e] = this.parse(i.responseText) : (this.player.notice(`LRC file request fails: status ${i.status}`), this.parsed[e] = [["00:00", "Not available"]]), this.container.innerHTML = C({
-            lyrics: this.parsed[e]
-          }), this.update(0), this.current = this.parsed[e]);
+        s[r] = [["00:00", "Loading"]];
+        const c = new XMLHttpRequest();
+        c.onreadystatechange = () => {
+          r === i.list.index && c.readyState === 4 && (c.status >= 200 && c.status < 300 || c.status === 304 ? s[r] = f(c.responseText) : (i.notice(`LRC file request fails: status ${c.status}`), s[r] = [["00:00", "Not available"]]), e.innerHTML = $({
+            lyrics: s[r]
+          }), p(0), n = s[r]);
         };
-        const a = this.player.list.audios[e].lrc;
-        i.open("get", a, !0), i.send(null);
+        const g = i.list.audios[r].lrc;
+        c.open("get", g, !0), c.send(null);
       }
-    this.container.innerHTML = C({
-      lyrics: this.parsed[e]
-    }), this.current = this.parsed[e];
+    e.innerHTML = $({
+      lyrics: s[r]
+    }), n = s[r];
   }
-  /**
-   * Parse lrc, suppose multiple time tag
-   *
-   * @param {String} lrc_s - Format:
-   * [mm:ss]lyric
-   * [mm:ss.xx]lyric
-   * [mm:ss.xxx]lyric
-   * [mm:ss.xx][mm:ss.xx][mm:ss.xx]lyric
-   * [mm:ss.xx]<mm:ss.xx>lyric
-   *
-   * @return {String} [[time, text], [time, text], [time, text], ...]
-   */
-  parse(e) {
-    if (e) {
-      e = e.replace(/([^\]^\n])\[/g, (o, n) => n + `
+  function f(r) {
+    if (r) {
+      r = r.replace(/([^\]^\n])\[/g, (m, w) => w + `
 [`);
-      const i = e.split(`
+      const c = r.split(`
 `);
-      let a = [];
-      const s = i.length;
-      for (let o = 0; o < s; o++) {
-        const n = i[o].match(/\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g), l = i[o].replace(/.*\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g, "").replace(/<(\d{2}):(\d{2})(\.(\d{2,3}))?>/g, "").replace(/^\s+|\s+$/g, "");
-        if (n) {
-          const r = n.length;
-          for (let c = 0; c < r; c++) {
-            const h = /\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/.exec(n[c]), v = h[1] * 60, f = parseInt(h[2]), M = h[4] ? parseInt(h[4]) / ((h[4] + "").length === 2 ? 100 : 1e3) : 0, T = v + f + M;
-            a.push([T, l]);
+      let g = [];
+      const Z = c.length;
+      for (let m = 0; m < Z; m++) {
+        const w = c[m].match(/\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g), F = c[m].replace(/.*\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g, "").replace(/<(\d{2}):(\d{2})(\.(\d{2,3}))?>/g, "").replace(/^\s+|\s+$/g, "");
+        if (w) {
+          const tt = w.length;
+          for (let O = 0; O < tt; O++) {
+            const M = /\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/.exec(w[O]), et = M[1] * 60, it = parseInt(M[2]), st = M[4] ? parseInt(M[4]) / ((M[4] + "").length === 2 ? 100 : 1e3) : 0, at = et + it + st;
+            g.push([at, F]);
           }
         }
       }
-      return a = a.filter((o) => o[1]), a.sort((o, n) => o[0] - n[0]), a;
+      return g = g.filter((m) => m[1]), g.sort((m, w) => m[0] - w[0]), g;
     } else
       return [];
   }
-  remove(e) {
-    this.parsed.splice(e, 1);
+  function E(r) {
+    s.splice(r, 1);
   }
-  clear() {
-    this.parsed = [], this.container.innerHTML = "";
+  function H() {
+    s = [], e.innerHTML = "";
   }
-}
-class ct {
+  return {
+    show: l,
+    hide: h,
+    toggle: d,
+    update: p,
+    switch: L,
+    parse: f,
+    remove: E,
+    clear: H
+  };
+};
+class xt {
   constructor(e) {
-    dt(e), pt(e), mt(e), vt(e), ft(e), y || ut(e), gt(e), yt(e), wt(e);
+    Tt(e), kt(e), qt(e), Et(e), Ht(e), x || Bt(e), Ot(e), At(e), St(e);
   }
 }
-function dt(t) {
+function Tt(t) {
   t.template.pic.addEventListener("click", () => {
     t.toggle();
   });
 }
-function pt(t) {
+function kt(t) {
   const e = (a) => {
-    let s = ((a.clientX || a.changedTouches[0].clientX) - S(t.template.barWrap)) / t.template.barWrap.clientWidth;
-    s = Math.max(s, 0), s = Math.min(s, 1), t.bar.set("played", s, "width"), t.lrc && t.lrc.update(s * t.duration), t.template.ptime.innerHTML = m(s * t.duration);
+    let s = ((a.clientX || a.changedTouches[0].clientX) - N(t.template.barWrap)) / t.template.barWrap.clientWidth;
+    s = Math.max(s, 0), s = Math.min(s, 1), t.bar.set("played", s, "width"), t.lrc && t.lrc.update(s * t.duration), t.template.ptime.innerHTML = b(s * t.duration);
   }, i = (a) => {
-    document.removeEventListener(d.dragEnd, i), document.removeEventListener(d.dragMove, e);
-    let s = ((a.clientX || a.changedTouches[0].clientX) - S(t.template.barWrap)) / t.template.barWrap.clientWidth;
+    document.removeEventListener(u.dragEnd, i), document.removeEventListener(u.dragMove, e);
+    let s = ((a.clientX || a.changedTouches[0].clientX) - N(t.template.barWrap)) / t.template.barWrap.clientWidth;
     s = Math.max(s, 0), s = Math.min(s, 1), t.bar.set("played", s, "width"), t.seek(t.bar.get("played", "width") * t.duration), t.disableTimeupdate = !1;
   };
-  t.template.barWrap.addEventListener(d.dragStart, () => {
-    t.disableTimeupdate = !0, document.addEventListener(d.dragMove, e), document.addEventListener(d.dragEnd, i);
+  t.template.barWrap.addEventListener(u.dragStart, () => {
+    t.disableTimeupdate = !0, document.addEventListener(u.dragMove, e), document.addEventListener(u.dragEnd, i);
   });
 }
-function ut(t) {
+function Bt(t) {
   t.template.volumeButton.addEventListener("click", () => {
     t.audio.muted ? (t.audio.muted = !1, t.switchVolumeIcon(), t.bar.set("volume", t.volume(), "height")) : (t.audio.muted = !0, t.switchVolumeIcon(), t.bar.set("volume", 0, "height"));
   });
   const e = (a) => {
-    let s = 1 - ((a.clientY || a.changedTouches[0].clientY) - P(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
+    let s = 1 - ((a.clientY || a.changedTouches[0].clientY) - j(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
     s = Math.max(s, 0), s = Math.min(s, 1), t.volume(s);
   }, i = (a) => {
-    t.template.volumeBarWrap.classList.remove("aplayer-volume-bar-wrap-active"), document.removeEventListener(d.dragEnd, i), document.removeEventListener(d.dragMove, e);
-    let s = 1 - ((a.clientY || a.changedTouches[0].clientY) - P(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
+    t.template.volumeBarWrap.classList.remove("aplayer-volume-bar-wrap-active"), document.removeEventListener(u.dragEnd, i), document.removeEventListener(u.dragMove, e);
+    let s = 1 - ((a.clientY || a.changedTouches[0].clientY) - j(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
     s = Math.max(s, 0), s = Math.min(s, 1), t.volume(s);
   };
-  t.template.volumeBarWrap.addEventListener(d.dragStart, () => {
-    t.template.volumeBarWrap.classList.add("aplayer-volume-bar-wrap-active"), document.addEventListener(d.dragMove, e), document.addEventListener(d.dragEnd, i);
+  t.template.volumeBarWrap.addEventListener(u.dragStart, () => {
+    t.template.volumeBarWrap.classList.add("aplayer-volume-bar-wrap-active"), document.addEventListener(u.dragMove, e), document.addEventListener(u.dragEnd, i);
   });
 }
-function mt(t) {
+function qt(t) {
   t.template.order.addEventListener("click", () => {
-    t.options.order === "list" ? (t.options.order = "random", t.template.order.innerHTML = j) : t.options.order === "random" && (t.options.order = "list", t.template.order.innerHTML = $);
+    t.options.order === "list" ? (t.options.order = "random", t.template.order.innerHTML = Y) : t.options.order === "random" && (t.options.order = "list", t.template.order.innerHTML = X);
   });
 }
-function vt(t) {
+function Et(t) {
   t.template.loop.addEventListener("click", () => {
-    t.list.audios.length > 1 ? t.options.loop === "one" ? (t.options.loop = "none", t.template.loop.innerHTML = B) : t.options.loop === "none" ? (t.options.loop = "all", t.template.loop.innerHTML = k) : t.options.loop === "all" && (t.options.loop = "one", t.template.loop.innerHTML = R) : t.options.loop === "one" || t.options.loop === "all" ? (t.options.loop = "none", t.template.loop.innerHTML = B) : t.options.loop === "none" && (t.options.loop = "all", t.template.loop.innerHTML = k);
+    t.list.audios.length > 1 ? t.options.loop === "one" ? (t.options.loop = "none", t.template.loop.innerHTML = S) : t.options.loop === "none" ? (t.options.loop = "all", t.template.loop.innerHTML = A) : t.options.loop === "all" && (t.options.loop = "one", t.template.loop.innerHTML = D) : t.options.loop === "one" || t.options.loop === "all" ? (t.options.loop = "none", t.template.loop.innerHTML = S) : t.options.loop === "none" && (t.options.loop = "all", t.template.loop.innerHTML = A);
   });
 }
-function ft(t) {
+function Ht(t) {
   t.template.menu.addEventListener("click", () => {
     t.list.toggle();
   });
 }
-function gt(t) {
+function Ot(t) {
   t.template.miniSwitcher.addEventListener("click", () => {
     t.setMode(t.mode === "mini" ? "normal" : "mini");
   });
 }
-function yt(t) {
+function At(t) {
   t.template.skipBackButton.addEventListener("click", () => {
     t.skipBack();
   }), t.template.skipForwardButton.addEventListener("click", () => {
@@ -384,12 +378,12 @@ function yt(t) {
     t.toggle();
   });
 }
-function wt(t) {
+function St(t) {
   t.template.lrcButton.addEventListener("click", () => {
     t.template.lrcButton.classList.contains("aplayer-icon-lrc-inactivity") ? (t.template.lrcButton.classList.remove("aplayer-icon-lrc-inactivity"), t.lrc && t.lrc.show()) : (t.template.lrcButton.classList.add("aplayer-icon-lrc-inactivity"), t.lrc && t.lrc.hide());
   });
 }
-const bt = (t) => {
+const Pt = (t) => {
   let e = 0, i = 0, a = !1, s = !1, o = setInterval(() => {
     s && (i = t.audio.currentTime, !a && i === e && !t.audio.paused && (t.container.classList.add("aplayer-loading"), a = !0), a && i > e && !t.audio.paused && (t.container.classList.remove("aplayer-loading"), a = !1), e = i);
   }, 100);
@@ -404,7 +398,7 @@ const bt = (t) => {
       s = !1, o && clearInterval(o);
     }
   };
-}, Lt = [
+}, zt = [
   "destroy",
   "listshow",
   "listhide",
@@ -416,7 +410,7 @@ const bt = (t) => {
   "noticehide",
   "lrcshow",
   "lrchide"
-], b = [
+], k = [
   "abort",
   "canplay",
   "canplaythrough",
@@ -440,7 +434,7 @@ const bt = (t) => {
   "timeupdate",
   "volumechange",
   "waiting"
-], xt = () => {
+], It = () => {
   const t = {};
   function e(s, o) {
     a(s) && typeof o == "function" && (t[s] || (t[s] = []), t[s].push(o));
@@ -451,57 +445,57 @@ const bt = (t) => {
         t[s][n](o);
   }
   function a(s) {
-    return Lt.indexOf(s) !== -1 ? "player" : b.indexOf(s) !== -1 ? "audio" : (console.error(`Unknown event name: ${s}`), null);
+    return zt.indexOf(s) !== -1 ? "player" : k.indexOf(s) !== -1 ? "audio" : (console.error(`Unknown event name: ${s}`), null);
   }
   return { on: e, trigger: i, type: a };
 };
-var U = { exports: {} };
+var K = { exports: {} };
 (function(t, e) {
   (function(i, a) {
     t.exports = a();
-  })(F, function() {
+  })(pt, function() {
     if (typeof window == "object" && !(document.querySelectorAll === void 0 || window.pageYOffset === void 0 || history.pushState === void 0)) {
-      var i = function(l, r) {
-        return l.nodeName === "HTML" ? -r : l.getBoundingClientRect().top + r;
+      var i = function(l, h) {
+        return l.nodeName === "HTML" ? -h : l.getBoundingClientRect().top + h;
       }, a = function(l) {
         return l < 0.5 ? 4 * l * l * l : (l - 1) * (2 * l - 2) * (2 * l - 2) + 1;
-      }, s = function(l, r, c, h) {
-        return c > h ? r : l + (r - l) * a(c / h);
-      }, o = function(l, r, c, h) {
-        r = r || 500, h = h || window;
-        var v = h.scrollTop || window.pageYOffset;
+      }, s = function(l, h, d, p) {
+        return d > p ? h : l + (h - l) * a(d / p);
+      }, o = function(l, h, d, p) {
+        h = h || 500, p = p || window;
+        var L = p.scrollTop || window.pageYOffset;
         if (typeof l == "number")
           var f = parseInt(l);
         else
-          var f = i(l, v);
-        var M = Date.now(), T = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function(g) {
-          window.setTimeout(g, 15);
-        }, A = function() {
-          var g = Date.now() - M;
-          h !== window ? h.scrollTop = s(v, f, g, r) : window.scroll(0, s(v, f, g, r)), g > r ? typeof c == "function" && c(l) : T(A);
+          var f = i(l, L);
+        var E = Date.now(), H = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function(c) {
+          window.setTimeout(c, 15);
+        }, r = function() {
+          var c = Date.now() - E;
+          p !== window ? p.scrollTop = s(L, f, c, h) : window.scroll(0, s(L, f, c, h)), c > h ? typeof d == "function" && d(l) : H(r);
         };
-        A();
+        r();
       }, n = function(l) {
         if (!l.defaultPrevented) {
           l.preventDefault(), location.hash !== this.hash && window.history.pushState(null, null, this.hash);
-          var r = document.getElementById(this.hash.substring(1));
-          if (!r)
+          var h = document.getElementById(this.hash.substring(1));
+          if (!h)
             return;
-          o(r, 500, function(c) {
-            location.replace("#" + c.id);
+          o(h, 500, function(d) {
+            location.replace("#" + d.id);
           });
         }
       };
       return document.addEventListener("DOMContentLoaded", function() {
-        for (var l = document.querySelectorAll('a[href^="#"]:not([href="#"])'), r, c = l.length; r = l[--c]; )
-          r.addEventListener("click", n, !1);
+        for (var l = document.querySelectorAll('a[href^="#"]:not([href="#"])'), h, d = l.length; h = l[--d]; )
+          h.addEventListener("click", n, !1);
       }), o;
     }
   });
-})(U);
-var Mt = U.exports;
-const Tt = /* @__PURE__ */ V(Mt);
-class kt {
+})(K);
+var Ct = K.exports;
+const Nt = /* @__PURE__ */ J(Ct);
+class jt {
   constructor(e) {
     this.player = e, this.index = 0, this.audios = this.player.options.audio, this.bindEvents();
   }
@@ -525,13 +519,13 @@ class kt {
   add(e) {
     this.player.events.trigger("listadd", {
       audios: e
-    }), Object.prototype.toString.call(e) !== "[object Array]" && (e = [e]), e.map((s) => (s.name = s.name || s.title || "Audio name", s.artist = s.artist || s.author || "Audio artist", s.cover = s.cover || s.pic, s.type = s.type || "normal", s));
+    }), e = _(e);
     const i = !(this.audios.length > 1), a = this.audios.length === 0;
-    this.player.template.listOl.innerHTML += O({
+    this.player.template.listOl.innerHTML += C({
       theme: this.player.options.theme,
       audio: e,
       index: this.audios.length + 1
-    }), this.audios = this.audios.concat(e), i && this.audios.length > 1 && this.player.container.classList.add("aplayer-withlist"), this.player.randomOrder = N(this.audios.length), this.player.template.listCurs = this.player.container.querySelectorAll(".aplayer-list-cur"), this.player.template.listCurs[this.audios.length - 1].style.backgroundColor = e.theme || this.player.options.theme, a && (this.player.options.order === "random" ? this.switch(this.player.randomOrder[0]) : this.switch(0));
+    }), this.audios = this.audios.concat(e), i && this.audios.length > 1 && this.player.container.classList.add("aplayer-withlist"), this.player.randomOrder = V(this.audios.length), this.player.template.listCurs = this.player.container.querySelectorAll(".aplayer-list-cur"), this.player.template.listCurs[this.audios.length - 1].style.backgroundColor = e.theme || this.player.options.theme, a && (this.player.options.order === "random" ? this.switch(this.player.randomOrder[0]) : this.switch(0));
   }
   remove(e) {
     if (this.player.events.trigger("listremove", {
@@ -554,39 +548,39 @@ class kt {
       const i = this.audios[this.index];
       this.player.template.pic.style.backgroundImage = i.cover ? `url('${i.cover}')` : "", this.player.theme(this.audios[this.index].theme || this.player.options.theme, this.index, !1), this.player.template.title.innerHTML = i.name, this.player.template.author.innerHTML = i.artist ? " - " + i.artist : "";
       const a = this.player.container.getElementsByClassName("aplayer-list-light")[0];
-      a && a.classList.remove("aplayer-list-light"), this.player.container.querySelectorAll(".aplayer-list li")[this.index].classList.add("aplayer-list-light"), Tt(this.index * 33, 500, null, this.player.template.listOl), this.player.setAudio(i), this.player.lrc && this.player.lrc.switch(this.index), this.player.lrc && this.player.lrc.update(0), this.player.duration !== 1 && (this.player.template.dtime.innerHTML = m(this.player.duration));
+      a && a.classList.remove("aplayer-list-light"), this.player.container.querySelectorAll(".aplayer-list li")[this.index].classList.add("aplayer-list-light"), Nt(this.index * 33, 500, null, this.player.template.listOl), this.player.setAudio(i), this.player.lrc && this.player.lrc.switch(this.index), this.player.lrc && this.player.lrc.update(0), this.player.duration !== 1 && (this.player.template.dtime.innerHTML = b(this.player.duration));
     }
   }
   clear() {
-    this.player.events.trigger("listclear"), this.index = 0, this.player.container.classList.remove("aplayer-withlist"), this.player.pause(), this.audios = [], this.player.lrc && this.player.lrc.clear(), this.player.audio.src = "", this.player.template.listOl.innerHTML = "", this.player.template.pic.style.backgroundImage = "", this.player.theme(this.player.options.theme, this.index, !1), this.player.template.title.innerHTML = "No audio", this.player.template.author.innerHTML = "", this.player.bar.set("loaded", 0, "width"), this.player.template.dtime.innerHTML = m(0);
+    this.player.events.trigger("listclear"), this.index = 0, this.player.container.classList.remove("aplayer-withlist"), this.player.pause(), this.audios = [], this.player.lrc && this.player.lrc.clear(), this.player.audio.src = "", this.player.template.listOl.innerHTML = "", this.player.template.pic.style.backgroundImage = "", this.player.theme(this.player.options.theme, this.index, !1), this.player.template.title.innerHTML = "No audio", this.player.template.author.innerHTML = "", this.player.bar.set("loaded", 0, "width"), this.player.template.dtime.innerHTML = b(0);
   }
 }
-const u = [];
-let L = q;
-function Bt(t) {
-  L = t;
+const y = [];
+let B = P;
+function Wt(t) {
+  B = t;
 }
-function qt(t) {
+function Rt(t) {
   t.audio = document.createElement("audio"), t.audio.preload = t.options.preload;
-  for (let e = 0; e < b.length; e++)
-    t.audio.addEventListener(b[e], (i) => {
-      t.events.trigger(b[e], i);
+  for (let e = 0; e < k.length; e++)
+    t.audio.addEventListener(k[e], (i) => {
+      t.events.trigger(k[e], i);
     });
   t.volume(t.storage.getVolume(), !0);
 }
-function Et(t) {
+function $t(t) {
   t.on("play", () => {
-    t.paused && D(t);
+    t.paused && Q(t);
   }), t.on("pause", () => {
-    t.paused || E(t);
+    t.paused || z(t);
   }), t.on("timeupdate", () => {
     if (!t.disableTimeupdate) {
       t.bar.set("played", t.audio.currentTime / t.duration, "width"), t.lrc && t.lrc.update();
-      const i = m(t.audio.currentTime);
+      const i = b(t.audio.currentTime);
       t.template.ptime.innerHTML !== i && (t.template.ptime.innerHTML = i);
     }
   }), t.on("durationchange", () => {
-    t.duration !== 1 && (t.template.dtime.innerHTML = m(t.duration));
+    t.duration !== 1 && (t.template.dtime.innerHTML = b(t.duration));
   }), t.on("progress", () => {
     const i = t.audio.buffered.length ? t.audio.buffered.end(t.audio.buffered.length - 1) / t.duration : 0;
     t.bar.set("loaded", i, "width");
@@ -602,19 +596,19 @@ function Et(t) {
     t.options.loop === "none" ? t.options.order === "list" ? t.list.index < t.list.audios.length - 1 ? (t.list.switch((t.list.index + 1) % t.list.audios.length), t.play()) : (t.list.switch((t.list.index + 1) % t.list.audios.length), t.pause()) : t.options.order === "random" && (t.randomOrder.indexOf(t.list.index) < t.randomOrder.length - 1 ? (t.list.switch(t.nextIndex()), t.play()) : (t.list.switch(t.nextIndex()), t.pause())) : t.options.loop === "one" ? (t.list.switch(t.list.index), t.play()) : t.options.loop === "all" && (t.skipForward(), t.play());
   });
 }
-function D(t) {
+function Q(t) {
   if (t.paused && (t.paused = !1, t.template.button.classList.remove("aplayer-play"), t.template.button.classList.add("aplayer-pause"), t.template.button.innerHTML = "", setTimeout(() => {
-    t.template.button.innerHTML = z;
-  }, 100), t.template.skipPlayButton.innerHTML = z), t.timer.enable(), t.options.mutex)
-    for (let e = 0; e < u.length; e++)
-      t !== u[e] && u[e].pause();
+    t.template.button.innerHTML = W;
+  }, 100), t.template.skipPlayButton.innerHTML = W), t.timer.enable(), t.options.mutex)
+    for (let e = 0; e < y.length; e++)
+      t !== y[e] && y[e].pause();
 }
-function E(t) {
+function z(t) {
   t.paused || (t.paused = !0, t.template.button.classList.remove("aplayer-pause"), t.template.button.classList.add("aplayer-play"), t.template.button.innerHTML = "", setTimeout(() => {
-    t.template.button.innerHTML = x;
-  }, 100), t.template.skipPlayButton.innerHTML = x), t.container.classList.remove("aplayer-loading"), t.timer.disable();
+    t.template.button.innerHTML = q;
+  }, 100), t.template.skipPlayButton.innerHTML = q), t.container.classList.remove("aplayer-loading"), t.timer.disable();
 }
-class Ht {
+class Vt {
   /**
    * APlayer constructor function
    *
@@ -623,17 +617,17 @@ class Ht {
    */
   constructor(e) {
     e.fixed = !1;
-    const i = L();
-    if (L != q && (e.fixed = !0, L = q), this.options = _(e), this.container = this.options.container, this.paused = !0, this.playedPromise = Promise.resolve(), this.mode = "normal", this.randomOrder = N(this.options.audio.length), this.container.classList.add("aplayer"), this.options.lrcType && !this.options.fixed && this.container.classList.add("aplayer-withlrc"), this.options.audio.length > 1 && this.container.classList.add("aplayer-withlist"), y && this.container.classList.add("aplayer-mobile"), this.arrow = this.container.offsetWidth <= 300, this.arrow && this.container.classList.add("aplayer-arrow"), this.container = this.options.container, this.options.lrcType === 2 || this.options.lrcType === !0) {
+    const i = B();
+    if (B != P && (e.fixed = !0, B = P), this.options = dt(e), this.container = this.options.container, this.paused = !0, this.playedPromise = Promise.resolve(), this.mode = "normal", this.randomOrder = V(this.options.audio.length), this.container.classList.add("aplayer"), this.options.lrcType && !this.options.fixed && this.container.classList.add("aplayer-withlrc"), this.options.audio.length > 1 && this.container.classList.add("aplayer-withlist"), x && this.container.classList.add("aplayer-mobile"), this.arrow = this.container.offsetWidth <= 300, this.arrow && this.container.classList.add("aplayer-arrow"), this.container = this.options.container, this.options.lrcType === 2 || this.options.lrcType === !0) {
       const a = this.container.getElementsByClassName("aplayer-lrc-content");
       for (let s = 0; s < a.length; s++)
         this.options.audio[s] && (this.options.audio[s].lrc = a[s].innerHTML);
     }
-    this.template = lt(this.container, this.options, this.randomOrder, i), this.options.fixed && (this.container.classList.add("aplayer-fixed"), this.template.body.style.width = this.template.body.offsetWidth - 18 + "px"), this.options.mini && (this.setMode("mini"), this.template.info.style.display = "block"), this.template.info.offsetWidth < 200 && this.template.time.classList.add("aplayer-time-narrow"), this.options.lrcType && (this.lrc = new ht({
+    this.template = yt(this.container, this.options, this.randomOrder, i), this.options.fixed && (this.container.classList.add("aplayer-fixed"), this.template.body.style.width = this.template.body.offsetWidth - 18 + "px"), this.options.mini && (this.setMode("mini"), this.template.info.style.display = "block"), this.template.info.offsetWidth < 200 && this.template.time.classList.add("aplayer-time-narrow"), this.options.lrcType && (this.lrc = new Mt({
       container: this.template.lrc,
       async: this.options.lrcType === 3,
       player: this
-    })), this.storage = rt(this), this.timer = bt(this), this.events = xt(), this.bar = new nt(this.template), this.controller = new ct(this), this.list = new kt(this), qt(this), Et(this), this.options.order === "random" ? this.list.switch(this.randomOrder[0]) : this.list.switch(0), this.options.autoplay && this.play(), u.push(this);
+    })), this.storage = Lt(this), this.timer = Pt(this), this.events = It(), this.bar = bt(this.template), this.controller = new xt(this), this.list = new jt(this), Rt(this), $t(this), this.options.order === "random" ? this.list.switch(this.randomOrder[0]) : this.list.switch(0), this.options.autoplay && this.play(), y.push(this);
   }
   setAudio(e) {
     this.hls && (this.hls.destroy(), this.hls = null);
@@ -644,23 +638,23 @@ class Ht {
     a && this.list.audios[i] && (this.list.audios[i].theme = e), this.template.listCurs[i] && (this.template.listCurs[i].style.backgroundColor = e), i === this.list.index && (this.template.pic.style.backgroundColor = e, this.template.played.style.background = e, this.template.thumb.style.background = e, this.template.volume.style.background = e);
   }
   seek(e) {
-    e = Math.max(e, 0), e = Math.min(e, this.duration), this.audio.currentTime = e, this.bar.set("played", e / this.duration, "width"), this.template.ptime.innerHTML = m(e);
+    e = Math.max(e, 0), e = Math.min(e, this.duration), this.audio.currentTime = e, this.bar.set("played", e / this.duration, "width"), this.template.ptime.innerHTML = b(e);
   }
   get duration() {
     return isNaN(this.audio.duration) ? 0 : this.audio.duration;
   }
   play() {
-    D(this);
+    Q(this);
     const e = this.audio.play();
     e && e.catch((i) => {
-      console.warn(i), i.name === "NotAllowedError" && E(this);
+      console.warn(i), i.name === "NotAllowedError" && z(this);
     });
   }
   pause() {
-    E(this), this.audio.pause();
+    z(this), this.audio.pause();
   }
   switchVolumeIcon() {
-    this.volume() >= 0.95 ? this.template.volumeButton.innerHTML = X : this.volume() > 0 ? this.template.volumeButton.innerHTML = W : this.template.volumeButton.innerHTML = J;
+    this.volume() >= 0.95 ? this.template.volumeButton.innerHTML = ot : this.volume() > 0 ? this.template.volumeButton.innerHTML = U : this.template.volumeButton.innerHTML = nt;
   }
   /**
    * Set volume
@@ -696,7 +690,7 @@ class Ht {
    * destroy this player
    */
   destroy() {
-    u.splice(u.indexOf(this), 1), this.pause(), this.container.innerHTML = "", this.audio.src = "", this.timer.destroy(), this.events.trigger("destroy");
+    y.splice(y.indexOf(this), 1), this.pause(), this.container.innerHTML = "", this.audio.src = "", this.timer.destroy(), this.events.trigger("destroy");
   }
   setMode(e = "normal") {
     this.mode = e, e === "mini" ? this.container.classList.add("aplayer-narrow") : e === "normal" && this.container.classList.remove("aplayer-narrow");
@@ -737,10 +731,10 @@ class Ht {
     this.list.switch(this.nextIndex());
   }
 }
-const Ot = () => {
-  Bt(at);
+const Yt = () => {
+  Wt(gt);
 };
 export {
-  Ht as default,
-  Ot as enableFixedModeOnce
+  Vt as default,
+  Yt as enableFixedModeOnce
 };

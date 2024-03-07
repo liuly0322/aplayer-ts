@@ -1,87 +1,86 @@
 import tplLrc from '../template/lrc.js';
 
-class Lrc {
-    constructor(options) {
-        this.container = options.container;
-        this.async = options.async;
-        this.player = options.player;
-        this.parsed = [];
-        this.index = 0;
-        this.current = [];
+export default (options) => {
+    const container = options.container;
+    const player = options.player;
+    const async_ = options.async;
+
+    let parsed_ = [];
+    let index_ = 0;
+    let current_ = [];
+
+    function show() {
+        player.events.trigger('lrcshow');
+        player.template.lrcWrap.classList.remove('aplayer-lrc-hide');
     }
 
-    show() {
-        this.player.events.trigger('lrcshow');
-        this.player.template.lrcWrap.classList.remove('aplayer-lrc-hide');
+    function hide() {
+        player.events.trigger('lrchide');
+        player.template.lrcWrap.classList.add('aplayer-lrc-hide');
     }
 
-    hide() {
-        this.player.events.trigger('lrchide');
-        this.player.template.lrcWrap.classList.add('aplayer-lrc-hide');
-    }
-
-    toggle() {
-        if (this.player.template.lrcWrap.classList.contains('aplayer-lrc-hide')) {
-            this.show();
+    function toggle() {
+        if (player.template.lrcWrap.classList.contains('aplayer-lrc-hide')) {
+            show();
         }
         else {
-            this.hide();
+            hide();
         }
     }
 
-    update(currentTime = this.player.audio.currentTime) {
-        if (this.index > this.current.length - 1 || currentTime < this.current[this.index][0] || (!this.current[this.index + 1] || currentTime >= this.current[this.index + 1][0])) {
-            for (let i = 0; i < this.current.length; i++) {
-                if (currentTime >= this.current[i][0] && (!this.current[i + 1] || currentTime < this.current[i + 1][0])) {
-                    this.index = i;
-                    this.container.style.transform = `translateY(${-this.index * 16}px)`;
-                    this.container.style.webkitTransform = `translateY(${-this.index * 16}px)`;
-                    this.container.getElementsByClassName('aplayer-lrc-current')[0].classList.remove('aplayer-lrc-current');
-                    this.container.getElementsByTagName('p')[i].classList.add('aplayer-lrc-current');
+    function update(currentTime = player.audio.currentTime) {
+        if (index_ > current_.length - 1 || currentTime < current_[index_][0] || (!current_[index_ + 1] || currentTime >= current_[index_ + 1][0])) {
+            for (let i = 0; i < current_.length; i++) {
+                if (currentTime >= current_[i][0] && (!current_[i + 1] || currentTime < current_[i + 1][0])) {
+                    index_ = i;
+                    container.style.transform = `translateY(${-index_ * 16}px)`;
+                    container.style.webkitTransform = `translateY(${-index_ * 16}px)`;
+                    container.getElementsByClassName('aplayer-lrc-current')[0].classList.remove('aplayer-lrc-current');
+                    container.getElementsByTagName('p')[i].classList.add('aplayer-lrc-current');
                 }
             }
         }
     }
 
-    switch(index) {
-        if (!this.parsed[index]) {
-            if (!this.async) {
-                if (this.player.list.audios[index].lrc) {
-                    this.parsed[index] = this.parse(this.player.list.audios[index].lrc);
+    function switch_(index) {
+        if (!parsed_[index]) {
+            if (!async_) {
+                if (player.list.audios[index].lrc) {
+                    parsed_[index] = parse(player.list.audios[index].lrc);
                 }
                 else {
-                    this.parsed[index] = [['00:00', 'Not available']];
+                    parsed_[index] = [['00:00', 'Not available']];
                 }
             }
             else {
-                this.parsed[index] = [['00:00', 'Loading']];
+                parsed_[index] = [['00:00', 'Loading']];
                 const xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = () => {
-                    if (index === this.player.list.index && xhr.readyState === 4) {
+                    if (index === player.list.index && xhr.readyState === 4) {
                         if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
-                            this.parsed[index] = this.parse(xhr.responseText);
+                            parsed_[index] = parse(xhr.responseText);
                         }
                         else {
-                            this.player.notice(`LRC file request fails: status ${xhr.status}`);
-                            this.parsed[index] = [['00:00', 'Not available']];
+                            player.notice(`LRC file request fails: status ${xhr.status}`);
+                            parsed_[index] = [['00:00', 'Not available']];
                         }
-                        this.container.innerHTML = tplLrc({
-                            lyrics: this.parsed[index]
+                        container.innerHTML = tplLrc({
+                            lyrics: parsed_[index]
                         });
-                        this.update(0);
-                        this.current = this.parsed[index];
+                        update(0);
+                        current_ = parsed_[index];
                     }
                 };
-                const apiurl = this.player.list.audios[index].lrc;
+                const apiurl = player.list.audios[index].lrc;
                 xhr.open('get', apiurl, true);
                 xhr.send(null);
             }
         }
 
-        this.container.innerHTML = tplLrc({
-            lyrics: this.parsed[index]
+        container.innerHTML = tplLrc({
+            lyrics: parsed_[index]
         });
-        this.current = this.parsed[index];
+        current_ = parsed_[index];
     }
 
     /**
@@ -96,7 +95,7 @@ class Lrc {
      *
      * @return {String} [[time, text], [time, text], [time, text], ...]
      */
-    parse(lrc_s) {
+    function parse(lrc_s) {
         if (lrc_s) {
             lrc_s = lrc_s.replace(/([^\]^\n])\[/g, (match, p1) => p1 + '\n[');
             const lyric = lrc_s.split('\n');
@@ -131,14 +130,23 @@ class Lrc {
         }
     }
 
-    remove(index) {
-        this.parsed.splice(index, 1);
+    function remove(index) {
+        parsed_.splice(index, 1);
     }
 
-    clear() {
-        this.parsed = [];
-        this.container.innerHTML = '';
+    function clear() {
+        parsed_ = [];
+        container.innerHTML = '';
+    }
+
+    return {
+        show,
+        hide,
+        toggle,
+        update,
+        switch: switch_,
+        parse,
+        remove,
+        clear
     }
 }
-
-export default Lrc;
