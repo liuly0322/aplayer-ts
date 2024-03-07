@@ -13,7 +13,8 @@
   "scripts": {
     "build": "vite build",
     "build:demo": "vite  build --config vite-dev.config.js",
-    "dev": "vite"
+    "dev": "vite",
+    "lint": "eslint --ext .js src/js"
   },
   "repository": {
     "url": "git+https://github.com/liuly0322/aplayer-ts",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.20.1",
+    "eslint": "^8.57.0",
     "vite": "^5.1.5"
   }
 }
