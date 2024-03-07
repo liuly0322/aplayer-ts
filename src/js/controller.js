@@ -1,20 +1,18 @@
 import { isMobile, nameMap, getElementViewLeft, getElementViewTop, secondToTime } from './utils';
 import { orderList, orderRandom, loopOne, loopNone, loopAll } from './icons';
 
-class Controller {
-    constructor(player) {
-        initPlayButton(player);
-        initPlayBar(player);
-        initOrderButton(player);
-        initLoopButton(player);
-        initMenuButton(player);
-        if (!isMobile) {
-            initVolumeButton(player);
-        }
-        initMiniSwitcher(player);
-        initSkipButton(player);
-        initLrcButton(player);
+export default (player) => {
+    initPlayButton(player);
+    initPlayBar(player);
+    initOrderButton(player);
+    initLoopButton(player);
+    initMenuButton(player);
+    if (!isMobile) {
+        initVolumeButton(player);
     }
+    initMiniSwitcher(player);
+    initSkipButton(player);
+    initLrcButton(player);
 }
 
 function initPlayButton(player) {
@@ -167,5 +165,3 @@ function initLrcButton(player) {
         }
     });
 }
-
-export default Controller;

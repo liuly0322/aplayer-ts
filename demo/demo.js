@@ -1,4 +1,6 @@
 import APlayer from "../src/js";
+import { addToList } from "../src/js";
+import { removeFromList } from "../src/js";
 import '../src/css/base.css'
 
 // import { enableFixedModeOnce } from "../src/js"
@@ -25,8 +27,9 @@ const url = `https://api.liuly.moe/meting-api/?server=netease&type=playlist&id=3
 (async () => {
     const data = await fetch(url).then(res => res.json())
     const audioList = data.map(value => ({ ...value, cover: value.pic })) ?? []
-    ap1.list.clear()
-    ap1.list.add(audioList)
+    removeFromList(ap1, 0)
+    // clearList(ap1)
+    addToList(ap1, audioList)
 })()
 
 window.ap1 = ap1

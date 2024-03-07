@@ -58,9 +58,10 @@ export default class APlayer {
     show(): void;
     hide(): void;
     toggle(): void;
-    add(audios: Audio[] | Audio): void;
-    remove(index: number): void;
     switch(index: number): void;
-    clear(): void;
   };
 }
+
+export const addToList: (player: APlayer, audios: Audio[] | Audio) => void;
+export const removeFromList: (player: APlayer, index: number) => void;
+export const clearList: (player: APlayer) => void;

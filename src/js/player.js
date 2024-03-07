@@ -234,13 +234,12 @@ class APlayer {
             });
         }
 
-        this.storage = VolumnStorage(this);
-        this.timer = Timer(this);
         this.events = Events();
+        this.storage = VolumnStorage(this);
         this.bar = Bar(this.template);
-
-        this.controller = new Controller(this);
-        this.list = new List(this);
+        this.controller = Controller(this);
+        this.timer = Timer(this);
+        this.list = List(this);
 
         initAudio(this);
         bindEvents(this);
@@ -405,21 +404,6 @@ class APlayer {
         else if (this.template.button.classList.contains('aplayer-pause')) {
             this.pause();
         }
-    }
-
-    // abandoned
-    switchAudio(index) {
-        this.list.switch(index);
-    }
-
-    // abandoned
-    addAudio(audios) {
-        this.list.add(audios);
-    }
-
-    // abandoned
-    removeAudio(index) {
-        this.list.remove(index);
     }
 
     /**
