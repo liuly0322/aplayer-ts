@@ -50,7 +50,6 @@ import APlayer, { APlayerFixedModePlugin } from 'aplayer-ts'
 import 'aplayer-ts/src/css/base.css'
 import 'aplayer-ts/src/css/fixed.css' // remember to import the css
 
-enableFixedModeOnce() // before each instance need fixed mode
 const instance = APlayer()
     .use(APlayerFixedModePlugin)
     .init({ /* refer to the aplayer doc */ })
