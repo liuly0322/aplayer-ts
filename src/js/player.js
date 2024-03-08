@@ -4,7 +4,6 @@ import handleOption from './options';
 import Template from './template';
 import { notFixedModeTplRenderers } from '../template/player';
 import Bar from './bar';
-import VolumnStorage from './volumeStorage';
 import Lrc from './lrc';
 import Controller from './controller';
 import Timer from './timer';
@@ -41,6 +40,20 @@ const APlayer = () => {
     const player = getPlayerStruct()
 
     // inner attributes
+    const volumeStorage = (() => {
+        const storageName = player.options.storageName;
+        const data = JSON.parse(localStorage.getItem(storageName)) || {};
+        data.volume ||= player.options.volume;
+        return {
+            get() {
+                return data.volume;
+            },
+            set(value) {
+                data.volume = value;
+                localStorage.setItem(storageName, JSON.stringify(data));
+            }
+        }
+    })();
     let paused = true;
     let hls = null;
     let noticeTime;
@@ -50,13 +63,13 @@ const APlayer = () => {
         player.audio = document.createElement('audio');
         player.audio.preload = player.options.preload;
 
-        for (let i = 0; i < audioEvents.length; i++) {
-            player.audio.addEventListener(audioEvents[i], (e) => {
-                player.events.trigger(audioEvents[i], e);
+        audioEvents.forEach((eventName) => {
+            player.audio.addEventListener(eventName, (e) => {
+                player.events.trigger(eventName, e);
             });
-        }
+        });
 
-        player.volume(player.storage.getVolume(), true);
+        player.volume(volumeStorage.get(), true);
     }
     function bindEvents() {
         player.on('play', () => {
@@ -164,11 +177,9 @@ const APlayer = () => {
         player.timer.enable();
 
         if (player.options.mutex) {
-            for (let i = 0; i < instances.length; i++) {
-                if (player !== instances[i]) {
-                    instances[i].pause();
-                }
-            }
+            instances.filter((instance) => instance !== player).forEach((instance) => {
+                instance.pause();
+            });
         }
     }
     function setUIPaused() {
@@ -282,7 +293,6 @@ const APlayer = () => {
         }
 
         player.events = Events();
-        player.storage = VolumnStorage(player);
         player.bar = Bar(player.template);
         player.controller = Controller(player);
         player.timer = Timer(player);
@@ -440,7 +450,7 @@ const APlayer = () => {
             percentage = Math.min(percentage, 1);
             player.bar.set('volume', percentage, 'height');
             if (!nostorage) {
-                player.storage.setVolume(percentage);
+                volumeStorage.set(percentage);
             }
 
             player.audio.volume = percentage;

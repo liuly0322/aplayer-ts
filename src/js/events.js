@@ -24,11 +24,7 @@ export default () => {
         }
     }
     function trigger(name, data) {
-        if (events[name] && events[name].length) {
-            for (let i = 0; i < events[name].length; i++) {
-                events[name][i](data);
-            }
-        }
+        events[name]?.forEach(callback => callback(data));
     }
     function type(name) {
         if (playerEvents.indexOf(name) !== -1) {
@@ -41,6 +37,6 @@ export default () => {
         console.error(`Unknown event name: ${name}`);
         return null;
     }
-    return { on, trigger, type }
+    return { on, trigger }
 }
 
