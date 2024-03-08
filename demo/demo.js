@@ -3,23 +3,24 @@ import { addToList } from "../src/js";
 import { removeFromList } from "../src/js";
 import '../src/css/base.css'
 
-// import { enableFixedModeOnce } from "../src/js"
+// import { APlayerFixedModePlugin } from "../src/js"
 // import '../src/css/fixed.css'
-// enableFixedModeOnce()
 
-const ap1 = new APlayer({
-    element: document.getElementById('player1'),
-    theme: 'rgba(255,255,255,0.2)',
-    preload: 'none',
-    lrcType: 3,
-    listFolded: true,
-    listMaxHeight: '250px',
-    audio: {
-        name: '正在加载...',
-        artist: '正在加载...',
-        lrc: 'data:,loading...',
-    },
-});
+const ap1 = APlayer()
+    // .use(APlayerFixedModePlugin)
+    .init({
+        element: document.getElementById('player1'),
+        theme: 'rgba(255,255,255,0.2)',
+        preload: 'none',
+        lrcType: 3,
+        listFolded: true,
+        listMaxHeight: '250px',
+        audio: {
+            name: '正在加载...',
+            artist: '正在加载...',
+            lrc: 'data:,loading...',
+        },
+    })
 
 const r = Math.random()
 const url = `https://api.liuly.moe/meting-api/?server=netease&type=playlist&id=373425292&r=${r}`;

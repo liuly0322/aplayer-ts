@@ -28,13 +28,14 @@ interface APlayerOptions {
   customAudioType?: Record<string, () => void>;
 }
 
-export const enableFixedModeOnce: () => void;
+type Plugin = (player: APlayer) => void;
 
-export default class APlayer {
+interface APlayer {
   audio: HTMLAudioElement;
   mode: 'mini' | 'normal';
 
-  constructor(options: APlayerOptions);
+  init(options: APlayerOptions): APlayer;
+  use(plugin: Plugin): APlayer;
   play(): void;
   pause(): void;
   seek(time: number): void;
@@ -62,6 +63,9 @@ export default class APlayer {
   };
 }
 
+export default () => APlayer;
+
+export const APlayerFixedModePlugin: Plugin;
 export const addToList: (player: APlayer, audios: Audio[] | Audio) => void;
 export const removeFromList: (player: APlayer, index: number) => void;
 export const clearList: (player: APlayer) => void;

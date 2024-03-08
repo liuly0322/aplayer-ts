@@ -4,77 +4,73 @@ import listItem from './list-item.js';
 
 const $escape = $imports.$escape;
 
-export function notFixedModeTplRenderers() {
-    return [
-        (options, includeFunction) => {
-            includeFunction('<div class="aplayer-body"><div class="aplayer-pic" style="')
-        },
-        (options, includeFunction) => {
-            includeFunction('</div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ')
-        },
-        (options, includeFunction) => {
-            includeFunction('</button></div></div><div class="aplayer-list');
-            if (options.listFolded) {
-                includeFunction(' aplayer-list-hide');
-            }
-            includeFunction('" ');
-            if (options.listMaxHeight) {
-                includeFunction(' style="max-height: ');
-                includeFunction($escape(options.listMaxHeight));
-                includeFunction('" ');
-            }
-            includeFunction('><ol ');
-            if (options.listMaxHeight) {
-                includeFunction(' style="max-height: ');
-                includeFunction($escape(options.listMaxHeight));
-                includeFunction('" ');
-            }
-            includeFunction('> ');
-            includeFunction(listItem({
-                theme: options.theme,
-                audio: options.audio,
-                index: 1
-            }));
-            includeFunction(' </ol></div> ');
+export const notFixedModeTplRenderers = [
+    (options, includeFunction) => {
+        includeFunction('<div class="aplayer-body"><div class="aplayer-pic" style="')
+    },
+    (options, includeFunction) => {
+        includeFunction('</div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ')
+    },
+    (options, includeFunction) => {
+        includeFunction('</button></div></div><div class="aplayer-list');
+        if (options.listFolded) {
+            includeFunction(' aplayer-list-hide');
         }
-    ]
-}
+        includeFunction('" ');
+        if (options.listMaxHeight) {
+            includeFunction(' style="max-height: ');
+            includeFunction($escape(options.listMaxHeight));
+            includeFunction('" ');
+        }
+        includeFunction('><ol ');
+        if (options.listMaxHeight) {
+            includeFunction(' style="max-height: ');
+            includeFunction($escape(options.listMaxHeight));
+            includeFunction('" ');
+        }
+        includeFunction('> ');
+        includeFunction(listItem({
+            theme: options.theme,
+            audio: options.audio,
+            index: 1
+        }));
+        includeFunction(' </ol></div> ');
+    }
+]
 
-export function fixedModeTplRenderer() {
-    return [
-        (options, includeFunction) => {
-            includeFunction(' <div class="aplayer-list');
-            if (options.listFolded) {
-                includeFunction(' aplayer-list-hide');
-            }
-            includeFunction('" ');
-            if (options.listMaxHeight) {
-                includeFunction(' style="max-height: ');
-                includeFunction($escape(options.listMaxHeight));
-                includeFunction('" ');
-            }
-            includeFunction('><ol ');
-            if (options.listMaxHeight) {
-                includeFunction(' style="max-height: ');
-                includeFunction($escape(options.listMaxHeight));
-                includeFunction('" ');
-            }
-            includeFunction('> ');
-            includeFunction(listItem({
-                theme: options.theme,
-                audio: options.audio,
-                index: 1
-            }));
-            includeFunction(' </ol></div><div class="aplayer-body"><div class="aplayer-pic" style="');
-        },
-        (options, includeFunction) => {
-            includeFunction('</div></div><div class="aplayer-info" style="display:none"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ');
-        },
-        (options, includeFunction) => {
-            includeFunction('</button></div></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div> ');
+export const fixedModeTplRenderer = [
+    (options, includeFunction) => {
+        includeFunction(' <div class="aplayer-list');
+        if (options.listFolded) {
+            includeFunction(' aplayer-list-hide');
         }
-    ]
-}
+        includeFunction('" ');
+        if (options.listMaxHeight) {
+            includeFunction(' style="max-height: ');
+            includeFunction($escape(options.listMaxHeight));
+            includeFunction('" ');
+        }
+        includeFunction('><ol ');
+        if (options.listMaxHeight) {
+            includeFunction(' style="max-height: ');
+            includeFunction($escape(options.listMaxHeight));
+            includeFunction('" ');
+        }
+        includeFunction('> ');
+        includeFunction(listItem({
+            theme: options.theme,
+            audio: options.audio,
+            index: 1
+        }));
+        includeFunction(' </ol></div><div class="aplayer-body"><div class="aplayer-pic" style="');
+    },
+    (options, includeFunction) => {
+        includeFunction('</div></div><div class="aplayer-info" style="display:none"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ');
+    },
+    (options, includeFunction) => {
+        includeFunction('</button></div></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div> ');
+    }
+]
 
 export default function (options, cover, tplRenderers) {
     'use strict';
