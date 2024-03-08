@@ -10,7 +10,7 @@ export class Audio {
   type?: string;
 }
 
-interface APlayerOptions {
+export interface APlayerOptions {
   container?: HTMLElement;
   mini?: boolean;
   autoplay?: boolean;
@@ -28,9 +28,7 @@ interface APlayerOptions {
   customAudioType?: Record<string, () => void>;
 }
 
-type Plugin = (player: APlayer) => void;
-
-interface APlayer {
+export interface APlayer {
   audio: HTMLAudioElement;
   mode: 'mini' | 'normal';
 
@@ -62,10 +60,12 @@ interface APlayer {
     switch(index: number): void;
   };
 }
+export const APlayer: () => APlayer;
+export default APlayer
 
-export default () => APlayer;
-
+type Plugin = (player: APlayer) => void;
 export const APlayerFixedModePlugin: Plugin;
+
 export const addToList: (player: APlayer, audios: Audio[] | Audio) => void;
 export const removeFromList: (player: APlayer, index: number) => void;
 export const clearList: (player: APlayer) => void;
