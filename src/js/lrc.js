@@ -145,7 +145,6 @@ export default (options) => {
         toggle,
         update,
         switch: switch_,
-        parse,
         remove,
         clear
     }
