@@ -12,31 +12,27 @@ export const audioEvents = [
     'timeupdate', 'volumechange', 'waiting'
 ];
 
+function type(name) {
+    if (playerEvents.indexOf(name) !== -1) {
+        return 'player';
+    }
+    else if (audioEvents.indexOf(name) !== -1) {
+        return 'audio';
+    }
+}
+
 export default () => {
     const events = {};
-
-    function on(name, callback) {
-        if (type(name) && typeof callback === 'function') {
-            if (!events[name]) {
-                events[name] = [];
+    return {
+        on: function (name, callback) {
+            if (type(name) && typeof callback === 'function') {
+                events[name] ||= [];
+                events[name].push(callback);
             }
-            events[name].push(callback);
+        },
+        trigger: function (name, data) {
+            events[name]?.forEach(callback => callback(data));
         }
     }
-    function trigger(name, data) {
-        events[name]?.forEach(callback => callback(data));
-    }
-    function type(name) {
-        if (playerEvents.indexOf(name) !== -1) {
-            return 'player';
-        }
-        else if (audioEvents.indexOf(name) !== -1) {
-            return 'audio';
-        }
-
-        console.error(`Unknown event name: ${name}`);
-        return null;
-    }
-    return { on, trigger }
 }
 

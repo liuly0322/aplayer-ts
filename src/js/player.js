@@ -44,12 +44,20 @@ const APlayer = () => {
     let volumeStorage;
     let paused = true;
     let hls = null;
+    let timer = Timer(player);
     let noticeTime;
+
+    // objects that are public but has a inner name
+    // these are never reassigned, so they share the same reference
+    let options_;
+    let container_;
+    let template_;
+    let list_;
 
     // inner methods
     function initAudio() {
         player.audio = document.createElement('audio');
-        player.audio.preload = player.options.preload;
+        player.audio.preload = options_.preload;
 
         audioEvents.forEach((eventName) => {
             player.audio.addEventListener(eventName, (e) => {
@@ -77,8 +85,8 @@ const APlayer = () => {
                 player.bar.set('played', player.audio.currentTime / player.duration, 'width');
                 player.lrc && player.lrc.update();
                 const currentTime = secondToTime(player.audio.currentTime);
-                if (player.template.ptime.innerHTML !== currentTime) {
-                    player.template.ptime.innerHTML = currentTime;
+                if (template_.ptime.innerHTML !== currentTime) {
+                    template_.ptime.innerHTML = currentTime;
                 }
             }
         });
@@ -86,7 +94,7 @@ const APlayer = () => {
         // show audio time: the metadata has loaded or changed
         player.on('durationchange', () => {
             if (player.duration !== 1) {           // compatibility: Android browsers will output 1 at first
-                player.template.dtime.innerHTML = secondToTime(player.duration);
+                template_.dtime.innerHTML = secondToTime(player.duration);
             }
         });
 
@@ -99,7 +107,7 @@ const APlayer = () => {
         // audio download error: an error occurs
         let skipTime;
         player.on('error', () => {
-            if (player.list.audios.length > 1) {
+            if (list_.audios.length > 1) {
                 player.notice('An audio error has occurred, player will skip forward in 2 seconds.');
                 skipTime = setTimeout(() => {
                     player.skipForward();
@@ -108,7 +116,7 @@ const APlayer = () => {
                     }
                 }, 2000);
             }
-            else if (player.list.audios.length === 1) {
+            else if (list_.audios.length === 1) {
                 player.notice('An audio error has occurred.');
             }
         });
@@ -118,33 +126,33 @@ const APlayer = () => {
 
         // multiple audio play
         player.on('ended', () => {
-            if (player.options.loop === 'none') {
-                if (player.options.order === 'list') {
-                    if (player.list.index < player.list.audios.length - 1) {
-                        player.list.switch((player.list.index + 1) % player.list.audios.length);
+            if (options_.loop === 'none') {
+                if (options_.order === 'list') {
+                    if (list_.index < list_.audios.length - 1) {
+                        list_.switch((list_.index + 1) % list_.audios.length);
                         player.play();
                     }
                     else {
-                        player.list.switch((player.list.index + 1) % player.list.audios.length);
+                        list_.switch((list_.index + 1) % list_.audios.length);
                         player.pause();
                     }
                 }
-                else if (player.options.order === 'random') {
-                    if (player.randomOrder.indexOf(player.list.index) < player.randomOrder.length - 1) {
-                        player.list.switch(nextIndex());
+                else if (options_.order === 'random') {
+                    if (player.randomOrder.indexOf(list_.index) < player.randomOrder.length - 1) {
+                        list_.switch(nextIndex());
                         player.play();
                     }
                     else {
-                        player.list.switch(nextIndex());
+                        list_.switch(nextIndex());
                         player.pause();
                     }
                 }
             }
-            else if (player.options.loop === 'one') {
-                player.list.switch(player.list.index);
+            else if (options_.loop === 'one') {
+                list_.switch(list_.index);
                 player.play();
             }
-            else if (player.options.loop === 'all') {
+            else if (options_.loop === 'all') {
                 player.skipForward();
                 player.play();
             }
@@ -153,18 +161,18 @@ const APlayer = () => {
     function setUIPlaying() {
         if (paused) {
             paused = false;
-            player.template.button.classList.remove('aplayer-play');
-            player.template.button.classList.add('aplayer-pause');
-            player.template.button.innerHTML = '';
+            template_.button.classList.remove('aplayer-play');
+            template_.button.classList.add('aplayer-pause');
+            template_.button.innerHTML = '';
             setTimeout(() => {
-                player.template.button.innerHTML = pause;
+                template_.button.innerHTML = pause;
             }, 100);
-            player.template.skipPlayButton.innerHTML = pause;
+            template_.skipPlayButton.innerHTML = pause;
         }
 
-        player.timer.enable();
+        timer.enable();
 
-        if (player.options.mutex) {
+        if (options_.mutex) {
             instances.filter((instance) => instance !== player).forEach((instance) => {
                 instance.pause();
             });
@@ -174,25 +182,25 @@ const APlayer = () => {
         if (!paused) {
             paused = true;
 
-            player.template.button.classList.remove('aplayer-pause');
-            player.template.button.classList.add('aplayer-play');
-            player.template.button.innerHTML = '';
+            template_.button.classList.remove('aplayer-pause');
+            template_.button.classList.add('aplayer-play');
+            template_.button.innerHTML = '';
             setTimeout(() => {
-                player.template.button.innerHTML = play;
+                template_.button.innerHTML = play;
             }, 100);
-            player.template.skipPlayButton.innerHTML = play;
+            template_.skipPlayButton.innerHTML = play;
         }
 
-        player.container.classList.remove('aplayer-loading');
-        player.timer.disable();
+        container_.classList.remove('aplayer-loading');
+        timer.disable();
     }
     function prevIndex() {
-        if (player.list.audios.length > 1) {
-            if (player.options.order === 'list') {
-                return player.list.index - 1 < 0 ? player.list.audios.length - 1 : player.list.index - 1;
+        if (list_.audios.length > 1) {
+            if (options_.order === 'list') {
+                return list_.index - 1 < 0 ? list_.audios.length - 1 : list_.index - 1;
             }
-            else if (player.options.order === 'random') {
-                const index = player.randomOrder.indexOf(player.list.index);
+            else if (options_.order === 'random') {
+                const index = player.randomOrder.indexOf(list_.index);
                 if (index === 0) {
                     return player.randomOrder[player.randomOrder.length - 1];
                 }
@@ -206,12 +214,12 @@ const APlayer = () => {
         }
     }
     function nextIndex() {
-        if (player.list.audios.length > 1) {
-            if (player.options.order === 'list') {
-                return (player.list.index + 1) % player.list.audios.length;
+        if (list_.audios.length > 1) {
+            if (options_.order === 'list') {
+                return (list_.index + 1) % list_.audios.length;
             }
-            else if (player.options.order === 'random') {
-                const index = player.randomOrder.indexOf(player.list.index);
+            else if (options_.order === 'random') {
+                const index = player.randomOrder.indexOf(list_.index);
                 if (index === player.randomOrder.length - 1) {
                     return player.randomOrder[0];
                 }
@@ -227,63 +235,65 @@ const APlayer = () => {
 
     // add new public methods to the player
     player.init = (options) => {
-        player.options = handleOption(options);
-        player.container = player.options.container;
-        player.mode = 'normal';
+        options_ = handleOption(options);
+        player.options = options_;
+        container_ = options_.container;
+        player.container = container_;
 
-        player.randomOrder = randomOrder(player.options.audio.length);
-
-        player.container.classList.add('aplayer');
-        if (player.options.lrcType && !player.options.fixed) {
-            player.container.classList.add('aplayer-withlrc');
+        container_.classList.add('aplayer');
+        if (options_.lrcType && !options_.fixed) {
+            container_.classList.add('aplayer-withlrc');
         }
-        if (player.options.audio.length > 1) {
-            player.container.classList.add('aplayer-withlist');
+        if (options_.audio.length > 1) {
+            container_.classList.add('aplayer-withlist');
         }
         if (isMobile) {
-            player.container.classList.add('aplayer-mobile');
+            container_.classList.add('aplayer-mobile');
         }
-        const arrow = player.container.offsetWidth <= 300;
+        const arrow = container_.offsetWidth <= 300;
         if (arrow) {
-            player.container.classList.add('aplayer-arrow');
+            container_.classList.add('aplayer-arrow');
         }
 
         // save lrc
-        if (player.options.lrcType === 2 || player.options.lrcType === true) {
-            const lrcEle = player.container.getElementsByClassName('aplayer-lrc-content');
+        if (options_.lrcType === 2 || options_.lrcType === true) {
+            const lrcEle = container_.getElementsByClassName('aplayer-lrc-content');
             for (let i = 0; i < lrcEle.length; i++) {
-                if (player.options.audio[i]) {
-                    player.options.audio[i].lrc = lrcEle[i].innerHTML;
+                if (options_.audio[i]) {
+                    options_.audio[i].lrc = lrcEle[i].innerHTML;
                 }
             }
         }
 
-        player.template = Template(player.container, player.options, player.randomOrder, player.tplRenderers)
+        player.randomOrder = randomOrder(options_.audio.length);
+        template_ = Template(container_, options_, player.randomOrder, player.tplRenderers)
+        player.template = template_;
 
-        if (player.options.fixed) {
-            player.container.classList.add('aplayer-fixed');
-            player.template.body.style.width = player.template.body.offsetWidth - 18 + 'px';
+        player.mode = 'normal';
+        if (options_.fixed) {
+            container_.classList.add('aplayer-fixed');
+            template_.body.style.width = template_.body.offsetWidth - 18 + 'px';
         }
-        if (player.options.mini) {
+        if (options_.mini) {
             player.setMode('mini');
-            player.template.info.style.display = 'block';
+            template_.info.style.display = 'block';
         }
-        if (player.template.info.offsetWidth < 200) {
-            player.template.time.classList.add('aplayer-time-narrow');
+        if (template_.info.offsetWidth < 200) {
+            template_.time.classList.add('aplayer-time-narrow');
         }
 
-        if (player.options.lrcType) {
+        if (options_.lrcType) {
             player.lrc = Lrc({
-                container: player.template.lrc,
-                async: player.options.lrcType === 3,
+                container: template_.lrc,
+                async: options_.lrcType === 3,
                 player: player,
             });
         }
 
         volumeStorage = (() => {
-            const storageName = player.options.storageName;
+            const storageName = options_.storageName;
             const data = JSON.parse(localStorage.getItem(storageName)) || {};
-            data.volume ||= player.options.volume;
+            data.volume ||= options_.volume;
             return {
                 get() {
                     return data.volume;
@@ -296,22 +306,22 @@ const APlayer = () => {
         })()
 
         player.events = Events();
-        player.bar = Bar(player.template);
+        player.bar = Bar(template_);
         player.controller = Controller(player);
-        player.timer = Timer(player);
-        player.list = List(player);
+        list_ = List(player);
+        player.list = list_;
 
         initAudio();
         bindEvents();
-        if (player.options.order === 'random') {
-            player.list.switch(player.randomOrder[0]);
+        if (options_.order === 'random') {
+            list_.switch(player.randomOrder[0]);
         }
         else {
-            player.list.switch(0);
+            list_.switch(0);
         }
 
         // autoplay
-        if (player.options.autoplay) {
+        if (options_.autoplay) {
             player.play();
         }
 
@@ -329,9 +339,9 @@ const APlayer = () => {
             hls = null;
         }
         let type = audio.type;
-        if (player.options.customAudioType && player.options.customAudioType[type]) {
-            if (Object.prototype.toString.call(player.options.customAudioType[type]) === '[object Function]') {
-                player.options.customAudioType[type](player.audio, audio, player);
+        if (options_.customAudioType && options_.customAudioType[type]) {
+            if (Object.prototype.toString.call(options_.customAudioType[type]) === '[object Function]') {
+                options_.customAudioType[type](player.audio, audio, player);
             }
             else {
                 console.error(`Illegal customType: ${type}`);
@@ -374,23 +384,23 @@ const APlayer = () => {
     player.destroy = () => {
         instances.splice(instances.indexOf(player), 1);
         player.pause();
-        player.container.innerHTML = '';
+        container_.innerHTML = '';
         player.audio.src = '';
-        player.timer.destroy();
+        timer.destroy();
         player.events.trigger('destroy');
     }
     player.setMode = (mode = 'normal') => {
         player.mode = mode;
         if (mode === 'mini') {
-            player.container.classList.add('aplayer-narrow');
+            container_.classList.add('aplayer-narrow');
         }
         else if (mode === 'normal') {
-            player.container.classList.remove('aplayer-narrow');
+            container_.classList.remove('aplayer-narrow');
         }
     }
     player.notice = (text, time = 2000, opacity = 0.8) => {
-        player.template.notice.innerHTML = text;
-        player.template.notice.style.opacity = opacity;
+        template_.notice.innerHTML = text;
+        template_.notice.style.opacity = opacity;
         if (noticeTime) {
             clearTimeout(noticeTime);
         }
@@ -399,21 +409,21 @@ const APlayer = () => {
         });
         if (time) {
             noticeTime = setTimeout(() => {
-                player.template.notice.style.opacity = 0;
+                template_.notice.style.opacity = 0;
                 player.events.trigger('noticehide');
             }, time);
         }
     }
-    player.theme = (color = player.list.audios[player.list.index].theme || player.options.theme, index = player.list.index, isReset = true) => {
+    player.theme = (color = list_.audios[list_.index].theme || options_.theme, index = list_.index, isReset = true) => {
         if (isReset) {
-            player.list.audios[index] && (player.list.audios[index].theme = color);
+            list_.audios[index] && (list_.audios[index].theme = color);
         }
-        player.template.listCurs[index] && (player.template.listCurs[index].style.backgroundColor = color);
-        if (index === player.list.index) {
-            player.template.pic.style.backgroundColor = color;
-            player.template.played.style.background = color;
-            player.template.thumb.style.background = color;
-            player.template.volume.style.background = color;
+        template_.listCurs[index] && (template_.listCurs[index].style.backgroundColor = color);
+        if (index === list_.index) {
+            template_.pic.style.backgroundColor = color;
+            template_.played.style.background = color;
+            template_.thumb.style.background = color;
+            template_.volume.style.background = color;
         }
     }
     player.seek = (time) => {
@@ -421,7 +431,7 @@ const APlayer = () => {
         time = Math.min(time, player.duration);
         player.audio.currentTime = time;
         player.bar.set('played', time / player.duration, 'width');
-        player.template.ptime.innerHTML = secondToTime(time);
+        template_.ptime.innerHTML = secondToTime(time);
     }
     player.play = () => {
         setUIPlaying();
@@ -442,13 +452,13 @@ const APlayer = () => {
     }
     player.switchVolumeIcon = () => {
         if (player.volume() >= 0.95) {
-            player.template.volumeButton.innerHTML = volumeUp;
+            template_.volumeButton.innerHTML = volumeUp;
         }
         else if (player.volume() > 0) {
-            player.template.volumeButton.innerHTML = volumeDown;
+            template_.volumeButton.innerHTML = volumeDown;
         }
         else {
-            player.template.volumeButton.innerHTML = volumeOff;
+            template_.volumeButton.innerHTML = volumeOff;
         }
     }
     player.volume = (percentage, nostorage) => {
@@ -475,18 +485,18 @@ const APlayer = () => {
         player.events.on(name, callback);
     }
     player.toggle = () => {
-        if (player.template.button.classList.contains('aplayer-play')) {
+        if (template_.button.classList.contains('aplayer-play')) {
             player.play();
         }
-        else if (player.template.button.classList.contains('aplayer-pause')) {
+        else if (template_.button.classList.contains('aplayer-pause')) {
             player.pause();
         }
     }
     player.skipBack = () => {
-        player.list.switch(prevIndex());
+        list_.switch(prevIndex());
     }
     player.skipForward = () => {
-        player.list.switch(nextIndex());
+        list_.switch(nextIndex());
     }
     player.use = (plugin) => {
         plugin(player);
