@@ -11,7 +11,26 @@ export function APlayerFixedModePlugin(player) {
         return init_(options)
     }
 }
-
-export { addToList, removeFromList, clearList };
+export function addMusicPlugin(player) {
+    player.afterInitHooks.push(() => {
+        player.list.add = (audio) => {
+            addToList(player, audio)
+        }
+    })
+}
+export function removeMusicPlugin(player) {
+    player.afterInitHooks.push(() => {
+        player.list.remove = (index) => {
+            removeFromList(player, index)
+        }
+    })
+}
+export function clearMusicPlugin(player) {
+    player.afterInitHooks.push(() => {
+        player.list.clear = () => {
+            clearList(player)
+        }
+    })
+}
 
 export default APlayer;

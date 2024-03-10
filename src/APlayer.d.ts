@@ -1,5 +1,3 @@
-type FullScreenType = "web" | "browser";
-
 export class Audio {
   name?: string;
   url?: string;
@@ -28,12 +26,12 @@ export interface APlayerOptions {
   customAudioType?: Record<string, () => void>;
 }
 
-export interface APlayer {
+type APlayerBase<T = unknown> = {
   audio: HTMLAudioElement;
   mode: 'mini' | 'normal';
 
-  init(options: APlayerOptions): APlayer;
-  use(plugin: Plugin): APlayer;
+  init(options: APlayerOptions): APlayer<T>;
+  use<P>(plugin: Plugin<P>): APlayer<T & P>;
   play(): void;
   pause(): void;
   seek(time: number): void;
@@ -60,12 +58,26 @@ export interface APlayer {
     switch(index: number): void;
   };
 }
-export const APlayer: () => APlayer;
+
+export type APlayer<T = unknown> = APlayerBase<T> & T;
+
+export const APlayer: () => APlayer<unknown>;
 export default APlayer
 
-type Plugin = (player: APlayer) => void;
-export const APlayerFixedModePlugin: Plugin;
-
-export const addToList: (player: APlayer, audios: Audio[] | Audio) => void;
-export const removeFromList: (player: APlayer, index: number) => void;
-export const clearList: (player: APlayer) => void;
+type Plugin<P> = (player: APlayer) => void;
+export const APlayerFixedModePlugin: Plugin<unknown>;
+export const addMusicPlugin: Plugin<{
+  list: {
+    add: (audios: Audio[] | Audio) => void;
+  }
+}>;
+export const removeMusicPlugin: Plugin<{
+  list: {
+    remove: (index: number) => void;
+  }
+}>;
+export const clearMusicPlugin: Plugin<{
+  list: {
+    clear: () => void;
+  }
+}>;

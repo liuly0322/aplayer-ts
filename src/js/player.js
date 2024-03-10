@@ -15,6 +15,7 @@ const instances = [];
 const getPlayerStruct = () => {
     const struct = {
         tplRenderers: notFixedModeTplRenderers,
+        afterInitHooks: [],
         get duration() {
             return isNaN(struct.audio.duration) ? 0 : struct.audio.duration;
         }
@@ -40,20 +41,7 @@ const APlayer = () => {
     const player = getPlayerStruct()
 
     // inner attributes
-    const volumeStorage = (() => {
-        const storageName = player.options.storageName;
-        const data = JSON.parse(localStorage.getItem(storageName)) || {};
-        data.volume ||= player.options.volume;
-        return {
-            get() {
-                return data.volume;
-            },
-            set(value) {
-                data.volume = value;
-                localStorage.setItem(storageName, JSON.stringify(data));
-            }
-        }
-    })();
+    let volumeStorage;
     let paused = true;
     let hls = null;
     let noticeTime;
@@ -292,6 +280,21 @@ const APlayer = () => {
             });
         }
 
+        volumeStorage = (() => {
+            const storageName = player.options.storageName;
+            const data = JSON.parse(localStorage.getItem(storageName)) || {};
+            data.volume ||= player.options.volume;
+            return {
+                get() {
+                    return data.volume;
+                },
+                set(value) {
+                    data.volume = value;
+                    localStorage.setItem(storageName, JSON.stringify(data));
+                }
+            }
+        })()
+
         player.events = Events();
         player.bar = Bar(player.template);
         player.controller = Controller(player);
@@ -313,6 +316,11 @@ const APlayer = () => {
         }
 
         instances.push(player);
+
+        player.afterInitHooks.forEach((hook) => {
+            hook(player);
+        })
+
         return player
     }
     player.setAudio = (audio) => {

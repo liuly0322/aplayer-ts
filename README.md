@@ -55,15 +55,18 @@ const instance = APlayer()
     .init({ /* refer to the aplayer doc */ })
 ```
 
-2. `list.add`, `list.remove` and `list.clear` are removed, use `addToList`, `removeFromList` and `clearList` instead.
+2. If you want to use `list.add`, `list.remove` and `list.clear` are removed, First install their plugins:
 
 ```TypeScript
-import APlayer, { addToList } from 'aplayer-ts'
+import APlayer, { addMusicPlugin, removeMusicPlugin } from 'aplayer-ts'
 import 'aplayer-ts/src/css/base.css'
 
 const instance = APlayer()
+    .use(addMusicPlugin)
+    .use(removeMusicPlugin)
     .init({ /* refer to the aplayer doc */ })
-addToList(instance, { /* new audios here */ })
+
+instance.list.add({ /* new audios here */ })
 ```
 
 ## Development
