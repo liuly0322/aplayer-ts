@@ -66,6 +66,7 @@ export default APlayer
 
 type Plugin<P> = (player: APlayer) => void;
 export const APlayerFixedModePlugin: Plugin<unknown>;
+export const APlayerHlsPlugin: Plugin<unknown>;
 export const addMusicPlugin: Plugin<{
   list: {
     add: (audios: Audio[] | Audio) => void;

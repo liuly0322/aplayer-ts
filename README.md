@@ -55,10 +55,10 @@ const instance = APlayer()
     .init({ /* refer to the aplayer doc */ })
 ```
 
-2. `list.add`, `list.remove` and `list.clear` are by default removed, first install their plugins if you want to use:
+2. `list.add`, `list.remove` and `list.clear` are by default removed, install their plugins if you want to use:
 
 ```TypeScript
-import APlayer, { addMusicPlugin, removeMusicPlugin } from 'aplayer-ts'
+import APlayer, { addMusicPlugin, removeMusicPlugin, clearMusicPlugin } from 'aplayer-ts'
 import 'aplayer-ts/src/css/base.css'
 
 const instance = APlayer()
@@ -67,6 +67,17 @@ const instance = APlayer()
     .init({ /* refer to the aplayer doc */ })
 
 instance.list.add({ /* new audios here */ })
+```
+
+3. HLS is by default removed, install `APlayerHlsPlugin` if you want to use:
+
+```TypeScript
+import APlayer, { APlayerHlsPlugin } from 'aplayer-ts'
+import 'aplayer-ts/src/css/base.css'
+
+const instance = APlayer()
+    .use(APlayerHlsPlugin)
+    .init({ /* refer to the aplayer doc */ })
 ```
 
 ## Development

@@ -32,5 +32,23 @@ export function clearMusicPlugin(player) {
         }
     })
 }
+export function APlayerHlsPlugin(player) {
+    player.hlsHandler = (audio) => {
+        // eslint-disable-next-line no-undef
+        if (Hls.isSupported()) {
+            // eslint-disable-next-line no-undef
+            const hls = new Hls();
+            hls.loadSource(audio.url);
+            hls.attachMedia(player.audio);
+            return hls;
+        }
+        else if (player.audio.canPlayType('application/x-mpegURL') || player.audio.canPlayType('application/vnd.apple.mpegURL')) {
+            player.audio.src = audio.url;
+        }
+        else {
+            player.notice('Error: HLS is not supported.');
+        }
+    }
+}
 
 export default APlayer;

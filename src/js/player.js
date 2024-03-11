@@ -15,6 +15,8 @@ const instances = [];
 const getPlayerStruct = () => {
     const struct = {
         tplRenderers: notFixedModeTplRenderers,
+        hlsHandler: () => { },
+        events: Events(),
         mode: 'normal',
         afterInitHooks: [],
         get duration() {
@@ -24,7 +26,6 @@ const getPlayerStruct = () => {
         // the origin code init them in the constructor (the current init function)
         // disableTimeupdate: null,
         // randomOrder: null,
-        // events: null,
         // bar: null,
         // list: null,
         // audio: null,
@@ -55,6 +56,65 @@ const APlayer = () => {
     let list_;
 
     // inner methods
+    function initLrc() {
+        if (options_.lrcType === 2 || options_.lrcType === true) {
+            const lrcEle = container_.getElementsByClassName('aplayer-lrc-content');
+            for (let i = 0; i < lrcEle.length; i++) {
+                if (options_.audio[i]) {
+                    options_.audio[i].lrc = lrcEle[i].innerHTML;
+                }
+            }
+        }
+        if (options_.lrcType) {
+            player.lrc = Lrc({
+                container: template_.lrc,
+                async: options_.lrcType === 3,
+                player: player,
+            });
+        }
+    }
+    function initClassNames() {
+        container_.classList.add('aplayer');
+        if (options_.lrcType && !options_.fixed) {
+            container_.classList.add('aplayer-withlrc');
+        }
+        if (options_.audio.length > 1) {
+            container_.classList.add('aplayer-withlist');
+        }
+        if (isMobile) {
+            container_.classList.add('aplayer-mobile');
+        }
+        const arrow = container_.offsetWidth <= 300;
+        if (arrow) {
+            container_.classList.add('aplayer-arrow');
+        }
+        if (options_.fixed) {
+            container_.classList.add('aplayer-fixed');
+            template_.body.style.width = template_.body.offsetWidth - 18 + 'px';
+        }
+        if (options_.mini) {
+            player.setMode('mini');
+            template_.info.style.display = 'block';
+        }
+        if (template_.info.offsetWidth < 200) {
+            template_.time.classList.add('aplayer-time-narrow');
+        }
+    }
+    function useVolumeStorage() {
+        const storageName = options_.storageName;
+        const data = JSON.parse(localStorage.getItem(storageName)) || {};
+        data.volume ||= options_.volume;
+        return {
+            get() {
+                return data.volume;
+            },
+            set(value) {
+                data.volume = value;
+                localStorage.setItem(storageName, JSON.stringify(data));
+            }
+        }
+
+    }
     function initAudio() {
         player.audio = document.createElement('audio');
         player.audio.preload = options_.preload;
@@ -239,74 +299,16 @@ const APlayer = () => {
         player.options = options_;
         container_ = options_.container;
         player.container = container_;
-
-        container_.classList.add('aplayer');
-        if (options_.lrcType && !options_.fixed) {
-            container_.classList.add('aplayer-withlrc');
-        }
-        if (options_.audio.length > 1) {
-            container_.classList.add('aplayer-withlist');
-        }
-        if (isMobile) {
-            container_.classList.add('aplayer-mobile');
-        }
-        const arrow = container_.offsetWidth <= 300;
-        if (arrow) {
-            container_.classList.add('aplayer-arrow');
-        }
-
-        // save lrc
-        if (options_.lrcType === 2 || options_.lrcType === true) {
-            const lrcEle = container_.getElementsByClassName('aplayer-lrc-content');
-            for (let i = 0; i < lrcEle.length; i++) {
-                if (options_.audio[i]) {
-                    options_.audio[i].lrc = lrcEle[i].innerHTML;
-                }
-            }
-        }
-
-        player.randomOrder = randomOrder(options_.audio.length);
         template_ = Template(container_, options_, player.randomOrder, player.tplRenderers)
         player.template = template_;
-
-        if (options_.fixed) {
-            container_.classList.add('aplayer-fixed');
-            template_.body.style.width = template_.body.offsetWidth - 18 + 'px';
-        }
-        if (options_.mini) {
-            player.setMode('mini');
-            template_.info.style.display = 'block';
-        }
-        if (template_.info.offsetWidth < 200) {
-            template_.time.classList.add('aplayer-time-narrow');
-        }
-
-        if (options_.lrcType) {
-            player.lrc = Lrc({
-                container: template_.lrc,
-                async: options_.lrcType === 3,
-                player: player,
-            });
-        }
-
-        volumeStorage = (() => {
-            const storageName = options_.storageName;
-            const data = JSON.parse(localStorage.getItem(storageName)) || {};
-            data.volume ||= options_.volume;
-            return {
-                get() {
-                    return data.volume;
-                },
-                set(value) {
-                    data.volume = value;
-                    localStorage.setItem(storageName, JSON.stringify(data));
-                }
-            }
-        })()
-
-        player.events = Events();
-        player.bar = Bar(template_);
         player.controller = Controller(player);
+        initClassNames();
+
+        player.randomOrder = randomOrder(options_.audio.length);
+        volumeStorage = useVolumeStorage()
+
+        initLrc();
+        player.bar = Bar(template_);
         list_ = List(player);
         player.list = list_;
 
@@ -319,7 +321,6 @@ const APlayer = () => {
             list_.switch(0);
         }
 
-        // autoplay
         if (options_.autoplay) {
             player.play();
         }
@@ -356,19 +357,7 @@ const APlayer = () => {
                 }
             }
             if (type === 'hls') {
-                // eslint-disable-next-line no-undef
-                if (Hls.isSupported()) {
-                    // eslint-disable-next-line no-undef
-                    hls = new Hls();
-                    hls.loadSource(audio.url);
-                    hls.attachMedia(player.audio);
-                }
-                else if (player.audio.canPlayType('application/x-mpegURL') || player.audio.canPlayType('application/vnd.apple.mpegURL')) {
-                    player.audio.src = audio.url;
-                }
-                else {
-                    player.notice('Error: HLS is not supported.');
-                }
+                hls = player.hlsHandler(audio);
             }
             else if (type === 'normal') {
                 player.audio.src = audio.url;
