@@ -15,13 +15,13 @@ const instances = [];
 const getPlayerStruct = () => {
     const struct = {
         tplRenderers: notFixedModeTplRenderers,
+        mode: 'normal',
         afterInitHooks: [],
         get duration() {
             return isNaN(struct.audio.duration) ? 0 : struct.audio.duration;
         }
         // you may check other public attributes below
         // the origin code init them in the constructor (the current init function)
-        // mode: null,
         // disableTimeupdate: null,
         // randomOrder: null,
         // events: null,
@@ -269,7 +269,6 @@ const APlayer = () => {
         template_ = Template(container_, options_, player.randomOrder, player.tplRenderers)
         player.template = template_;
 
-        player.mode = 'normal';
         if (options_.fixed) {
             container_.classList.add('aplayer-fixed');
             template_.body.style.width = template_.body.offsetWidth - 18 + 'px';
