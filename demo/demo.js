@@ -3,12 +3,14 @@ import { addMusicPlugin } from "../src/js";
 import { removeMusicPlugin } from "../src/js";
 import '../src/css/base.css'
 
+// import { APlayerHlsPlugin } from "../src/js"
 // import { APlayerFixedModePlugin } from "../src/js"
 // import '../src/css/fixed.css'
 
 const ap1 = APlayer()
     .use(addMusicPlugin)
     .use(removeMusicPlugin)
+    // .use(APlayerHlsPlugin)
     // .use(APlayerFixedModePlugin)
     .init({
         element: document.getElementById('player1'),

@@ -5,7 +5,7 @@
 
 > Wow, such a lovely HTML5 music player
 
-Fully ESM version of [APlayer](https://github.com/MoePlayer/APlayer/) with TypeScript support. With Rollup and esbuild, [index.min.js](build/index.min.js) is **50% smaller** than the original [APlayer.min.js](dist/APlayer.min.js), from 58KB to 31KB or less.
+Fully ESM version of [APlayer](https://github.com/MoePlayer/APlayer/) with TypeScript support. With Rollup and esbuild, [index.min.js](build/index.min.js) is **50% smaller** than the original [APlayer.min.js](dist/APlayer.min.js), from 58KB to ~30KB.
 
 ## Why this
 
@@ -18,11 +18,11 @@ See this [blog post](https://blog.liuly.moe/posts/tree-shaking).
    # only import APlayer constructor
    demo_build/index.html                  1.95 kB │ gzip: 0.79 kB
    demo_build/assets/index-3p8iLQ3k.css  10.22 kB │ gzip: 2.19 kB
-   demo_build/assets/index-AmLZK57G.js   29.36 kB │ gzip: 9.49 kB
+   demo_build/assets/index-CkPi-9F1.js   29.23 kB │ gzip: 9.44 kB
    # import everything
-   demo_build/index.html                  1.95 kB │ gzip: 0.78 kB
+   demo_build/index.html                  1.95 kB │ gzip: 0.79 kB
    demo_build/assets/index-Bi0rxlmU.css  12.04 kB │ gzip: 2.47 kB
-   demo_build/assets/index-BhtKGDQq.js   32.14 kB │ gzip: 9.94 kB
+   demo_build/assets/index-x6uEdt4E.js   32.27 kB │ gzip: 9.99 kB
    ```
 
 `APlayer.min.js` is still in `dist` folder, but by default this package exports `src/js/index.js`.
