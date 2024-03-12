@@ -164,7 +164,11 @@ export default (player) => {
             }
             const listItemElement = getCurrentListItem();
             listItemElement.classList.add('aplayer-list-light');
-            listItemElement.parentNode.scrollTop = listItemElement.offsetTop;
+            listItemElement.parentNode.scrollTo({
+                top: listItemElement.offsetTop,
+                left: 0,
+                behavior: 'smooth'
+            })
 
             player.setAudio(audio);
 
