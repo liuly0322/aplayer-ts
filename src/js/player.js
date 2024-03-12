@@ -99,6 +99,7 @@ const APlayer = () => {
         if (template_.info.offsetWidth < 200) {
             template_.time.classList.add('aplayer-time-narrow');
         }
+        template_.listOl.style.position = 'relative';
     }
     function useVolumeStorage() {
         const storageName = options_.storageName;

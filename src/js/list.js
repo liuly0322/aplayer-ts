@@ -120,7 +120,8 @@ export default (player) => {
     function show() {
         player.events.trigger('listshow');
         player.template.list.classList.remove('aplayer-list-hide');
-        player.template.listOl.scrollTop = index_ * 33;
+        const listItemElement = getCurrentListItem();
+        player.template.listOl.scrollTop = listItemElement.offsetTop
     }
 
     function hide() {
@@ -135,6 +136,10 @@ export default (player) => {
         else {
             show();
         }
+    }
+
+    function getCurrentListItem() {
+        return player.container.querySelectorAll('.aplayer-list li')[index_];
     }
 
     function switch_(index) {
@@ -157,9 +162,9 @@ export default (player) => {
             if (light) {
                 light.classList.remove('aplayer-list-light');
             }
-            const currentListItem = player.container.querySelectorAll('.aplayer-list li')[index_];
-            currentListItem.classList.add('aplayer-list-light');
-            currentListItem.scrollIntoView({ behavior: "smooth" });
+            const listItemElement = getCurrentListItem();
+            listItemElement.classList.add('aplayer-list-light');
+            listItemElement.parentNode.scrollTop = listItemElement.offsetTop;
 
             player.setAudio(audio);
 
