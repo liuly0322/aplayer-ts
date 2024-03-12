@@ -18,11 +18,11 @@ See this [blog post](https://blog.liuly.moe/posts/tree-shaking).
    # only import APlayer constructor
    demo_build/index.html                  1.95 kB │ gzip: 0.79 kB
    demo_build/assets/index-3p8iLQ3k.css  10.22 kB │ gzip: 2.19 kB
-   demo_build/assets/index-dYKzm1rR.js   27.83 kB │ gzip: 8.87 kB
+   demo_build/assets/index-DDEVMoCF.js   27.37 kB │ gzip: 8.66 kB
    # import everything
    demo_build/index.html                  1.95 kB │ gzip: 0.79 kB
    demo_build/assets/index-Bi0rxlmU.css  12.04 kB │ gzip: 2.47 kB
-   demo_build/assets/index-Bp2Me_6t.js   30.86 kB │ gzip: 9.42 kB
+   demo_build/assets/index-CTXYaVj8.js   30.44 kB │ gzip: 9.23 kB
    ```
 
 `APlayer.min.js` is still in `dist` folder, but by default this package exports `src/js/index.js`.

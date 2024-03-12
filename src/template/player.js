@@ -1,4 +1,4 @@
-import $imports from 'art-template/lib/runtime.js';
+import $imports from './art-runtime';
 import { lrc, right, menu, play, loading, skip, volumeDown, orderList, loopOne, loopAll, loopNone, orderRandom } from '../js/icons'
 import listItem from './list-item.js';
 

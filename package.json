@@ -32,9 +32,6 @@
     "url": "https://github.com/liuly0322/aplayer-ts"
   },
   "homepage": "https://github.com/liuly0322/aplayer-ts#readme",
-  "dependencies": {
-    "art-template": "4.12.2"
-  },
   "devDependencies": {
     "esbuild": "^0.20.1",
     "eslint": "^8.57.0",

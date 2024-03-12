@@ -1,4 +1,4 @@
-import $imports from 'art-template/lib/runtime.js';
+import $imports from './art-runtime';
 export default function ($data) {
     'use strict';
     $data = $data || {};
