@@ -1,7 +1,6 @@
 import tplListItem from '../template/list-item.js';
 import { secondToTime, randomOrder } from './utils';
 import { handleAudioOption } from './options';
-import smoothScroll from 'smoothscroll';
 
 export function addToList(player, audios) {
     player.events.trigger('listadd', {
@@ -158,9 +157,9 @@ export default (player) => {
             if (light) {
                 light.classList.remove('aplayer-list-light');
             }
-            player.container.querySelectorAll('.aplayer-list li')[index_].classList.add('aplayer-list-light');
-
-            smoothScroll(index_ * 33, 500, null, player.template.listOl);
+            const currentListItem = player.container.querySelectorAll('.aplayer-list li')[index_];
+            currentListItem.classList.add('aplayer-list-light');
+            currentListItem.scrollIntoView({ behavior: "smooth" });
 
             player.setAudio(audio);
 

@@ -1,9 +1,9 @@
-const k = /mobile/i.test(window.navigator.userAgent);
-function M(t) {
-  const e = (n) => n < 10 ? "0" + n : "" + n, s = Math.floor(t / 3600), i = Math.floor((t - s * 3600) / 60), a = Math.floor(t - s * 3600 - i * 60);
+const M = /mobile/i.test(window.navigator.userAgent);
+function y(t) {
+  const e = (l) => l < 10 ? "0" + l : "" + l, s = Math.floor(t / 3600), i = Math.floor((t - s * 3600) / 60), a = Math.floor(t - s * 3600 - i * 60);
   return (s > 0 ? [s, i, a] : [i, a]).map(e).join(":");
 }
-function I(t) {
+function A(t) {
   let e = t.offsetLeft, s = t.offsetParent;
   const i = document.body.scrollLeft + document.documentElement.scrollLeft;
   if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement)
@@ -14,22 +14,22 @@ function I(t) {
       e += s.offsetLeft, s = s.offsetParent;
   return e - i;
 }
-function P(t, e) {
+function N(t, e) {
   let s = t.offsetTop, i = t.offsetParent, a = 0;
   for (; i !== null; )
     s += i.offsetTop, i = i.offsetParent;
   return a = document.body.scrollTop + document.documentElement.scrollTop, e ? s : s - a;
 }
-const v = {
-  dragStart: k ? "touchstart" : "mousedown",
-  dragMove: k ? "touchmove" : "mousemove",
-  dragEnd: k ? "touchend" : "mouseup"
+const p = {
+  dragStart: M ? "touchstart" : "mousedown",
+  dragMove: M ? "touchmove" : "mousemove",
+  dragEnd: M ? "touchend" : "mouseup"
 };
-function $(t) {
+function _(t) {
   function e(s) {
     for (let i = s.length - 1; i >= 0; i--) {
-      const a = Math.floor(Math.random() * (i + 1)), n = s[a];
-      s[a] = s[i], s[i] = n;
+      const a = Math.floor(Math.random() * (i + 1)), l = s[a];
+      s[a] = s[i], s[i] = l;
     }
     return s;
   }
@@ -37,7 +37,7 @@ function $(t) {
     return i;
   }));
 }
-const R = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22.667 4l7 6-7 6 7 6-7 6v-4h-3.653l-3.76-3.76 2.827-2.827 2.587 2.587h2v-8h-2l-12 12h-6v-4h4.347l12-12h3.653v-4zM2.667 8h6l3.76 3.76-2.827 2.827-2.587-2.587h-4.347v-4z"></path></svg>', C = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 17 32"><path d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z"></path></svg>', it = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056zM29.728 16q0 4.096-2.272 7.552t-6.048 5.056q-0.224 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.64 0.704-1.056 0.128-0.064 0.384-0.192t0.416-0.192q0.8-0.448 1.44-0.896 2.208-1.632 3.456-4.064t1.216-5.152-1.216-5.152-3.456-4.064q-0.64-0.448-1.44-0.896-0.128-0.096-0.416-0.192t-0.384-0.192q-0.704-0.416-0.704-1.056 0-0.448 0.32-0.8t0.832-0.352q0.224 0 0.448 0.096 3.776 1.632 6.048 5.056t2.272 7.552z"></path></svg>', _ = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528z"></path></svg>', N = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z"></path></svg>', st = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>', j = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 33 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333zM17.333 20v-8h-1.333l-2.667 1.333v1.333h2v5.333h2z"></path></svg>', at = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 22 32"><path d="M20.8 14.4q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2zM1.6 11.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2zM20.8 20.8q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2z"></path></svg>', B = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 31"><path d="M15.552 15.168q0.448 0.32 0.448 0.832 0 0.448-0.448 0.768l-13.696 8.512q-0.768 0.512-1.312 0.192t-0.544-1.28v-16.448q0-0.96 0.544-1.28t1.312 0.192z"></path></svg>', ot = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path></svg>', nt = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M4 16c0-6.6 5.4-12 12-12s12 5.4 12 12c0 1.2-0.8 2-2 2s-2-0.8-2-2c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.2 0 2 0.8 2 2s-0.8 2-2 2c-6.6 0-12-5.4-12-12z"></path></svg>', Y = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M0.622 18.334h19.54v7.55l11.052-9.412-11.052-9.413v7.549h-19.54v3.725z"></path></svg>', O = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333z"></path></svg>', S = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M2.667 7.027l1.707-1.693 22.293 22.293-1.693 1.707-4-4h-11.64v4l-5.333-5.333 5.333-5.333v4h8.973l-8.973-8.973v0.973h-2.667v-3.64l-4-4zM22.667 17.333h2.667v5.573l-2.667-2.667v-2.907zM22.667 6.667v-4l5.333 5.333-5.333 5.333v-4h-10.907l-2.667-2.667h13.573z"></path></svg>', lt = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M26.667 5.333h-21.333c-0 0-0.001 0-0.001 0-1.472 0-2.666 1.194-2.666 2.666 0 0 0 0.001 0 0.001v-0 16c0 0 0 0.001 0 0.001 0 1.472 1.194 2.666 2.666 2.666 0 0 0.001 0 0.001 0h21.333c0 0 0.001 0 0.001 0 1.472 0 2.666-1.194 2.666-2.666 0-0 0-0.001 0-0.001v0-16c0-0 0-0.001 0-0.001 0-1.472-1.194-2.666-2.666-2.666-0 0-0.001 0-0.001 0h0zM5.333 16h5.333v2.667h-5.333v-2.667zM18.667 24h-13.333v-2.667h13.333v2.667zM26.667 24h-5.333v-2.667h5.333v2.667zM26.667 18.667h-13.333v-2.667h13.333v2.667z"></path></svg>';
+const j = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22.667 4l7 6-7 6 7 6-7 6v-4h-3.653l-3.76-3.76 2.827-2.827 2.587 2.587h2v-8h-2l-12 12h-6v-4h4.347l12-12h3.653v-4zM2.667 8h6l3.76 3.76-2.827 2.827-2.587-2.587h-4.347v-4z"></path></svg>', C = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 17 32"><path d="M14.080 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048zM2.88 4.8q2.88 0 2.88 2.048v18.24q0 2.112-2.88 2.112t-2.88-2.112v-18.24q0-2.048 2.88-2.048z"></path></svg>', tt = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056zM29.728 16q0 4.096-2.272 7.552t-6.048 5.056q-0.224 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.64 0.704-1.056 0.128-0.064 0.384-0.192t0.416-0.192q0.8-0.448 1.44-0.896 2.208-1.632 3.456-4.064t1.216-5.152-1.216-5.152-3.456-4.064q-0.64-0.448-1.44-0.896-0.128-0.096-0.416-0.192t-0.384-0.192q-0.704-0.416-0.704-1.056 0-0.448 0.32-0.8t0.832-0.352q0.224 0 0.448 0.096 3.776 1.632 6.048 5.056t2.272 7.552z"></path></svg>', R = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528z"></path></svg>', W = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M25.468 6.947c-0.326-0.172-0.724-0.151-1.030 0.057l-6.438 4.38v-3.553c0-0.371-0.205-0.71-0.532-0.884-0.326-0.172-0.724-0.151-1.030 0.057l-12 8.164c-0.274 0.186-0.438 0.496-0.438 0.827s0.164 0.641 0.438 0.827l12 8.168c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-3.556l6.438 4.382c0.169 0.115 0.365 0.174 0.562 0.174 0.16 0 0.321-0.038 0.468-0.116 0.327-0.173 0.532-0.514 0.532-0.884v-16.333c0-0.371-0.205-0.71-0.532-0.884z"></path></svg>', et = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 28 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>', Y = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 33 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333zM17.333 20v-8h-1.333l-2.667 1.333v1.333h2v5.333h2z"></path></svg>', it = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 22 32"><path d="M20.8 14.4q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2zM1.6 11.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2zM20.8 20.8q0.704 0 1.152 0.48t0.448 1.12-0.48 1.12-1.12 0.48h-19.2q-0.64 0-1.12-0.48t-0.48-1.12 0.448-1.12 1.152-0.48h19.2z"></path></svg>', B = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 16 31"><path d="M15.552 15.168q0.448 0.32 0.448 0.832 0 0.448-0.448 0.768l-13.696 8.512q-0.768 0.512-1.312 0.192t-0.544-1.28v-16.448q0-0.96 0.544-1.28t1.312 0.192z"></path></svg>', st = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M22 16l-10.105-10.6-1.895 1.987 8.211 8.613-8.211 8.612 1.895 1.988 8.211-8.613z"></path></svg>', at = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M4 16c0-6.6 5.4-12 12-12s12 5.4 12 12c0 1.2-0.8 2-2 2s-2-0.8-2-2c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8c1.2 0 2 0.8 2 2s-0.8 2-2 2c-6.6 0-12-5.4-12-12z"></path></svg>', V = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M0.622 18.334h19.54v7.55l11.052-9.412-11.052-9.413v7.549h-19.54v3.725z"></path></svg>', z = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M9.333 9.333h13.333v4l5.333-5.333-5.333-5.333v4h-16v8h2.667v-5.333zM22.667 22.667h-13.333v-4l-5.333 5.333 5.333 5.333v-4h16v-8h-2.667v5.333z"></path></svg>', S = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 29 32"><path d="M2.667 7.027l1.707-1.693 22.293 22.293-1.693 1.707-4-4h-11.64v4l-5.333-5.333 5.333-5.333v4h8.973l-8.973-8.973v0.973h-2.667v-3.64l-4-4zM22.667 17.333h2.667v5.573l-2.667-2.667v-2.907zM22.667 6.667v-4l5.333 5.333-5.333 5.333v-4h-10.907l-2.667-2.667h13.573z"></path></svg>', ot = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M26.667 5.333h-21.333c-0 0-0.001 0-0.001 0-1.472 0-2.666 1.194-2.666 2.666 0 0 0 0.001 0 0.001v-0 16c0 0 0 0.001 0 0.001 0 1.472 1.194 2.666 2.666 2.666 0 0 0.001 0 0.001 0h21.333c0 0 0.001 0 0.001 0 1.472 0 2.666-1.194 2.666-2.666 0-0 0-0.001 0-0.001v0-16c0-0 0-0.001 0-0.001 0-1.472-1.194-2.666-2.666-2.666-0 0-0.001 0-0.001 0h0zM5.333 16h5.333v2.667h-5.333v-2.667zM18.667 24h-13.333v-2.667h13.333v2.667zM26.667 24h-5.333v-2.667h5.333v2.667zM26.667 18.667h-13.333v-2.667h13.333v2.667z"></path></svg>';
 function U(t) {
   return Object.prototype.toString.call(t) !== "[object Array]" && (t = [t]), t.map((e) => ({
     ...e,
@@ -47,7 +47,7 @@ function U(t) {
     type: e.type || "normal"
   }));
 }
-const rt = (t) => {
+const lt = (t) => {
   const e = {
     container: t.element || document.getElementsByClassName("aplayer")[0],
     mini: t.narrow || t.fixed || !1,
@@ -67,15 +67,14 @@ const rt = (t) => {
   };
   return t = Object.assign(e, t), t.audio = U(t.audio), t.audio.length <= 1 && t.loop === "one" && (t.loop = "all"), t;
 };
-var ct = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function D(t) {
+function nt(t) {
   return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
 }
-var z = Object.create(window), dt = /["&'<>]/;
-z.$escape = function(t) {
-  return ut(V(t));
+var P = Object.create(window), rt = /["&'<>]/;
+P.$escape = function(t) {
+  return ct(X(t));
 };
-z.$each = function(t, e) {
+P.$each = function(t, e) {
   if (Array.isArray(t))
     for (var s = 0, i = t.length; s < i; s++)
       e(t[s], s);
@@ -83,48 +82,48 @@ z.$each = function(t, e) {
     for (var a in t)
       e(t[a], a);
 };
-function V(t) {
-  return typeof t != "string" && (t == null ? t = "" : typeof t == "function" ? t = V(t.call(t)) : t = JSON.stringify(t)), t;
+function X(t) {
+  return typeof t != "string" && (t == null ? t = "" : typeof t == "function" ? t = X(t.call(t)) : t = JSON.stringify(t)), t;
 }
-function ut(t) {
-  var e = "" + t, s = dt.exec(e);
+function ct(t) {
+  var e = "" + t, s = rt.exec(e);
   if (!s)
     return t;
-  var i = "", a = void 0, n = void 0, r = void 0;
-  for (a = s.index, n = 0; a < e.length; a++) {
+  var i = "", a = void 0, l = void 0, n = void 0;
+  for (a = s.index, l = 0; a < e.length; a++) {
     switch (e.charCodeAt(a)) {
       case 34:
-        r = "&#34;";
+        n = "&#34;";
         break;
       case 38:
-        r = "&#38;";
+        n = "&#38;";
         break;
       case 39:
-        r = "&#39;";
+        n = "&#39;";
         break;
       case 60:
-        r = "&#60;";
+        n = "&#60;";
         break;
       case 62:
-        r = "&#62;";
+        n = "&#62;";
         break;
       default:
         continue;
     }
-    n !== a && (i += e.substring(n, a)), n = a + 1, i += r;
+    l !== a && (i += e.substring(l, a)), l = a + 1, i += n;
   }
-  return n !== a ? i + e.substring(n, a) : i;
+  return l !== a ? i + e.substring(l, a) : i;
 }
-var mt = z, pt = mt;
-const q = /* @__PURE__ */ D(pt);
-function A(t) {
+var dt = P, ut = dt;
+const x = /* @__PURE__ */ nt(ut);
+function I(t) {
   t = t || {};
-  let e = "", s = q.$each, i = t.audio, a = q.$escape, n = t.theme, r = t.index;
-  return s(i, function(c, l) {
-    e += ' <li><span class="aplayer-list-cur" style="background-color: ', e += a(c.theme || n), e += '"></span> <span class="aplayer-list-index">', e += a(l + r), e += '</span><span class="aplayer-list-title">', e += a(c.name), e += '</span><span class="aplayer-list-author">', e += a(c.artist), e += "</span></li> ";
+  let e = "", s = x.$each, i = t.audio, a = x.$escape, l = t.theme, n = t.index;
+  return s(i, function(u, c) {
+    e += ' <li><span class="aplayer-list-cur" style="background-color: ', e += a(u.theme || l), e += '"></span> <span class="aplayer-list-index">', e += a(c + n), e += '</span><span class="aplayer-list-title">', e += a(u.name), e += '</span><span class="aplayer-list-author">', e += a(u.artist), e += "</span></li> ";
   }), e;
 }
-const y = q.$escape, ht = [
+const f = x.$escape, mt = [
   (t, e) => {
     e('<div class="aplayer-body"><div class="aplayer-pic" style="');
   },
@@ -132,15 +131,15 @@ const y = q.$escape, ht = [
     e('</div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">No audio</span> <span class="aplayer-author"></span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width:0"></div><div class="aplayer-played" style="width:0;background: ');
   },
   (t, e) => {
-    e('</button></div></div><div class="aplayer-list'), t.listFolded && e(" aplayer-list-hide"), e('" '), t.listMaxHeight && (e(' style="max-height: '), e(y(t.listMaxHeight)), e('" ')), e("><ol "), t.listMaxHeight && (e(' style="max-height: '), e(y(t.listMaxHeight)), e('" ')), e("> "), e(A({
+    e('</button></div></div><div class="aplayer-list'), t.listFolded && e(" aplayer-list-hide"), e('" '), t.listMaxHeight && (e(' style="max-height: '), e(f(t.listMaxHeight)), e('" ')), e("><ol "), t.listMaxHeight && (e(' style="max-height: '), e(f(t.listMaxHeight)), e('" ')), e("> "), e(I({
       theme: t.theme,
       audio: t.audio,
       index: 1
     })), e(" </ol></div> ");
   }
-], ft = [
+], ht = [
   (t, e) => {
-    e(' <div class="aplayer-list'), t.listFolded && e(" aplayer-list-hide"), e('" '), t.listMaxHeight && (e(' style="max-height: '), e(y(t.listMaxHeight)), e('" ')), e("><ol "), t.listMaxHeight && (e(' style="max-height: '), e(y(t.listMaxHeight)), e('" ')), e("> "), e(A({
+    e(' <div class="aplayer-list'), t.listFolded && e(" aplayer-list-hide"), e('" '), t.listMaxHeight && (e(' style="max-height: '), e(f(t.listMaxHeight)), e('" ')), e("><ol "), t.listMaxHeight && (e(' style="max-height: '), e(f(t.listMaxHeight)), e('" ')), e("> "), e(I({
       theme: t.theme,
       audio: t.audio,
       index: 1
@@ -153,193 +152,193 @@ const y = q.$escape, ht = [
     e('</button></div></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform:translateY(0);-webkit-transform:translateY(0)"></div></div> ');
   }
 ];
-function vt(t, e, s) {
-  let i = "", a = function(n) {
-    return i += n, i;
+function pt(t, e, s) {
+  let i = "", a = function(l) {
+    return i += l, i;
   };
-  return s[0](t, a), e && (i += "background-image:url(&quot;", i += y(e), i += "&quot;);"), i += "background-color: ", i += y(t.theme), i += '"><div class="aplayer-button aplayer-play">', i += B, s[1](t, a), i += y(t.theme), i += '"><span class="aplayer-thumb" style="background: ', i += y(t.theme), i += '"><span class="aplayer-loading-icon">', i += nt, i += '</span></span></div></div></div><div class="aplayer-time"><span class="aplayer-time-inner"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">00:00</span> </span><span class="aplayer-icon aplayer-icon-back"> ', i += N, i += ' </span><span class="aplayer-icon aplayer-icon-play"> ', i += B, i += ' </span><span class="aplayer-icon aplayer-icon-forward"> ', i += N, i += ' </span><div class="aplayer-volume-wrap"><button type="button" class="aplayer-icon aplayer-icon-volume-down"> ', i += _, i += ' </button><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height:80%;background: ', i += y(t.theme), i += '"></div></div></div></div><button type="button" class="aplayer-icon aplayer-icon-order"> ', t.order === "list" ? i += Y : t.order === "random" && (i += R), i += ' </button> <button type="button" class="aplayer-icon aplayer-icon-loop"> ', t.loop === "one" ? i += j : t.loop === "all" ? i += O : t.loop === "none" && (i += S), i += ' </button> <button type="button" class="aplayer-icon aplayer-icon-menu"> ', i += at, i += ' </button> <button type="button" class="aplayer-icon aplayer-icon-lrc"> ', i += lt, i += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">', i += ot, s[2](t, a), i;
+  return s[0](t, a), e && (i += "background-image:url(&quot;", i += f(e), i += "&quot;);"), i += "background-color: ", i += f(t.theme), i += '"><div class="aplayer-button aplayer-play">', i += B, s[1](t, a), i += f(t.theme), i += '"><span class="aplayer-thumb" style="background: ', i += f(t.theme), i += '"><span class="aplayer-loading-icon">', i += at, i += '</span></span></div></div></div><div class="aplayer-time"><span class="aplayer-time-inner"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">00:00</span> </span><span class="aplayer-icon aplayer-icon-back"> ', i += W, i += ' </span><span class="aplayer-icon aplayer-icon-play"> ', i += B, i += ' </span><span class="aplayer-icon aplayer-icon-forward"> ', i += W, i += ' </span><div class="aplayer-volume-wrap"><button type="button" class="aplayer-icon aplayer-icon-volume-down"> ', i += R, i += ' </button><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height:80%;background: ', i += f(t.theme), i += '"></div></div></div></div><button type="button" class="aplayer-icon aplayer-icon-order"> ', t.order === "list" ? i += V : t.order === "random" && (i += j), i += ' </button> <button type="button" class="aplayer-icon aplayer-icon-loop"> ', t.loop === "one" ? i += Y : t.loop === "all" ? i += z : t.loop === "none" && (i += S), i += ' </button> <button type="button" class="aplayer-icon aplayer-icon-menu"> ', i += it, i += ' </button> <button type="button" class="aplayer-icon aplayer-icon-lrc"> ', i += ot, i += ' </button></div></div></div><div class="aplayer-notice"></div><div class="aplayer-miniswitcher"><button class="aplayer-icon">', i += st, s[2](t, a), i;
 }
-function gt(t, e, s, i) {
+function vt(t, e, s, i) {
   let a = "";
-  e.audio.length && (e.order === "random" ? a = e.audio[s[0]].cover : a = e.audio[0].cover), t.innerHTML = vt(e, a, i);
-  const n = (r) => t.querySelector(r);
+  e.audio.length && (e.order === "random" ? a = e.audio[s[0]].cover : a = e.audio[0].cover), t.innerHTML = pt(e, a, i);
+  const l = (n) => t.querySelector(n);
   return {
-    lrc: n(".aplayer-lrc-contents"),
-    lrcWrap: n(".aplayer-lrc"),
-    ptime: n(".aplayer-ptime"),
-    info: n(".aplayer-info"),
-    time: n(".aplayer-time"),
-    barWrap: n(".aplayer-bar-wrap"),
-    button: n(".aplayer-button"),
-    body: n(".aplayer-body"),
-    list: n(".aplayer-list"),
-    listOl: n(".aplayer-list ol"),
+    lrc: l(".aplayer-lrc-contents"),
+    lrcWrap: l(".aplayer-lrc"),
+    ptime: l(".aplayer-ptime"),
+    info: l(".aplayer-info"),
+    time: l(".aplayer-time"),
+    barWrap: l(".aplayer-bar-wrap"),
+    button: l(".aplayer-button"),
+    body: l(".aplayer-body"),
+    list: l(".aplayer-list"),
+    listOl: l(".aplayer-list ol"),
     listCurs: t.querySelectorAll(".aplayer-list-cur"),
-    played: n(".aplayer-played"),
-    loaded: n(".aplayer-loaded"),
-    thumb: n(".aplayer-thumb"),
-    volume: n(".aplayer-volume"),
-    volumeBar: n(".aplayer-volume-bar"),
-    volumeButton: n(".aplayer-time button"),
-    volumeBarWrap: n(".aplayer-volume-bar-wrap"),
-    loop: n(".aplayer-icon-loop"),
-    order: n(".aplayer-icon-order"),
-    menu: n(".aplayer-icon-menu"),
-    pic: n(".aplayer-pic"),
-    title: n(".aplayer-title"),
-    author: n(".aplayer-author"),
-    dtime: n(".aplayer-dtime"),
-    notice: n(".aplayer-notice"),
-    miniSwitcher: n(".aplayer-miniswitcher"),
-    skipBackButton: n(".aplayer-icon-back"),
-    skipForwardButton: n(".aplayer-icon-forward"),
-    skipPlayButton: n(".aplayer-icon-play"),
-    lrcButton: n(".aplayer-icon-lrc")
+    played: l(".aplayer-played"),
+    loaded: l(".aplayer-loaded"),
+    thumb: l(".aplayer-thumb"),
+    volume: l(".aplayer-volume"),
+    volumeBar: l(".aplayer-volume-bar"),
+    volumeButton: l(".aplayer-time button"),
+    volumeBarWrap: l(".aplayer-volume-bar-wrap"),
+    loop: l(".aplayer-icon-loop"),
+    order: l(".aplayer-icon-order"),
+    menu: l(".aplayer-icon-menu"),
+    pic: l(".aplayer-pic"),
+    title: l(".aplayer-title"),
+    author: l(".aplayer-author"),
+    dtime: l(".aplayer-dtime"),
+    notice: l(".aplayer-notice"),
+    miniSwitcher: l(".aplayer-miniswitcher"),
+    skipBackButton: l(".aplayer-icon-back"),
+    skipForwardButton: l(".aplayer-icon-forward"),
+    skipPlayButton: l(".aplayer-icon-play"),
+    lrcButton: l(".aplayer-icon-lrc")
   };
 }
-const wt = (t) => {
+const ft = (t) => {
   const e = { ...t };
-  function s(a, n, r) {
-    n = Math.max(n, 0), n = Math.min(n, 1), e[a].style[r] = n * 100 + "%";
+  function s(a, l, n) {
+    l = Math.max(l, 0), l = Math.min(l, 1), e[a].style[n] = l * 100 + "%";
   }
-  function i(a, n) {
-    return parseFloat(e[a].style[n]) / 100;
+  function i(a, l) {
+    return parseFloat(e[a].style[l]) / 100;
   }
   return { get: i, set: s };
 };
-function W(t) {
+function $(t) {
   t = t || {};
-  let e = "", s = q.$each, i = t.lyrics, a = q.$escape;
-  return s(i, function(n, r) {
-    e += " <p ", r === 0 && (e += ' class="aplayer-lrc-current" '), e += ">", e += a(n[1]), e += "</p> ";
+  let e = "", s = x.$each, i = t.lyrics, a = x.$escape;
+  return s(i, function(l, n) {
+    e += " <p ", n === 0 && (e += ' class="aplayer-lrc-current" '), e += ">", e += a(l[1]), e += "</p> ";
   }), e;
 }
-const yt = (t) => {
+const gt = (t) => {
   const e = t.container, s = t.player, i = t.async;
-  let a = [], n = 0, r = [];
-  function c() {
+  let a = [], l = 0, n = [];
+  function u() {
     s.events.trigger("lrcshow"), s.template.lrcWrap.classList.remove("aplayer-lrc-hide");
   }
-  function l() {
+  function c() {
     s.events.trigger("lrchide"), s.template.lrcWrap.classList.add("aplayer-lrc-hide");
   }
   function d() {
-    s.template.lrcWrap.classList.contains("aplayer-lrc-hide") ? c() : l();
+    s.template.lrcWrap.classList.contains("aplayer-lrc-hide") ? u() : c();
   }
-  function h(m = s.audio.currentTime) {
-    if (n > r.length - 1 || m < r[n][0] || !r[n + 1] || m >= r[n + 1][0])
-      for (let o = 0; o < r.length; o++)
-        m >= r[o][0] && (!r[o + 1] || m < r[o + 1][0]) && (n = o, e.style.transform = `translateY(${-n * 16}px)`, e.style.webkitTransform = `translateY(${-n * 16}px)`, e.getElementsByClassName("aplayer-lrc-current")[0].classList.remove("aplayer-lrc-current"), e.getElementsByTagName("p")[o].classList.add("aplayer-lrc-current"));
+  function g(m = s.audio.currentTime) {
+    if (l > n.length - 1 || m < n[l][0] || !n[l + 1] || m >= n[l + 1][0])
+      for (let h = 0; h < n.length; h++)
+        m >= n[h][0] && (!n[h + 1] || m < n[h + 1][0]) && (l = h, e.style.transform = `translateY(${-l * 16}px)`, e.style.webkitTransform = `translateY(${-l * 16}px)`, e.getElementsByClassName("aplayer-lrc-current")[0].classList.remove("aplayer-lrc-current"), e.getElementsByTagName("p")[h].classList.add("aplayer-lrc-current"));
   }
-  function b(m) {
+  function E(m) {
     if (!a[m])
       if (!i)
-        s.list.audios[m].lrc ? a[m] = g(s.list.audios[m].lrc) : a[m] = [["00:00", "Not available"]];
+        s.list.audios[m].lrc ? a[m] = T(s.list.audios[m].lrc) : a[m] = [["00:00", "Not available"]];
       else {
         a[m] = [["00:00", "Loading"]];
-        const o = new XMLHttpRequest();
-        o.onreadystatechange = () => {
-          m === s.list.index && o.readyState === 4 && (o.status >= 200 && o.status < 300 || o.status === 304 ? a[m] = g(o.responseText) : (s.notice(`LRC file request fails: status ${o.status}`), a[m] = [["00:00", "Not available"]]), e.innerHTML = W({
+        const h = new XMLHttpRequest();
+        h.onreadystatechange = () => {
+          m === s.list.index && h.readyState === 4 && (h.status >= 200 && h.status < 300 || h.status === 304 ? a[m] = T(h.responseText) : (s.notice(`LRC file request fails: status ${h.status}`), a[m] = [["00:00", "Not available"]]), e.innerHTML = $({
             lyrics: a[m]
-          }), h(0), r = a[m]);
+          }), g(0), n = a[m]);
         };
-        const u = s.list.audios[m].lrc;
-        o.open("get", u, !0), o.send(null);
+        const v = s.list.audios[m].lrc;
+        h.open("get", v, !0), h.send(null);
       }
-    e.innerHTML = W({
+    e.innerHTML = $({
       lyrics: a[m]
-    }), r = a[m];
+    }), n = a[m];
   }
-  function g(m) {
+  function T(m) {
     if (m) {
-      m = m.replace(/([^\]^\n])\[/g, (p, w) => w + `
+      m = m.replace(/([^\]^\n])\[/g, (o, r) => r + `
 [`);
-      const o = m.split(`
+      const h = m.split(`
 `);
-      let u = [];
-      const f = o.length;
-      for (let p = 0; p < f; p++) {
-        const w = o[p].match(/\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g), K = o[p].replace(/.*\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g, "").replace(/<(\d{2}):(\d{2})(\.(\d{2,3}))?>/g, "").replace(/^\s+|\s+$/g, "");
-        if (w) {
-          const Q = w.length;
-          for (let H = 0; H < Q; H++) {
-            const T = /\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/.exec(w[H]), Z = T[1] * 60, F = parseInt(T[2]), tt = T[4] ? parseInt(T[4]) / ((T[4] + "").length === 2 ? 100 : 1e3) : 0, et = Z + F + tt;
-            u.push([et, K]);
+      let v = [];
+      const b = h.length;
+      for (let o = 0; o < b; o++) {
+        const r = h[o].match(/\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g), w = h[o].replace(/.*\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/g, "").replace(/<(\d{2}):(\d{2})(\.(\d{2,3}))?>/g, "").replace(/^\s+|\s+$/g, "");
+        if (r) {
+          const G = r.length;
+          for (let O = 0; O < G; O++) {
+            const L = /\[(\d{2}):(\d{2})(\.(\d{2,3}))?]/.exec(r[O]), K = L[1] * 60, Q = parseInt(L[2]), Z = L[4] ? parseInt(L[4]) / ((L[4] + "").length === 2 ? 100 : 1e3) : 0, F = K + Q + Z;
+            v.push([F, w]);
           }
         }
       }
-      return u = u.filter((p) => p[1]), u.sort((p, w) => p[0] - w[0]), u;
+      return v = v.filter((o) => o[1]), v.sort((o, r) => o[0] - r[0]), v;
     } else
       return [];
   }
-  function L(m) {
+  function H(m) {
     a.splice(m, 1);
   }
-  function x() {
+  function q() {
     a = [], e.innerHTML = "";
   }
   return {
-    show: c,
-    hide: l,
+    show: u,
+    hide: c,
     toggle: d,
-    update: h,
-    switch: b,
-    remove: L,
-    clear: x
+    update: g,
+    switch: E,
+    remove: H,
+    clear: q
   };
-}, bt = (t) => {
-  Lt(t), Mt(t), Tt(t), kt(t), qt(t), k || xt(t), Et(t), Bt(t), Ht(t);
+}, wt = (t) => {
+  yt(t), bt(t), Mt(t), xt(t), Tt(t), M || Lt(t), kt(t), Bt(t), Et(t);
 };
-function Lt(t) {
+function yt(t) {
   t.template.pic.addEventListener("click", () => {
     t.toggle();
   });
 }
-function Mt(t) {
+function bt(t) {
   const e = (i) => {
-    let a = ((i.clientX || i.changedTouches[0].clientX) - I(t.template.barWrap)) / t.template.barWrap.clientWidth;
-    a = Math.max(a, 0), a = Math.min(a, 1), t.bar.set("played", a, "width"), t.lrc && t.lrc.update(a * t.duration), t.template.ptime.innerHTML = M(a * t.duration);
+    let a = ((i.clientX || i.changedTouches[0].clientX) - A(t.template.barWrap)) / t.template.barWrap.clientWidth;
+    a = Math.max(a, 0), a = Math.min(a, 1), t.bar.set("played", a, "width"), t.lrc && t.lrc.update(a * t.duration), t.template.ptime.innerHTML = y(a * t.duration);
   }, s = (i) => {
-    document.removeEventListener(v.dragEnd, s), document.removeEventListener(v.dragMove, e);
-    let a = ((i.clientX || i.changedTouches[0].clientX) - I(t.template.barWrap)) / t.template.barWrap.clientWidth;
+    document.removeEventListener(p.dragEnd, s), document.removeEventListener(p.dragMove, e);
+    let a = ((i.clientX || i.changedTouches[0].clientX) - A(t.template.barWrap)) / t.template.barWrap.clientWidth;
     a = Math.max(a, 0), a = Math.min(a, 1), t.bar.set("played", a, "width"), t.seek(t.bar.get("played", "width") * t.duration), t.disableTimeupdate = !1;
   };
-  t.template.barWrap.addEventListener(v.dragStart, () => {
-    t.disableTimeupdate = !0, document.addEventListener(v.dragMove, e), document.addEventListener(v.dragEnd, s);
+  t.template.barWrap.addEventListener(p.dragStart, () => {
+    t.disableTimeupdate = !0, document.addEventListener(p.dragMove, e), document.addEventListener(p.dragEnd, s);
   });
 }
-function xt(t) {
+function Lt(t) {
   t.template.volumeButton.addEventListener("click", () => {
     t.audio.muted ? (t.audio.muted = !1, t.switchVolumeIcon(), t.bar.set("volume", t.volume(), "height")) : (t.audio.muted = !0, t.switchVolumeIcon(), t.bar.set("volume", 0, "height"));
   });
   const e = (i) => {
-    let a = 1 - ((i.clientY || i.changedTouches[0].clientY) - P(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
+    let a = 1 - ((i.clientY || i.changedTouches[0].clientY) - N(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
     a = Math.max(a, 0), a = Math.min(a, 1), t.volume(a);
   }, s = (i) => {
-    t.template.volumeBarWrap.classList.remove("aplayer-volume-bar-wrap-active"), document.removeEventListener(v.dragEnd, s), document.removeEventListener(v.dragMove, e);
-    let a = 1 - ((i.clientY || i.changedTouches[0].clientY) - P(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
+    t.template.volumeBarWrap.classList.remove("aplayer-volume-bar-wrap-active"), document.removeEventListener(p.dragEnd, s), document.removeEventListener(p.dragMove, e);
+    let a = 1 - ((i.clientY || i.changedTouches[0].clientY) - N(t.template.volumeBar, t.options.fixed)) / t.template.volumeBar.clientHeight;
     a = Math.max(a, 0), a = Math.min(a, 1), t.volume(a);
   };
-  t.template.volumeBarWrap.addEventListener(v.dragStart, () => {
-    t.template.volumeBarWrap.classList.add("aplayer-volume-bar-wrap-active"), document.addEventListener(v.dragMove, e), document.addEventListener(v.dragEnd, s);
+  t.template.volumeBarWrap.addEventListener(p.dragStart, () => {
+    t.template.volumeBarWrap.classList.add("aplayer-volume-bar-wrap-active"), document.addEventListener(p.dragMove, e), document.addEventListener(p.dragEnd, s);
+  });
+}
+function Mt(t) {
+  t.template.order.addEventListener("click", () => {
+    t.options.order === "list" ? (t.options.order = "random", t.template.order.innerHTML = j) : t.options.order === "random" && (t.options.order = "list", t.template.order.innerHTML = V);
+  });
+}
+function xt(t) {
+  t.template.loop.addEventListener("click", () => {
+    t.list.audios.length > 1 ? t.options.loop === "one" ? (t.options.loop = "none", t.template.loop.innerHTML = S) : t.options.loop === "none" ? (t.options.loop = "all", t.template.loop.innerHTML = z) : t.options.loop === "all" && (t.options.loop = "one", t.template.loop.innerHTML = Y) : t.options.loop === "one" || t.options.loop === "all" ? (t.options.loop = "none", t.template.loop.innerHTML = S) : t.options.loop === "none" && (t.options.loop = "all", t.template.loop.innerHTML = z);
   });
 }
 function Tt(t) {
-  t.template.order.addEventListener("click", () => {
-    t.options.order === "list" ? (t.options.order = "random", t.template.order.innerHTML = R) : t.options.order === "random" && (t.options.order = "list", t.template.order.innerHTML = Y);
-  });
-}
-function kt(t) {
-  t.template.loop.addEventListener("click", () => {
-    t.list.audios.length > 1 ? t.options.loop === "one" ? (t.options.loop = "none", t.template.loop.innerHTML = S) : t.options.loop === "none" ? (t.options.loop = "all", t.template.loop.innerHTML = O) : t.options.loop === "all" && (t.options.loop = "one", t.template.loop.innerHTML = j) : t.options.loop === "one" || t.options.loop === "all" ? (t.options.loop = "none", t.template.loop.innerHTML = S) : t.options.loop === "none" && (t.options.loop = "all", t.template.loop.innerHTML = O);
-  });
-}
-function qt(t) {
   t.template.menu.addEventListener("click", () => {
     t.list.toggle();
   });
 }
-function Et(t) {
+function kt(t) {
   t.template.miniSwitcher.addEventListener("click", () => {
     t.setMode(t.mode === "mini" ? "normal" : "mini");
   });
@@ -353,13 +352,13 @@ function Bt(t) {
     t.toggle();
   });
 }
-function Ht(t) {
+function Et(t) {
   t.template.lrcButton.addEventListener("click", () => {
     t.template.lrcButton.classList.contains("aplayer-icon-lrc-inactivity") ? (t.template.lrcButton.classList.remove("aplayer-icon-lrc-inactivity"), t.lrc && t.lrc.show()) : (t.template.lrcButton.classList.add("aplayer-icon-lrc-inactivity"), t.lrc && t.lrc.hide());
   });
 }
-const Ot = (t) => {
-  let e = 0, s = 0, i = !1, a = !1, n = setInterval(() => {
+const Ht = (t) => {
+  let e = 0, s = 0, i = !1, a = !1, l = setInterval(() => {
     a && (s = t.audio.currentTime, !i && s === e && !t.audio.paused && (t.container.classList.add("aplayer-loading"), i = !0), i && s > e && !t.audio.paused && (t.container.classList.remove("aplayer-loading"), i = !1), e = s);
   }, 100);
   return {
@@ -370,10 +369,10 @@ const Ot = (t) => {
       a = !1;
     },
     destroy() {
-      a = !1, n && clearInterval(n);
+      a = !1, l && clearInterval(l);
     }
   };
-}, St = [
+}, qt = [
   "destroy",
   "listshow",
   "listhide",
@@ -385,7 +384,7 @@ const Ot = (t) => {
   "noticehide",
   "lrcshow",
   "lrchide"
-], X = [
+], D = [
   "abort",
   "canplay",
   "canplaythrough",
@@ -410,17 +409,17 @@ const Ot = (t) => {
   "volumechange",
   "waiting"
 ];
-function zt(t) {
-  if (St.indexOf(t) !== -1)
+function Ot(t) {
+  if (qt.indexOf(t) !== -1)
     return "player";
-  if (X.indexOf(t) !== -1)
+  if (D.indexOf(t) !== -1)
     return "audio";
 }
-const At = () => {
+const zt = () => {
   const t = {};
   return {
     on: function(e, s) {
-      zt(e) && typeof s == "function" && (t[e] || (t[e] = []), t[e].push(s));
+      Ot(e) && typeof s == "function" && (t[e] || (t[e] = []), t[e].push(s));
     },
     trigger: function(e, s) {
       var i;
@@ -428,64 +427,18 @@ const At = () => {
     }
   };
 };
-var J = { exports: {} };
-(function(t, e) {
-  (function(s, i) {
-    t.exports = i();
-  })(ct, function() {
-    if (typeof window == "object" && !(document.querySelectorAll === void 0 || window.pageYOffset === void 0 || history.pushState === void 0)) {
-      var s = function(c, l) {
-        return c.nodeName === "HTML" ? -l : c.getBoundingClientRect().top + l;
-      }, i = function(c) {
-        return c < 0.5 ? 4 * c * c * c : (c - 1) * (2 * c - 2) * (2 * c - 2) + 1;
-      }, a = function(c, l, d, h) {
-        return d > h ? l : c + (l - c) * i(d / h);
-      }, n = function(c, l, d, h) {
-        l = l || 500, h = h || window;
-        var b = h.scrollTop || window.pageYOffset;
-        if (typeof c == "number")
-          var g = parseInt(c);
-        else
-          var g = s(c, b);
-        var L = Date.now(), x = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function(o) {
-          window.setTimeout(o, 15);
-        }, m = function() {
-          var o = Date.now() - L;
-          h !== window ? h.scrollTop = a(b, g, o, l) : window.scroll(0, a(b, g, o, l)), o > l ? typeof d == "function" && d(c) : x(m);
-        };
-        m();
-      }, r = function(c) {
-        if (!c.defaultPrevented) {
-          c.preventDefault(), location.hash !== this.hash && window.history.pushState(null, null, this.hash);
-          var l = document.getElementById(this.hash.substring(1));
-          if (!l)
-            return;
-          n(l, 500, function(d) {
-            location.replace("#" + d.id);
-          });
-        }
-      };
-      return document.addEventListener("DOMContentLoaded", function() {
-        for (var c = document.querySelectorAll('a[href^="#"]:not([href="#"])'), l, d = c.length; l = c[--d]; )
-          l.addEventListener("click", r, !1);
-      }), n;
-    }
-  });
-})(J);
-var It = J.exports;
-const Pt = /* @__PURE__ */ D(It);
-function Ct(t, e) {
+function St(t, e) {
   t.events.trigger("listadd", {
     audios: e
   }), e = U(e);
   const s = !(t.list.audios.length > 1), i = t.list.audios.length === 0;
-  t.template.listOl.innerHTML += A({
+  t.template.listOl.innerHTML += I({
     theme: t.options.theme,
     audio: e,
     index: t.list.audios.length + 1
-  }), t.list.audios = t.list.audios.concat(e), s && t.list.audios.length > 1 && t.container.classList.add("aplayer-withlist"), t.randomOrder = $(t.list.audios.length), t.template.listCurs = t.container.querySelectorAll(".aplayer-list-cur"), t.template.listCurs[t.list.audios.length - 1].style.backgroundColor = e.theme || t.options.theme, i && (t.options.order === "random" ? t.list.switch(t.randomOrder[0]) : t.list.switch(0));
+  }), t.list.audios = t.list.audios.concat(e), s && t.list.audios.length > 1 && t.container.classList.add("aplayer-withlist"), t.randomOrder = _(t.list.audios.length), t.template.listCurs = t.container.querySelectorAll(".aplayer-list-cur"), t.template.listCurs[t.list.audios.length - 1].style.backgroundColor = e.theme || t.options.theme, i && (t.options.order === "random" ? t.list.switch(t.randomOrder[0]) : t.list.switch(0));
 }
-function Nt(t, e) {
+function Pt(t, e) {
   if (t.events.trigger("listremove", {
     index: e
   }), t.list.audios[e])
@@ -496,18 +449,18 @@ function Nt(t, e) {
         s[i].getElementsByClassName("aplayer-list-index")[0].textContent = i;
       t.list.audios.length === 1 && t.container.classList.remove("aplayer-withlist"), t.template.listCurs = t.container.querySelectorAll(".aplayer-list-cur");
     } else
-      G(t);
+      J(t);
 }
-function G(t) {
-  t.events.trigger("listclear"), t.list.index = 0, t.container.classList.remove("aplayer-withlist"), t.pause(), t.list.audios = [], t.lrc && t.lrc.clear(), t.audio.src = "", t.template.listOl.innerHTML = "", t.template.pic.style.backgroundImage = "", t.theme(t.options.theme, t.list.index, !1), t.template.title.innerHTML = "No audio", t.template.author.innerHTML = "", t.bar.set("loaded", 0, "width"), t.template.dtime.innerHTML = M(0);
+function J(t) {
+  t.events.trigger("listclear"), t.list.index = 0, t.container.classList.remove("aplayer-withlist"), t.pause(), t.list.audios = [], t.lrc && t.lrc.clear(), t.audio.src = "", t.template.listOl.innerHTML = "", t.template.pic.style.backgroundImage = "", t.theme(t.options.theme, t.list.index, !1), t.template.title.innerHTML = "No audio", t.template.author.innerHTML = "", t.bar.set("loaded", 0, "width"), t.template.dtime.innerHTML = y(0);
 }
-const Wt = (t) => {
+const It = (t) => {
   let e = 0, s = t.options.audio;
-  t.template.list.addEventListener("click", (c) => {
-    let l;
-    c.target.tagName.toUpperCase() === "LI" ? l = c.target : l = c.target.parentElement;
-    const d = parseInt(l.getElementsByClassName("aplayer-list-index")[0].innerHTML) - 1;
-    d !== e ? (r(d), t.play()) : t.toggle();
+  t.template.list.addEventListener("click", (u) => {
+    let c;
+    u.target.tagName.toUpperCase() === "LI" ? c = u.target : c = u.target.parentElement;
+    const d = parseInt(c.getElementsByClassName("aplayer-list-index")[0].innerHTML) - 1;
+    d !== e ? (n(d), t.play()) : t.toggle();
   });
   function i() {
     t.events.trigger("listshow"), t.template.list.classList.remove("aplayer-list-hide"), t.template.listOl.scrollTop = e * 33;
@@ -515,51 +468,55 @@ const Wt = (t) => {
   function a() {
     t.events.trigger("listhide"), t.template.list.classList.add("aplayer-list-hide");
   }
-  function n() {
+  function l() {
     t.template.list.classList.contains("aplayer-list-hide") ? i() : a();
   }
-  function r(c) {
+  function n(u) {
     if (t.events.trigger("listswitch", {
-      index: c
-    }), typeof c < "u" && s[c]) {
-      e = c;
-      const l = s[e];
-      t.template.pic.style.backgroundImage = l.cover ? `url('${l.cover}')` : "", t.theme(s[e].theme || t.options.theme, e, !1), t.template.title.innerHTML = l.name, t.template.author.innerHTML = l.artist ? " - " + l.artist : "";
+      index: u
+    }), typeof u < "u" && s[u]) {
+      e = u;
+      const c = s[e];
+      t.template.pic.style.backgroundImage = c.cover ? `url('${c.cover}')` : "", t.theme(s[e].theme || t.options.theme, e, !1), t.template.title.innerHTML = c.name, t.template.author.innerHTML = c.artist ? " - " + c.artist : "";
       const d = t.container.getElementsByClassName("aplayer-list-light")[0];
-      d && d.classList.remove("aplayer-list-light"), t.container.querySelectorAll(".aplayer-list li")[e].classList.add("aplayer-list-light"), Pt(e * 33, 500, null, t.template.listOl), t.setAudio(l), t.lrc && t.lrc.switch(e), t.lrc && t.lrc.update(0), t.duration !== 1 && (t.template.dtime.innerHTML = M(t.duration));
+      d && d.classList.remove("aplayer-list-light");
+      const g = t.container.querySelectorAll(".aplayer-list li")[e];
+      g.classList.add("aplayer-list-light"), g.scrollIntoView({ behavior: "smooth" }), t.setAudio(c), t.lrc && t.lrc.switch(e), t.lrc && t.lrc.update(0), t.duration !== 1 && (t.template.dtime.innerHTML = y(t.duration));
     }
   }
   return {
     get index() {
       return e;
     },
-    set index(c) {
-      e = c;
+    set index(u) {
+      e = u;
     },
     get audios() {
       return s;
     },
-    set audios(c) {
-      s = c;
+    set audios(u) {
+      s = u;
     },
     show: i,
     hide: a,
-    toggle: n,
-    switch: r
+    toggle: l,
+    switch: n
   };
-}, E = [], $t = () => {
+}, k = [], At = () => {
   const t = {
-    tplRenderers: ht,
+    tplRenderers: mt,
+    hlsHandler: () => {
+    },
+    events: zt(),
+    mode: "normal",
     afterInitHooks: [],
     get duration() {
       return isNaN(t.audio.duration) ? 0 : t.audio.duration;
     }
     // you may check other public attributes below
     // the origin code init them in the constructor (the current init function)
-    // mode: null,
     // disableTimeupdate: null,
     // randomOrder: null,
-    // events: null,
     // bar: null,
     // list: null,
     // audio: null,
@@ -569,32 +526,58 @@ const Wt = (t) => {
     // template: null,
   };
   return t;
-}, Rt = () => {
-  const t = $t();
-  let e, s = !0, i = null, a = Ot(t), n, r, c, l, d;
-  function h() {
-    t.audio = document.createElement("audio"), t.audio.preload = r.preload, X.forEach((o) => {
-      t.audio.addEventListener(o, (u) => {
-        t.events.trigger(o, u);
+}, Nt = () => {
+  const t = At();
+  let e, s = !0, i = null, a = Ht(t), l, n, u, c, d;
+  function g() {
+    if (n.lrcType === 2 || n.lrcType === !0) {
+      const o = u.getElementsByClassName("aplayer-lrc-content");
+      for (let r = 0; r < o.length; r++)
+        n.audio[r] && (n.audio[r].lrc = o[r].innerHTML);
+    }
+    n.lrcType && (t.lrc = gt({
+      container: c.lrc,
+      async: n.lrcType === 3,
+      player: t
+    }));
+  }
+  function E() {
+    u.classList.add("aplayer"), n.lrcType && !n.fixed && u.classList.add("aplayer-withlrc"), n.audio.length > 1 && u.classList.add("aplayer-withlist"), M && u.classList.add("aplayer-mobile"), u.offsetWidth <= 300 && u.classList.add("aplayer-arrow"), n.fixed && (u.classList.add("aplayer-fixed"), c.body.style.width = c.body.offsetWidth - 18 + "px"), n.mini && (t.setMode("mini"), c.info.style.display = "block"), c.info.offsetWidth < 200 && c.time.classList.add("aplayer-time-narrow");
+  }
+  function T() {
+    const o = n.storageName, r = JSON.parse(localStorage.getItem(o)) || {};
+    return r.volume || (r.volume = n.volume), {
+      get() {
+        return r.volume;
+      },
+      set(w) {
+        r.volume = w, localStorage.setItem(o, JSON.stringify(r));
+      }
+    };
+  }
+  function H() {
+    t.audio = document.createElement("audio"), t.audio.preload = n.preload, D.forEach((o) => {
+      t.audio.addEventListener(o, (r) => {
+        t.events.trigger(o, r);
       });
     }), t.volume(e.get(), !0);
   }
-  function b() {
+  function q() {
     t.on("play", () => {
-      s && g();
+      s && m();
     }), t.on("pause", () => {
-      s || L();
+      s || h();
     }), t.on("timeupdate", () => {
       if (!t.disableTimeupdate) {
         t.bar.set("played", t.audio.currentTime / t.duration, "width"), t.lrc && t.lrc.update();
-        const u = M(t.audio.currentTime);
-        l.ptime.innerHTML !== u && (l.ptime.innerHTML = u);
+        const r = y(t.audio.currentTime);
+        c.ptime.innerHTML !== r && (c.ptime.innerHTML = r);
       }
     }), t.on("durationchange", () => {
-      t.duration !== 1 && (l.dtime.innerHTML = M(t.duration));
+      t.duration !== 1 && (c.dtime.innerHTML = y(t.duration));
     }), t.on("progress", () => {
-      const u = t.audio.buffered.length ? t.audio.buffered.end(t.audio.buffered.length - 1) / t.duration : 0;
-      t.bar.set("loaded", u, "width");
+      const r = t.audio.buffered.length ? t.audio.buffered.end(t.audio.buffered.length - 1) / t.duration : 0;
+      t.bar.set("loaded", r, "width");
     });
     let o;
     t.on("error", () => {
@@ -604,134 +587,123 @@ const Wt = (t) => {
     }), t.events.on("listswitch", () => {
       o && clearTimeout(o);
     }), t.on("ended", () => {
-      r.loop === "none" ? r.order === "list" ? d.index < d.audios.length - 1 ? (d.switch((d.index + 1) % d.audios.length), t.play()) : (d.switch((d.index + 1) % d.audios.length), t.pause()) : r.order === "random" && (t.randomOrder.indexOf(d.index) < t.randomOrder.length - 1 ? (d.switch(m()), t.play()) : (d.switch(m()), t.pause())) : r.loop === "one" ? (d.switch(d.index), t.play()) : r.loop === "all" && (t.skipForward(), t.play());
+      n.loop === "none" ? n.order === "list" ? d.index < d.audios.length - 1 ? (d.switch((d.index + 1) % d.audios.length), t.play()) : (d.switch((d.index + 1) % d.audios.length), t.pause()) : n.order === "random" && (t.randomOrder.indexOf(d.index) < t.randomOrder.length - 1 ? (d.switch(b()), t.play()) : (d.switch(b()), t.pause())) : n.loop === "one" ? (d.switch(d.index), t.play()) : n.loop === "all" && (t.skipForward(), t.play());
     });
   }
-  function g() {
-    s && (s = !1, l.button.classList.remove("aplayer-play"), l.button.classList.add("aplayer-pause"), l.button.innerHTML = "", setTimeout(() => {
-      l.button.innerHTML = C;
-    }, 100), l.skipPlayButton.innerHTML = C), a.enable(), r.mutex && E.filter((o) => o !== t).forEach((o) => {
+  function m() {
+    s && (s = !1, c.button.classList.remove("aplayer-play"), c.button.classList.add("aplayer-pause"), c.button.innerHTML = "", setTimeout(() => {
+      c.button.innerHTML = C;
+    }, 100), c.skipPlayButton.innerHTML = C), a.enable(), n.mutex && k.filter((o) => o !== t).forEach((o) => {
       o.pause();
     });
   }
-  function L() {
-    s || (s = !0, l.button.classList.remove("aplayer-pause"), l.button.classList.add("aplayer-play"), l.button.innerHTML = "", setTimeout(() => {
-      l.button.innerHTML = B;
-    }, 100), l.skipPlayButton.innerHTML = B), c.classList.remove("aplayer-loading"), a.disable();
+  function h() {
+    s || (s = !0, c.button.classList.remove("aplayer-pause"), c.button.classList.add("aplayer-play"), c.button.innerHTML = "", setTimeout(() => {
+      c.button.innerHTML = B;
+    }, 100), c.skipPlayButton.innerHTML = B), u.classList.remove("aplayer-loading"), a.disable();
   }
-  function x() {
+  function v() {
     if (d.audios.length > 1) {
-      if (r.order === "list")
+      if (n.order === "list")
         return d.index - 1 < 0 ? d.audios.length - 1 : d.index - 1;
-      if (r.order === "random") {
+      if (n.order === "random") {
         const o = t.randomOrder.indexOf(d.index);
         return o === 0 ? t.randomOrder[t.randomOrder.length - 1] : t.randomOrder[o - 1];
       }
     } else
       return 0;
   }
-  function m() {
+  function b() {
     if (d.audios.length > 1) {
-      if (r.order === "list")
+      if (n.order === "list")
         return (d.index + 1) % d.audios.length;
-      if (r.order === "random") {
+      if (n.order === "random") {
         const o = t.randomOrder.indexOf(d.index);
         return o === t.randomOrder.length - 1 ? t.randomOrder[0] : t.randomOrder[o + 1];
       }
     } else
       return 0;
   }
-  return t.init = (o) => {
-    if (r = rt(o), t.options = r, c = r.container, t.container = c, c.classList.add("aplayer"), r.lrcType && !r.fixed && c.classList.add("aplayer-withlrc"), r.audio.length > 1 && c.classList.add("aplayer-withlist"), k && c.classList.add("aplayer-mobile"), c.offsetWidth <= 300 && c.classList.add("aplayer-arrow"), r.lrcType === 2 || r.lrcType === !0) {
-      const f = c.getElementsByClassName("aplayer-lrc-content");
-      for (let p = 0; p < f.length; p++)
-        r.audio[p] && (r.audio[p].lrc = f[p].innerHTML);
-    }
-    return t.randomOrder = $(r.audio.length), l = gt(c, r, t.randomOrder, t.tplRenderers), t.template = l, t.mode = "normal", r.fixed && (c.classList.add("aplayer-fixed"), l.body.style.width = l.body.offsetWidth - 18 + "px"), r.mini && (t.setMode("mini"), l.info.style.display = "block"), l.info.offsetWidth < 200 && l.time.classList.add("aplayer-time-narrow"), r.lrcType && (t.lrc = yt({
-      container: l.lrc,
-      async: r.lrcType === 3,
-      player: t
-    })), e = (() => {
-      const f = r.storageName, p = JSON.parse(localStorage.getItem(f)) || {};
-      return p.volume || (p.volume = r.volume), {
-        get() {
-          return p.volume;
-        },
-        set(w) {
-          p.volume = w, localStorage.setItem(f, JSON.stringify(p));
-        }
-      };
-    })(), t.events = At(), t.bar = wt(l), t.controller = bt(t), d = Wt(t), t.list = d, h(), b(), r.order === "random" ? d.switch(t.randomOrder[0]) : d.switch(0), r.autoplay && t.play(), E.push(t), t.afterInitHooks.forEach((f) => {
-      f(t);
-    }), t;
-  }, t.setAudio = (o) => {
+  return t.init = (o) => (n = lt(o), t.options = n, u = n.container, t.container = u, c = vt(u, n, t.randomOrder, t.tplRenderers), t.template = c, t.controller = wt(t), E(), t.randomOrder = _(n.audio.length), e = T(), g(), t.bar = ft(c), d = It(t), t.list = d, H(), q(), n.order === "random" ? d.switch(t.randomOrder[0]) : d.switch(0), n.autoplay && t.play(), k.push(t), t.afterInitHooks.forEach((r) => {
+    r(t);
+  }), t), t.setAudio = (o) => {
     i && (i.destroy(), i = null);
-    let u = o.type;
-    r.customAudioType && r.customAudioType[u] ? Object.prototype.toString.call(r.customAudioType[u]) === "[object Function]" ? r.customAudioType[u](t.audio, o, t) : console.error(`Illegal customType: ${u}`) : ((!u || u === "auto") && (/m3u8(#|\?|$)/i.exec(o.url) ? u = "hls" : u = "normal"), u === "hls" ? Hls.isSupported() ? (i = new Hls(), i.loadSource(o.url), i.attachMedia(t.audio)) : t.audio.canPlayType("application/x-mpegURL") || t.audio.canPlayType("application/vnd.apple.mpegURL") ? t.audio.src = o.url : t.notice("Error: HLS is not supported.") : u === "normal" && (t.audio.src = o.url)), t.seek(0), s || t.audio.play();
+    let r = o.type;
+    n.customAudioType && n.customAudioType[r] ? Object.prototype.toString.call(n.customAudioType[r]) === "[object Function]" ? n.customAudioType[r](t.audio, o, t) : console.error(`Illegal customType: ${r}`) : ((!r || r === "auto") && (/m3u8(#|\?|$)/i.exec(o.url) ? r = "hls" : r = "normal"), r === "hls" ? i = t.hlsHandler(o) : r === "normal" && (t.audio.src = o.url)), t.seek(0), s || t.audio.play();
   }, t.destroy = () => {
-    E.splice(E.indexOf(t), 1), t.pause(), c.innerHTML = "", t.audio.src = "", a.destroy(), t.events.trigger("destroy");
+    k.splice(k.indexOf(t), 1), t.pause(), u.innerHTML = "", t.audio.src = "", a.destroy(), t.events.trigger("destroy");
   }, t.setMode = (o = "normal") => {
-    t.mode = o, o === "mini" ? c.classList.add("aplayer-narrow") : o === "normal" && c.classList.remove("aplayer-narrow");
-  }, t.notice = (o, u = 2e3, f = 0.8) => {
-    l.notice.innerHTML = o, l.notice.style.opacity = f, n && clearTimeout(n), t.events.trigger("noticeshow", {
+    t.mode = o, o === "mini" ? u.classList.add("aplayer-narrow") : o === "normal" && u.classList.remove("aplayer-narrow");
+  }, t.notice = (o, r = 2e3, w = 0.8) => {
+    c.notice.innerHTML = o, c.notice.style.opacity = w, l && clearTimeout(l), t.events.trigger("noticeshow", {
       text: o
-    }), u && (n = setTimeout(() => {
-      l.notice.style.opacity = 0, t.events.trigger("noticehide");
-    }, u));
-  }, t.theme = (o = d.audios[d.index].theme || r.theme, u = d.index, f = !0) => {
-    f && d.audios[u] && (d.audios[u].theme = o), l.listCurs[u] && (l.listCurs[u].style.backgroundColor = o), u === d.index && (l.pic.style.backgroundColor = o, l.played.style.background = o, l.thumb.style.background = o, l.volume.style.background = o);
+    }), r && (l = setTimeout(() => {
+      c.notice.style.opacity = 0, t.events.trigger("noticehide");
+    }, r));
+  }, t.theme = (o = d.audios[d.index].theme || n.theme, r = d.index, w = !0) => {
+    w && d.audios[r] && (d.audios[r].theme = o), c.listCurs[r] && (c.listCurs[r].style.backgroundColor = o), r === d.index && (c.pic.style.backgroundColor = o, c.played.style.background = o, c.thumb.style.background = o, c.volume.style.background = o);
   }, t.seek = (o) => {
-    o = Math.max(o, 0), o = Math.min(o, t.duration), t.audio.currentTime = o, t.bar.set("played", o / t.duration, "width"), l.ptime.innerHTML = M(o);
+    o = Math.max(o, 0), o = Math.min(o, t.duration), t.audio.currentTime = o, t.bar.set("played", o / t.duration, "width"), c.ptime.innerHTML = y(o);
   }, t.play = () => {
-    g();
+    m();
     const o = t.audio.play();
-    o && o.catch((u) => {
-      console.warn(u), u.name === "NotAllowedError" && L();
+    o && o.catch((r) => {
+      console.warn(r), r.name === "NotAllowedError" && h();
     });
   }, t.pause = () => {
-    L(), t.audio.pause();
+    h(), t.audio.pause();
   }, t.switchVolumeIcon = () => {
-    t.volume() >= 0.95 ? l.volumeButton.innerHTML = it : t.volume() > 0 ? l.volumeButton.innerHTML = _ : l.volumeButton.innerHTML = st;
-  }, t.volume = (o, u) => (o = parseFloat(o), isNaN(o) || (o = Math.max(o, 0), o = Math.min(o, 1), t.bar.set("volume", o, "height"), u || e.set(o), t.audio.volume = o, t.audio.muted && (t.audio.muted = !1), t.switchVolumeIcon()), t.audio.muted ? 0 : t.audio.volume), t.on = (o, u) => {
-    t.events.on(o, u);
+    t.volume() >= 0.95 ? c.volumeButton.innerHTML = tt : t.volume() > 0 ? c.volumeButton.innerHTML = R : c.volumeButton.innerHTML = et;
+  }, t.volume = (o, r) => (o = parseFloat(o), isNaN(o) || (o = Math.max(o, 0), o = Math.min(o, 1), t.bar.set("volume", o, "height"), r || e.set(o), t.audio.volume = o, t.audio.muted && (t.audio.muted = !1), t.switchVolumeIcon()), t.audio.muted ? 0 : t.audio.volume), t.on = (o, r) => {
+    t.events.on(o, r);
   }, t.toggle = () => {
-    l.button.classList.contains("aplayer-play") ? t.play() : l.button.classList.contains("aplayer-pause") && t.pause();
+    c.button.classList.contains("aplayer-play") ? t.play() : c.button.classList.contains("aplayer-pause") && t.pause();
   }, t.skipBack = () => {
-    d.switch(x());
+    d.switch(v());
   }, t.skipForward = () => {
-    d.switch(m());
+    d.switch(b());
   }, t.use = (o) => (o(t), t), t;
 };
-function _t(t) {
-  t.tplRenderers = ft;
+function Ct(t) {
+  t.tplRenderers = ht;
   const e = t.init;
   t.init = (s) => (s.fixed = !0, e(s));
 }
-function jt(t) {
+function Wt(t) {
   t.afterInitHooks.push(() => {
     t.list.add = (e) => {
-      Ct(t, e);
+      St(t, e);
     };
   });
 }
-function Yt(t) {
+function $t(t) {
   t.afterInitHooks.push(() => {
     t.list.remove = (e) => {
-      Nt(t, e);
+      Pt(t, e);
     };
   });
 }
-function Ut(t) {
+function _t(t) {
   t.afterInitHooks.push(() => {
     t.list.clear = () => {
-      G(t);
+      J(t);
     };
   });
 }
+function jt(t) {
+  t.hlsHandler = (e) => {
+    if (Hls.isSupported()) {
+      const s = new Hls();
+      return s.loadSource(e.url), s.attachMedia(t.audio), s;
+    } else
+      t.audio.canPlayType("application/x-mpegURL") || t.audio.canPlayType("application/vnd.apple.mpegURL") ? t.audio.src = e.url : t.notice("Error: HLS is not supported.");
+  };
+}
 export {
-  _t as APlayerFixedModePlugin,
-  jt as addMusicPlugin,
-  Ut as clearMusicPlugin,
-  Rt as default,
-  Yt as removeMusicPlugin
+  Ct as APlayerFixedModePlugin,
+  jt as APlayerHlsPlugin,
+  Wt as addMusicPlugin,
+  _t as clearMusicPlugin,
+  Nt as default,
+  $t as removeMusicPlugin
 };
