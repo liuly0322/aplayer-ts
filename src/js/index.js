@@ -1,7 +1,7 @@
-import APlayer from './player';
+import APlayer from './player.js';
 
-import { fixedModeTplRenderer } from '../template/player';
-import { addToList, removeFromList, clearList } from './list';
+import { fixedModeTplRenderer } from '../template/player.js';
+import { addToList, removeFromList, clearList } from './list.js';
 
 export function APlayerFixedModePlugin(player) {
     player.tplRenderers = fixedModeTplRenderer

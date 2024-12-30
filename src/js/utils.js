@@ -1,4 +1,4 @@
-export const isMobile = /mobile/i.test(window.navigator.userAgent);
+export const isMobile = false// /mobile/i.test(window.navigator.userAgent);
 
 /**
 * Parse second to time string

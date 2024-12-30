@@ -1,6 +1,6 @@
 import tplListItem from '../template/list-item.js';
-import { secondToTime, randomOrder } from './utils';
-import { handleAudioOption } from './options';
+import { secondToTime, randomOrder } from './utils.js';
+import { handleAudioOption } from './options.js';
 
 export function addToList(player, audios) {
     player.events.trigger('listadd', {
