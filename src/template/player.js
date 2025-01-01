@@ -1,5 +1,5 @@
-import $imports from './art-runtime';
-import { lrc, right, menu, play, loading, skip, volumeDown, orderList, loopOne, loopAll, loopNone, orderRandom } from '../js/icons'
+import $imports from './art-runtime.js';
+import { lrc, right, menu, play, loading, skip, volumeDown, orderList, loopOne, loopAll, loopNone, orderRandom } from '../js/icons.js'
 import listItem from './list-item.js';
 
 const $escape = $imports.$escape;

@@ -1,5 +1,5 @@
-import { isMobile, nameMap, getElementViewLeft, getElementViewTop, secondToTime } from './utils';
-import { orderList, orderRandom, loopOne, loopNone, loopAll } from './icons';
+import { isMobile, nameMap, getElementViewLeft, getElementViewTop, secondToTime } from './utils.js';
+import { orderList, orderRandom, loopOne, loopNone, loopAll } from './icons.js';
 
 export default (player) => {
     initPlayButton(player);

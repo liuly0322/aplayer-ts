@@ -1,14 +1,14 @@
-import { secondToTime, isMobile, randomOrder } from './utils';
-import { pause, play, volumeDown, volumeOff, volumeUp } from './icons';
-import handleOption from './options';
-import Template from './template';
-import { notFixedModeTplRenderers } from '../template/player';
-import Bar from './bar';
-import Lrc from './lrc';
-import Controller from './controller';
-import Timer from './timer';
-import Events, { audioEvents } from './events';
-import List from './list';
+import { secondToTime, isMobile, randomOrder } from './utils.js';
+import { pause, play, volumeDown, volumeOff, volumeUp } from './icons.js';
+import handleOption from './options.js';
+import Template from './template.js';
+import { notFixedModeTplRenderers } from '../template/player.js';
+import Bar from './bar.js';
+import Lrc from './lrc.js';
+import Controller from './controller.js';
+import Timer from './timer.js';
+import Events, { audioEvents } from './events.js';
+import List from './list.js';
 
 const instances = [];
 
