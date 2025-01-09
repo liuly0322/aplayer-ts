@@ -69,9 +69,7 @@ const instance = APlayer()
 
 ## Development
 
-Demo website:
-
 ```bash
-pnpm dev         # start a dev server
-pnpm build:demo  # build the demo website (to view the output size)
+pnpm dev         # start a demo website server
+pnpm build       # build the demo website (to view the output size)
 ```
