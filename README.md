@@ -7,10 +7,10 @@
 
 [APlayer](https://github.com/MoePlayer/APlayer/), but:
 
-- ESM import/export;
+- Bundle size **from 58KB to less than 30KB**. See this [blog post](https://blog.liuly.moe/posts/tree-shaking) for details;
 - TypeScript interface support;
-- Includes a patch fixes [APlayer#283](https://github.com/DIYgod/APlayer/issues/283);
-- Bundle size **from 58KB to less than 30KB**. See this [blog post](https://blog.liuly.moe/posts/tree-shaking) for details.
+- Fixes [APlayer#283](https://github.com/DIYgod/APlayer/issues/283);
+- ESM import/export with zero dependencies.
 
 > The name 'APlayer-ts' might be a bit misleading, well I just modified APlayer for my personal usage years ago and picked a random name :)
 
@@ -23,7 +23,7 @@ import APlayer from 'aplayer-ts'
 import 'aplayer-ts/src/css/base.css'
 
 const instance = APlayer()
-    .init({ /* refer to the aplayer doc */ })
+    .init({ /* refer to the original APlayer doc */ })
 ```
 
 ### API difference
@@ -51,7 +51,7 @@ import 'aplayer-ts/src/css/base.css'
 const instance = APlayer()
     .use(addMusicPlugin)
     .use(removeMusicPlugin)
-    .init({ /* refer to the aplayer doc */ })
+    .init({ /* refer to the original APlayer doc */ })
 
 instance.list.add({ /* new audios here */ })
 ```
@@ -64,7 +64,7 @@ import 'aplayer-ts/src/css/base.css'
 
 const instance = APlayer()
     .use(APlayerHlsPlugin)
-    .init({ /* refer to the aplayer doc */ })
+    .init({ /* refer to the original APlayer doc */ })
 ```
 
 ## Development
@@ -73,11 +73,5 @@ Demo website:
 
 ```bash
 pnpm dev         # start a dev server
-pnpm build:demo  # build the demo website (to see output size)
-```
-
-Package build:
-
-```bash
-pnpm build       # ./build/index.{min}.js
+pnpm build:demo  # build the demo website (to view the output size)
 ```
