@@ -1,33 +1,21 @@
-const playerEvents = [
-    'destroy',
-    'listshow', 'listhide', 'listadd', 'listremove', 'listswitch', 'listclear',
-    'noticeshow', 'noticehide',
-    'lrcshow', 'lrchide',
-];
+const playerEvents = (
+    'destroy listshow listhide listadd listremove listswitch listclear ' +
+    'noticeshow noticehide lrcshow lrchide'
+).split(' ');
 
-export const audioEvents = [
-    'abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'ended', 'error',
-    'loadeddata', 'loadedmetadata', 'loadstart', 'mozaudioavailable', 'pause', 'play',
-    'playing', 'progress', 'ratechange', 'seeked', 'seeking', 'stalled', 'suspend',
-    'timeupdate', 'volumechange', 'waiting'
-];
-
-function type(name) {
-    if (playerEvents.indexOf(name) !== -1) {
-        return 'player';
-    }
-    else if (audioEvents.indexOf(name) !== -1) {
-        return 'audio';
-    }
-}
+export const audioEvents = (
+    'abort canplay canplaythrough durationchange emptied ended error ' +
+    'loadeddata loadedmetadata loadstart mozaudioavailable pause play ' +
+    'playing progress ratechange seeked seeking stalled suspend ' +
+    'timeupdate volumechange waiting'
+).split(' ');
 
 export default () => {
     const events = {};
     return {
         on: function (name, callback) {
-            if (type(name) && typeof callback === 'function') {
-                events[name] ||= [];
-                events[name].push(callback);
+            if ((playerEvents.indexOf(name) >= 0 || audioEvents.indexOf(name) >= 0) && typeof callback === 'function') {
+                (events[name] ||= []).push(callback);
             }
         },
         trigger: function (name, data) {

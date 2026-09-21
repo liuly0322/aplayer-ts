@@ -12,15 +12,15 @@ import List from './list.js';
 
 const instances = [];
 
-const getPlayerStruct = () => {
-    const struct = {
+const APlayer = () => {
+    const player = {
         tplRenderers: notFixedModeTplRenderers,
         hlsHandler: () => { },
         events: Events(),
         mode: 'normal',
         afterInitHooks: [],
         get duration() {
-            return isNaN(struct.audio.duration) ? 0 : struct.audio.duration;
+            return isNaN(player.audio.duration) ? 0 : player.audio.duration;
         }
         // you may check other public attributes below
         // the origin code init them in the constructor (the current init function)
@@ -34,12 +34,6 @@ const getPlayerStruct = () => {
         // options: null,
         // template: null,
     }
-    return struct
-}
-
-const APlayer = () => {
-    // get public attributes
-    const player = getPlayerStruct()
 
     // inner attributes
     let volumeStorage;

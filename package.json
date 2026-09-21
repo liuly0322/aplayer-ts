@@ -6,6 +6,9 @@
   "type": "module",
   "types": "src/APlayer.d.ts",
   "style": "dist/APlayer.min.css",
+  "sideEffects": [
+    "src/css/**"
+  ],
   "files": [
     "src",
     "dist"

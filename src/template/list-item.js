@@ -1,18 +1,10 @@
-import $imports from './art-runtime.js';
+import { $each, $escape } from './art-runtime.js';
 export default function ($data) {
     'use strict';
     $data = $data || {};
-    let $$out = '', $each = $imports.$each, audio = $data.audio, $escape = $imports.$escape, theme = $data.theme, index = $data.index;
+    let $$out = '', audio = $data.audio, theme = $data.theme, index = $data.index;
     $each(audio, function ($value, $index) {
-        $$out += ' <li><span class="aplayer-list-cur" style="background-color: ';
-        $$out += $escape($value.theme || theme);
-        $$out += '"></span> <span class="aplayer-list-index">';
-        $$out += $escape($index + index);
-        $$out += '</span><span class="aplayer-list-title">';
-        $$out += $escape($value.name);
-        $$out += '</span><span class="aplayer-list-author">';
-        $$out += $escape($value.artist);
-        $$out += '</span></li> ';
+        $$out += ` <li><span class="aplayer-list-cur" style="background-color: ${$escape($value.theme || theme)}"></span> <span class="aplayer-list-index">${$escape($index + index)}</span><span class="aplayer-list-title">${$escape($value.name)}</span><span class="aplayer-list-author">${$escape($value.artist)}</span></li> `;
     });
     return $$out;
 }

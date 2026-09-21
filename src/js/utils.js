@@ -18,7 +18,7 @@ export function secondToTime(second) {
     const hour = Math.floor(second / 3600);
     const min = Math.floor((second - hour * 3600) / 60);
     const sec = Math.floor(second - hour * 3600 - min * 60);
-    return (hour > 0 ? [hour, min, sec] : [min, sec]).map(add0).join(':');
+    return (hour > 0 ? add0(hour) + ':' : '') + add0(min) + ':' + add0(sec);
 }
 
 /**
@@ -29,17 +29,10 @@ export function getElementViewLeft(element) {
     let actualLeft = element.offsetLeft;
     let current = element.offsetParent;
     const elementScrollLeft = document.body.scrollLeft + document.documentElement.scrollLeft;
-    if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement) {
-        while (current !== null) {
-            actualLeft += current.offsetLeft;
-            current = current.offsetParent;
-        }
-    }
-    else {
-        while (current !== null && current !== element) {
-            actualLeft += current.offsetLeft;
-            current = current.offsetParent;
-        }
+    const fullscreen = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+    while (current !== null && (!fullscreen || current !== element)) {
+        actualLeft += current.offsetLeft;
+        current = current.offsetParent;
     }
     return actualLeft - elementScrollLeft;
 }
@@ -47,12 +40,11 @@ export function getElementViewLeft(element) {
 export function getElementViewTop(element, noScrollTop) {
     let actualTop = element.offsetTop;
     let current = element.offsetParent;
-    let elementScrollTop = 0;
     while (current !== null) {
         actualTop += current.offsetTop;
         current = current.offsetParent;
     }
-    elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop;
+    const elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop;
     return noScrollTop ? actualTop : actualTop - elementScrollTop;
 }
 
@@ -66,16 +58,12 @@ export const nameMap = {
  * get random order, using Fisher–Yates shuffle
  */
 export function randomOrder(length) {
-    function shuffle(arr) {
-        for (let i = arr.length - 1; i >= 0; i--) {
-            const randomIndex = Math.floor(Math.random() * (i + 1));
-            const itemAtIndex = arr[randomIndex];
-            arr[randomIndex] = arr[i];
-            arr[i] = itemAtIndex;
-        }
-        return arr;
+    const order = Array.from({ length }, (_, index) => index);
+    for (let i = order.length - 1; i >= 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        const itemAtIndex = order[randomIndex];
+        order[randomIndex] = order[i];
+        order[i] = itemAtIndex;
     }
-    return shuffle([...Array(length)].map(function (item, i) {
-        return i;
-    }));
+    return order;
 }
