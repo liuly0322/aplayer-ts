@@ -7,7 +7,7 @@
 
 [APlayer](https://github.com/MoePlayer/APlayer/), but:
 
-- JavaScript bundle size **from 58.74 kB to 23.86 kB** for basic usage. See [bundle size](#bundle-size) for measured configurations and this [blog post](https://blog.liuly.moe/posts/tree-shaking) for the approach;
+- JavaScript bundle size **from 58.74 kB to 23.48 kB** for basic usage. See [bundle size](#bundle-size) for measured configurations and this [blog post](https://blog.liuly.moe/posts/tree-shaking) for the approach;
 - TypeScript interface support;
 - Fixes [APlayer#283](https://github.com/DIYgod/APlayer/issues/283);
 - ESM import/export with zero dependencies.
@@ -20,11 +20,11 @@ Measured on 2026-09-21 with Node.js 22.13.0, the locked Vite 5.1.5 / esbuild 0.1
 
 | Entry | Player | JS | JS gzip | CSS | CSS gzip |
 | --- | --- | ---: | ---: | ---: | ---: |
-| Basic | APlayer-ts | 23.860 kB | 7.954 kB | 10.205 kB | 2.179 kB |
+| Basic | APlayer-ts | 23.482 kB | 7.829 kB | 10.205 kB | 2.179 kB |
 | Basic | APlayer 1.10.1 | 58.736 kB | 14.459 kB | 12.415 kB | 2.477 kB |
-| Demo | APlayer-ts | 26.069 kB | 8.586 kB | 10.205 kB | 2.179 kB |
+| Demo | APlayer-ts | 25.691 kB | 8.444 kB | 10.205 kB | 2.179 kB |
 | Demo | APlayer 1.10.1 | 59.170 kB | 14.712 kB | 12.415 kB | 2.477 kB |
-| All plugins | APlayer-ts | 27.008 kB | 8.550 kB | 12.030 kB | 2.465 kB |
+| All plugins | APlayer-ts | 26.630 kB | 8.417 kB | 12.030 kB | 2.465 kB |
 | All plugins | APlayer 1.10.1 | 58.736 kB | 14.459 kB | 12.415 kB | 2.477 kB |
 
 ## Usage

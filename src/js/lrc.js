@@ -83,55 +83,6 @@ export default (options) => {
         current_ = parsed_[index];
     }
 
-    /**
-     * Parse lrc, suppose multiple time tag
-     *
-     * @param {String} lrc_s - Format:
-     * [mm:ss]lyric
-     * [mm:ss.xx]lyric
-     * [mm:ss.xxx]lyric
-     * [mm:ss.xx][mm:ss.xx][mm:ss.xx]lyric
-     * [mm:ss.xx]<mm:ss.xx>lyric
-     *
-     * @return {String} [[time, text], [time, text], [time, text], ...]
-     */
-    function parse(lrc_s) {
-        if (lrc_s) {
-            lrc_s = lrc_s.replace(/([^\]^\n])\[/g, '$1\n[');
-            const lyric = lrc_s.split('\n');
-            let lrc = [];
-            const lyricLen = lyric.length;
-            for (let i = 0; i < lyricLen; i++) {
-                // match lrc time
-                const lrcTimes = lyric[i].match(/\[(\d{2}):(\d{2})(\.\d{2,3})?]/g);
-                // match lrc text
-                const lrcText = lyric[i].replace(/.*\[(\d{2}):(\d{2})(\.\d{2,3})?]/g, '').replace(/<(\d{2}):(\d{2})(\.\d{2,3})?>/g, '').trim();
-
-                if (lrcTimes) {
-                    // handle multiple time tag
-                    const timeLen = lrcTimes.length;
-                    for (let j = 0; j < timeLen; j++) {
-                        const oneTime = /\[(\d{2}):(\d{2})(\.\d{2,3})?]/.exec(lrcTimes[j]);
-                        const min2sec = oneTime[1] * 60;
-                        // Captures contain only decimal digits; unary + also handles leading zeros.
-                        const sec2sec = +oneTime[2];
-                        // The optional capture includes the decimal point and 2–3 digits.
-                        const msec2sec = +(oneTime[3] || 0);
-                        const lrcTime = min2sec + sec2sec + msec2sec;
-                        lrc.push([lrcTime, lrcText]);
-                    }
-                }
-            }
-            // sort by time
-            lrc = lrc.filter((item) => item[1]);
-            lrc.sort((a, b) => a[0] - b[0]);
-            return lrc;
-        }
-        else {
-            return [];
-        }
-    }
-
     function remove(index) {
         parsed_.splice(index, 1);
     }
@@ -150,4 +101,47 @@ export default (options) => {
         remove,
         clear
     }
+}
+
+/**
+ * Parse lrc, suppose multiple time tag
+ *
+ * @param {String} lrc_s - Format:
+ * [mm:ss]lyric
+ * [mm:ss.xx]lyric
+ * [mm:ss.xxx]lyric
+ * [mm:ss.xx][mm:ss.xx][mm:ss.xx]lyric
+ * [mm:ss.xx]<mm:ss.xx>lyric
+ *
+ * @return {String} [[time, text], [time, text], [time, text], ...]
+ */
+function parse(lrc_s) {
+    if (!lrc_s) {
+        return [];
+    }
+    lrc_s = lrc_s.replace(/([^\]^\n])\[/g, '$1\n[');
+    const lyric = lrc_s.split('\n');
+    const lrc = [];
+    const timePattern = /\[(\d{2}):(\d{2})(\.\d{2,3})?]/g;
+    for (const line of lyric) {
+        // match lrc text
+        const lrcText = line.replace(/.*\[(\d{2}):(\d{2})(\.\d{2,3})?]/g, '').replace(/<(\d{2}):(\d{2})(\.\d{2,3})?>/g, '').trim();
+
+        if (lrcText) {
+            // handle multiple time tag
+            // Exhausting exec resets lastIndex for the next line.
+            let oneTime;
+            while ((oneTime = timePattern.exec(line))) {
+                const min2sec = oneTime[1] * 60;
+                // Captures contain only decimal digits; unary + also handles leading zeros.
+                const sec2sec = +oneTime[2];
+                // The optional capture includes the decimal point and 2–3 digits.
+                const msec2sec = +(oneTime[3] || 0);
+                const lrcTime = min2sec + sec2sec + msec2sec;
+                lrc.push([lrcTime, lrcText]);
+            }
+        }
+    }
+    // sort by time
+    return lrc.sort((a, b) => a[0] - b[0]);
 }

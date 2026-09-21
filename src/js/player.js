@@ -50,51 +50,6 @@ const APlayer = () => {
     let list_;
 
     // inner methods
-    function initLrc() {
-        if (options_.lrcType === 2 || options_.lrcType === true) {
-            const lrcEle = container_.getElementsByClassName('aplayer-lrc-content');
-            for (let i = 0; i < lrcEle.length; i++) {
-                if (options_.audio[i]) {
-                    options_.audio[i].lrc = lrcEle[i].innerHTML;
-                }
-            }
-        }
-        if (options_.lrcType) {
-            player.lrc = Lrc({
-                container: template_.lrc,
-                async: options_.lrcType === 3,
-                player: player,
-            });
-        }
-    }
-    function initClassNames() {
-        container_.classList.add('aplayer');
-        if (options_.lrcType && !options_.fixed) {
-            container_.classList.add('aplayer-withlrc');
-        }
-        if (options_.audio.length > 1) {
-            container_.classList.add('aplayer-withlist');
-        }
-        if (isMobile) {
-            container_.classList.add('aplayer-mobile');
-        }
-        const arrow = container_.offsetWidth <= 300;
-        if (arrow) {
-            container_.classList.add('aplayer-arrow');
-        }
-        if (options_.fixed) {
-            container_.classList.add('aplayer-fixed');
-            template_.body.style.width = template_.body.offsetWidth - 18 + 'px';
-        }
-        if (options_.mini) {
-            player.setMode('mini');
-            template_.info.style.display = 'block';
-        }
-        if (template_.info.offsetWidth < 200) {
-            template_.time.classList.add('aplayer-time-narrow');
-        }
-        template_.listOl.style.position = 'relative';
-    }
     function useVolumeStorage() {
         const storageName = options_.storageName;
         const data = JSON.parse(localStorage.getItem(storageName)) || {};
@@ -109,18 +64,6 @@ const APlayer = () => {
             }
         }
 
-    }
-    function initAudio() {
-        player.audio = document.createElement('audio');
-        player.audio.preload = options_.preload;
-
-        audioEvents.forEach((eventName) => {
-            player.audio.addEventListener(eventName, (e) => {
-                player.events.trigger(eventName, e);
-            });
-        });
-
-        player.volume(volumeStorage.get(), true);
     }
     function bindEvents() {
         player.on('play', () => {
@@ -297,17 +240,65 @@ const APlayer = () => {
         template_ = Template(container_, options_, player.randomOrder, player.tplRenderers)
         player.template = template_;
         player.controller = Controller(player);
-        initClassNames();
+        container_.classList.add('aplayer');
+        if (options_.lrcType && !options_.fixed) {
+            container_.classList.add('aplayer-withlrc');
+        }
+        if (options_.audio.length > 1) {
+            container_.classList.add('aplayer-withlist');
+        }
+        if (isMobile) {
+            container_.classList.add('aplayer-mobile');
+        }
+        const arrow = container_.offsetWidth <= 300;
+        if (arrow) {
+            container_.classList.add('aplayer-arrow');
+        }
+        if (options_.fixed) {
+            container_.classList.add('aplayer-fixed');
+            template_.body.style.width = template_.body.offsetWidth - 18 + 'px';
+        }
+        if (options_.mini) {
+            player.setMode('mini');
+            template_.info.style.display = 'block';
+        }
+        if (template_.info.offsetWidth < 200) {
+            template_.time.classList.add('aplayer-time-narrow');
+        }
+        template_.listOl.style.position = 'relative';
 
         player.randomOrder = randomOrder(options_.audio.length);
         volumeStorage = useVolumeStorage()
 
-        initLrc();
+        if (options_.lrcType === 2 || options_.lrcType === true) {
+            const lrcEle = container_.getElementsByClassName('aplayer-lrc-content');
+            for (let i = 0; i < lrcEle.length; i++) {
+                if (options_.audio[i]) {
+                    options_.audio[i].lrc = lrcEle[i].innerHTML;
+                }
+            }
+        }
+        if (options_.lrcType) {
+            player.lrc = Lrc({
+                container: template_.lrc,
+                async: options_.lrcType === 3,
+                player: player,
+            });
+        }
         player.bar = Bar(template_);
         list_ = List(player);
         player.list = list_;
 
-        initAudio();
+        player.audio = document.createElement('audio');
+        player.audio.preload = options_.preload;
+
+        audioEvents.forEach((eventName) => {
+            player.audio.addEventListener(eventName, (e) => {
+                player.events.trigger(eventName, e);
+            });
+        });
+
+        player.volume(volumeStorage.get(), true);
         bindEvents();
         if (options_.order === 'random') {
             list_.switch(player.randomOrder[0]);

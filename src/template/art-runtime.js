@@ -27,15 +27,14 @@ export function $each(data, callback) {
 }
 
 function toString(value) {
-    if (typeof value !== 'string') {
-        if (value === undefined || value === null) {
-            value = '';
-        } else if (typeof value === 'function') {
-            value = toString(value.call(value));
-        } else {
-            value = JSON.stringify(value);
-        }
+    if (typeof value === 'string') {
+        return value;
     }
-
-    return value;
+    if (value === undefined || value === null) {
+        return '';
+    }
+    if (typeof value === 'function') {
+        return toString(value.call(value));
+    }
+    return JSON.stringify(value);
 }
