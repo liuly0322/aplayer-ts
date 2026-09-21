@@ -47,12 +47,11 @@ export function getElementViewLeft(element) {
 export function getElementViewTop(element, noScrollTop) {
     let actualTop = element.offsetTop;
     let current = element.offsetParent;
-    let elementScrollTop = 0;
     while (current !== null) {
         actualTop += current.offsetTop;
         current = current.offsetParent;
     }
-    elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop;
+    const elementScrollTop = document.body.scrollTop + document.documentElement.scrollTop;
     return noScrollTop ? actualTop : actualTop - elementScrollTop;
 }
 
@@ -66,16 +65,12 @@ export const nameMap = {
  * get random order, using Fisher–Yates shuffle
  */
 export function randomOrder(length) {
-    function shuffle(arr) {
-        for (let i = arr.length - 1; i >= 0; i--) {
-            const randomIndex = Math.floor(Math.random() * (i + 1));
-            const itemAtIndex = arr[randomIndex];
-            arr[randomIndex] = arr[i];
-            arr[i] = itemAtIndex;
-        }
-        return arr;
+    const order = Array.from({ length }, (_, index) => index);
+    for (let i = order.length - 1; i >= 0; i--) {
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        const itemAtIndex = order[randomIndex];
+        order[randomIndex] = order[i];
+        order[i] = itemAtIndex;
     }
-    return shuffle([...Array(length)].map(function (item, i) {
-        return i;
-    }));
+    return order;
 }

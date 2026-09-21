@@ -1,8 +1,6 @@
-import $imports from './art-runtime.js';
+import { $escape } from './art-runtime.js';
 import { lrc, right, menu, play, loading, skip, volumeDown, orderList, loopOne, loopAll, loopNone, orderRandom } from '../js/icons.js'
 import listItem from './list-item.js';
-
-const $escape = $imports.$escape;
 
 export const notFixedModeTplRenderers = [
     (options, includeFunction) => {

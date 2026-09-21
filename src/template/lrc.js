@@ -1,8 +1,8 @@
-import $imports from './art-runtime.js';
+import { $each, $escape } from './art-runtime.js';
 export default function ($data) {
     'use strict';
     $data = $data || {};
-    let $$out = '', $each = $imports.$each, lyrics = $data.lyrics, $escape = $imports.$escape;
+    let $$out = '', lyrics = $data.lyrics;
     $each(lyrics, function ($value, $index) {
         $$out += ' <p ';
         if ($index === 0) {
