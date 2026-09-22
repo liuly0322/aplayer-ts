@@ -50,21 +50,6 @@ const APlayer = () => {
     let list_;
 
     // inner methods
-    function useVolumeStorage() {
-        const storageName = options_.storageName;
-        const data = JSON.parse(localStorage.getItem(storageName)) || {};
-        data.volume ||= options_.volume;
-        return {
-            get() {
-                return data.volume;
-            },
-            set(value) {
-                data.volume = value;
-                localStorage.setItem(storageName, JSON.stringify(data));
-            }
-        }
-
-    }
     function bindEvents() {
         player.on('play', () => {
             if (paused) {
@@ -268,7 +253,16 @@ const APlayer = () => {
         template_.listOl.style.position = 'relative';
 
         player.randomOrder = randomOrder(options_.audio.length);
-        volumeStorage = useVolumeStorage()
+        const storageName = options_.storageName;
+        const data = JSON.parse(localStorage.getItem(storageName)) || {};
+        data.volume ||= options_.volume;
+        volumeStorage = {
+            data,
+            set(value) {
+                data.volume = value;
+                localStorage.setItem(storageName, JSON.stringify(data));
+            }
+        };
 
         if (options_.lrcType === 2 || options_.lrcType === true) {
             const lrcEle = container_.getElementsByClassName('aplayer-lrc-content');
@@ -298,7 +292,7 @@ const APlayer = () => {
             });
         });
 
-        player.volume(volumeStorage.get(), true);
+        player.volume(volumeStorage.data.volume, true);
         bindEvents();
         if (options_.order === 'random') {
             list_.switch(player.randomOrder[0]);
@@ -425,15 +419,8 @@ const APlayer = () => {
         player.audio.pause();
     }
     player.switchVolumeIcon = () => {
-        if (player.volume() >= 0.95) {
-            template_.volumeButton.innerHTML = volumeUp;
-        }
-        else if (player.volume() > 0) {
-            template_.volumeButton.innerHTML = volumeDown;
-        }
-        else {
-            template_.volumeButton.innerHTML = volumeOff;
-        }
+        const icon = player.volume() >= 0.95 ? volumeUp : player.volume() > 0 ? volumeDown : volumeOff;
+        template_.volumeButton.innerHTML = icon;
     }
     player.volume = (percentage, nostorage) => {
         percentage = parseFloat(percentage);

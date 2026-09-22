@@ -78,16 +78,10 @@ export default (player) => {
     });
     if (!isMobile) {
         player.template.volumeButton.addEventListener('click', () => {
-            if (player.audio.muted) {
-                player.audio.muted = false;
-                player.switchVolumeIcon();
-                player.bar.set('volume', player.volume(), 'height');
-            }
-            else {
-                player.audio.muted = true;
-                player.switchVolumeIcon();
-                player.bar.set('volume', 0, 'height');
-            }
+            const wasMuted = player.audio.muted;
+            player.audio.muted = !wasMuted;
+            player.switchVolumeIcon();
+            player.bar.set('volume', wasMuted ? player.volume() : 0, 'height');
         });
 
         const thumbMove = (e) => {

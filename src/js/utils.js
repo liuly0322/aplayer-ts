@@ -14,7 +14,7 @@ export const isMobile = (function () {
 * @return {String} 00:00 or 00:00:00
 */
 export function secondToTime(second) {
-    const add0 = (num) => num < 10 ? '0' + num : '' + num;
+    const add0 = (num) => (num < 10 ? '0' : '') + num;
     const hour = Math.floor(second / 3600);
     const min = Math.floor((second - hour * 3600) / 60);
     const sec = Math.floor(second - hour * 3600 - min * 60);

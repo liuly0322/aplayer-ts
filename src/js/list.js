@@ -120,7 +120,7 @@ export default (player) => {
     function show() {
         player.events.trigger('listshow');
         player.template.list.classList.remove('aplayer-list-hide');
-        const listItemElement = getCurrentListItem();
+        const listItemElement = player.container.querySelectorAll('.aplayer-list li')[index_];
         player.template.listOl.scrollTop = listItemElement.offsetTop
     }
 
@@ -136,10 +136,6 @@ export default (player) => {
         else {
             show();
         }
-    }
-
-    function getCurrentListItem() {
-        return player.container.querySelectorAll('.aplayer-list li')[index_];
     }
 
     function switch_(index) {
@@ -162,7 +158,7 @@ export default (player) => {
             if (light) {
                 light.classList.remove('aplayer-list-light');
             }
-            const listItemElement = getCurrentListItem();
+            const listItemElement = player.container.querySelectorAll('.aplayer-list li')[index_];
             listItemElement.classList.add('aplayer-list-light');
             listItemElement.parentNode.scrollTo({
                 top: listItemElement.offsetTop,

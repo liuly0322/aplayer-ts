@@ -1,12 +1,11 @@
 export default (player) => {
     let lastPlayPos = 0;
-    let currentPlayPos = 0;
     let bufferingDetected = false;
     let enableloadingChecker = false;
     let timer = setInterval(() => {
         if (enableloadingChecker) {
             // whether the audio is buffering
-            currentPlayPos = player.audio.currentTime;
+            const currentPlayPos = player.audio.currentTime;
             if (!bufferingDetected
                 && currentPlayPos === lastPlayPos
                 && !player.audio.paused) {
